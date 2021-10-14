@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "rte_components.h": "c"
+    },
+    "C_Cpp.errorSquiggles": "Disabled"
+}
