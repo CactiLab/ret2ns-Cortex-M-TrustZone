@@ -10,13 +10,13 @@
       <TargetName>V2M-MPS2+</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6070000::V6.7::.\ARMCLANG</pCCUsed>
+      <pCCUsed>6150000::V6.15::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>IOTKit_CM33_FP</Device>
           <Vendor>ARM</Vendor>
-          <PackID>Keil.V2M-MPS2_IOTKit_BSP.1.4.0-dev3</PackID>
+          <PackID>Keil.V2M-MPS2_IOTKit_BSP.1.4.2</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x38000000,0x00200000) IRAM2(0x28200000,0x00200000) IROM(0x10000000,0x00200000) IROM2(0x00200000,0x00200000) CPUTYPE("Cortex-M33") FPU3(SFPU) DSP TZ CLOCK(12000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -184,6 +184,8 @@
             <hadXRAM>0</hadXRAM>
             <uocXRam>0</uocXRam>
             <RvdsVP>2</RvdsVP>
+            <RvdsMve>0</RvdsMve>
+            <RvdsCdeCp>0</RvdsCdeCp>
             <hadIRAM2>1</hadIRAM2>
             <hadIROM2>1</hadIROM2>
             <StupSel>16</StupSel>
@@ -324,6 +326,7 @@
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
             <uC99>0</uC99>
+            <uGnu>0</uGnu>
             <useXO>0</useXO>
             <v6Lang>5</v6Lang>
             <v6LangP>0</v6LangP>
@@ -349,7 +352,7 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
-            <uClangAs>0</uClangAs>
+            <ClangAsOpt>13</ClangAsOpt>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define></Define>
@@ -608,7 +611,7 @@
       <file attr="config" category="header" name="CMSIS\Config\RTE_Device.h" version="1.0.0">
         <instance index="0">RTE\Device\IOTKit_CM33_FP\RTE_Device.h</instance>
         <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="1.0.3" condition="IOTKit_CM33 CMSIS"/>
-        <package name="V2M-MPS2_IOTKit_BSP" schemaVersion="1.4.9" url="http://www.keil.com/pack/" vendor="Keil" version="1.4.0-dev3"/>
+        <package name="V2M-MPS2_IOTKit_BSP" schemaVersion="1.4.9" url="http://www.keil.com/pack/" vendor="Keil" version="1.4.2"/>
         <targetInfos>
           <targetInfo name="V2M-MPS2+"/>
         </targetInfos>
@@ -616,7 +619,7 @@
       <file attr="config" category="header" name="Device\IOTKit_CM33\Include\Template\partition_IOTKit_CM33.h" version="1.0.0">
         <instance index="0">RTE\Device\IOTKit_CM33_FP\partition_IOTKit_CM33.h</instance>
         <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="1.0.3" condition="IOTKit_CM33 CMSIS"/>
-        <package name="V2M-MPS2_IOTKit_BSP" schemaVersion="1.4.9" url="http://www.keil.com/pack/" vendor="Keil" version="1.4.0-dev3"/>
+        <package name="V2M-MPS2_IOTKit_BSP" schemaVersion="1.4.9" url="http://www.keil.com/pack/" vendor="Keil" version="1.4.2"/>
         <targetInfos>
           <targetInfo name="V2M-MPS2+"/>
         </targetInfos>
@@ -624,7 +627,7 @@
       <file attr="config" category="sourceAsm" condition="ARMCC" name="Device\IOTKit_CM33\Source\ARM\startup_IOTKit_CM33.s" version="1.0.3">
         <instance index="0">RTE\Device\IOTKit_CM33_FP\startup_IOTKit_CM33.s</instance>
         <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="1.0.3" condition="IOTKit_CM33 CMSIS"/>
-        <package name="V2M-MPS2_IOTKit_BSP" schemaVersion="1.4.9" url="http://www.keil.com/pack/" vendor="Keil" version="1.4.0-dev3"/>
+        <package name="V2M-MPS2_IOTKit_BSP" schemaVersion="1.4.9" url="http://www.keil.com/pack/" vendor="Keil" version="1.4.2"/>
         <targetInfos>
           <targetInfo name="V2M-MPS2+"/>
         </targetInfos>
@@ -632,7 +635,7 @@
       <file attr="config" category="sourceC" name="Device\IOTKit_CM33\Source\system_IOTKit_CM33.c" version="1.0.1">
         <instance index="0">RTE\Device\IOTKit_CM33_FP\system_IOTKit_CM33.c</instance>
         <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="1.0.3" condition="IOTKit_CM33 CMSIS"/>
-        <package name="V2M-MPS2_IOTKit_BSP" schemaVersion="1.4.9" url="http://www.keil.com/pack/" vendor="Keil" version="1.4.0-dev3"/>
+        <package name="V2M-MPS2_IOTKit_BSP" schemaVersion="1.4.9" url="http://www.keil.com/pack/" vendor="Keil" version="1.4.2"/>
         <targetInfos>
           <targetInfo name="V2M-MPS2+"/>
         </targetInfos>

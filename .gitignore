@@ -52,3 +52,10 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+scenario_1/MPS2plus_AN505/IOTKit_CM33_S_NS/IOTKit_CM33_ns/Listings/*
+scenario_1/MPS2plus_AN505/IOTKit_CM33_S_NS/IOTKit_CM33_ns/Objects/*
+scenario_1/MPS2plus_AN505/IOTKit_CM33_S_NS/IOTKit_CM33_s/Listings/*
+scenario_1/MPS2plus_AN505/IOTKit_CM33_S_NS/IOTKit_CM33_s/Objects/*
+scenario_1/MPS2plus_AN505/IOTKit_CM33_S_NS/IOTKit_CM33_ns/IOTKit_CM33_ns.uvguix.minta
+scenario_1/MPS2plus_AN505/IOTKit_CM33_S_NS/IOTKit_CM33_s/IOTKit_CM33_s.uvguix.minta
+scenario_1/MPS2plus_AN505/IOTKit_CM33_S_NS/IOTKit_CM33_s_ns.uvmpw.uvgui.minta
