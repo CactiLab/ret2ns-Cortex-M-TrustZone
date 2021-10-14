@@ -66,14 +66,6 @@ int main (void)
 {
   uint32_t i;
 
-  /* exercise some floating point instructions */
-  volatile uint32_t fpuType = SCB_GetFPUType(); 
-  volatile float  x1 = 12.4567f;
-  volatile float  x2 = 0.6637967f;
-  volatile float  x3 = 24.1111118f;
-
-  x3 = x3 * (x1 / x2);
-
   /* exercise some core register from Non Secure Mode */
   x = __get_MSP();
   x = __get_PSP();

@@ -77,6 +77,7 @@ int32_t Secure_LED_Off_callback(NonSecure_fpParam callback)
  *----------------------------------------------------------------------------*/
 void SysTick_Handler (void);
 void SysTick_Handler (void) {
+	/*
   static uint32_t ticks = 0;
   static uint32_t ticks_printf = 0;
 
@@ -112,6 +113,7 @@ void SysTick_Handler (void) {
         ticks = 0;
       }
   }
+	*/
 }
 
 
@@ -124,17 +126,11 @@ int main (void)
   uint32_t         NonSecure_StackPointer=                   (*((uint32_t *)(NONSECURE_START + 0u)));
   NonSecure_fpVoid NonSecure_ResetHandler= (NonSecure_fpVoid)(*((uint32_t *)(NONSECURE_START + 4u)));
 
-  /* exercise some floating point instructions from Secure Mode */
-  volatile uint32_t fpuType = SCB_GetFPUType(); 
-  volatile float  x1 = 12.4567f;
-  volatile float  x2 = 0.6637967f;
-  volatile float  x3 = 24.1111118f;
-
-  x3 = x3 * (x1 / x2);
-
   /* exercise some core register from Secure Mode */
+	
   x = __get_MSP();
   x = __get_PSP();
+	__set_PSP(x);
   __TZ_set_MSP_NS(NonSecure_StackPointer);
   x = __TZ_get_MSP_NS();
   __TZ_set_PSP_NS(0x22000000u);
@@ -143,18 +139,6 @@ int main (void)
   SystemCoreClockUpdate();
 
   stdout_init();                          /* Initializ Serial interface */
-  LED_Initialize ();
-  GLCD_Initialize();
-
-  /* display initial screen */
-  GLCD_SetFont(&GLCD_Font_16x24);
-  GLCD_SetBackgroundColor(GLCD_COLOR_WHITE);
-  GLCD_ClearScreen();
-  GLCD_SetBackgroundColor(GLCD_COLOR_BLUE);
-  GLCD_SetForegroundColor(GLCD_COLOR_RED);
-  GLCD_DrawString(0*16, 0*24, "   V2M-MPS2 Demo    ");
-  GLCD_DrawString(0*16, 1*24, " Secure/Non-Secure  ");
-  GLCD_DrawString(0*16, 2*24, "   www.keil.com     ");
 
   SysTick_Config(SystemCoreClock / 100);  /* Generate interrupt each 10 ms */
 
