@@ -1,3 +1,5 @@
+scenario1/**
+/scenario1/
 .vscode/
 
 # Prerequisites
@@ -60,3 +62,6 @@ scenario_1/MPS2plus_AN505/IOTKit_CM33_S_NS/IOTKit_CM33_ns/IOTKit_CM33_ns.uvguix.
 scenario_1/MPS2plus_AN505/IOTKit_CM33_S_NS/IOTKit_CM33_s/IOTKit_CM33_s.uvguix.minta
 scenario_1/MPS2plus_AN505/IOTKit_CM33_S_NS/IOTKit_CM33_s_ns.uvmpw.uvgui.minta
 scenario_1/MPS2plus_AN505/IOTKit_CM33_S_NS/IOTKit_CM33_s/EventRecorderStub.scvd
+scenario_1/MPS2plus_AN505/IOTKit_CM33_S_NS/IOTKit_CM33_ns/IOTKit_CM33_ns.uvguix.andy2
+scenario_1/MPS2plus_AN505/IOTKit_CM33_S_NS/IOTKit_CM33_s/IOTKit_CM33_s.uvguix.andy2
+scenario_1/MPS2plus_AN505/IOTKit_CM33_S_NS/IOTKit_CM33_s_ns.uvmpw.uvgui.andy2

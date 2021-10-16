@@ -1,9 +1,0 @@
---cpu=Cortex-M33
-".\objects\main_s.o"
-".\objects\interface.o"
-".\objects\startup_armcm33.o"
-".\objects\system_armcm33.o"
---library_type=microlib --strict --scatter ".\RTE\Device\ARMCM33_DSP_FP_TZ\ARMCM33_ac6_s.sct"
---import-cmse-lib-out="..\CM33_s\Objects\CM33_s_CMSE_Lib.o" --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
---info sizes --info totals --info unused --info veneers
---list ".\Listings\CM33_s.map" -o .\Objects\CM33_s.axf

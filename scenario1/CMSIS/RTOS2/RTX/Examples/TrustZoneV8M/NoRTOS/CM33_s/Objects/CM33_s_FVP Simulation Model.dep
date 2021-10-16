@@ -1,41 +1,0 @@
-Dependencies for Project 'CM33_s', Target 'FVP Simulation Model': (DO NOT MODIFY !)
-CompilerVersion: 6160000::V6.16::ARMCLANG
-F (.\main_s.c)(0x61685371)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m33 -mfpu=fpv5-sp-d16 -mfloat-abi=hard -mcmse -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -mlittle-endian -gdwarf-4 -O0 -ffunction-sections -Weverything -Wno-packed -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -I./RTE/Device/ARMCM33_DSP_FP_TZ-I./RTE/_FVP_Simulation_Model-ID:/Arm/Arm/Packs/ARM/CMSIS/5.8.0/CMSIS/Core/Include-ID:/Arm/Arm/Packs/ARM/CMSIS/5.8.0/Device/ARM/ARMCM33/Include-D__UVISION_VERSION="536" -D_RTE_ -DARMCM33_DSP_FP_TZ -D_RTE_-o ./objects/main_s.o -MD)
-I (D:\Arm\Keil_v5\ARM\ARMCLANG\include\arm_cmse.h)(0x602AE43E)
-I (D:\Arm\Keil_v5\ARM\ARMCLANG\include\stddef.h)(0x6035B090)
-I (D:\Arm\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6035B090)
-I (RTE\_FVP_Simulation_Model\RTE_Components.h)(0x61673338)
-I (D:\Arm\Arm\Packs\ARM\CMSIS\5.8.0\Device\ARM\ARMCM33\Include\ARMCM33_DSP_FP_TZ.h)(0x60D491A2)
-I (D:\Arm\Arm\Packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include\core_cm33.h)(0x60D491A2)
-I (D:\Arm\Arm\Packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include\cmsis_version.h)(0x60D491A2)
-I (D:\Arm\Arm\Packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include\cmsis_compiler.h)(0x60D491A2)
-I (D:\Arm\Arm\Packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include\cmsis_armclang.h)(0x60D491A2)
-I (D:\Arm\Arm\Packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include\mpu_armv8.h)(0x60D491A2)
-I (D:\Arm\Arm\Packs\ARM\CMSIS\5.8.0\Device\ARM\ARMCM33\Include\system_ARMCM33.h)(0x60D491A2)
-F (.\interface.c)(0x60D491A2)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m33 -mfpu=fpv5-sp-d16 -mfloat-abi=hard -mcmse -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -mlittle-endian -gdwarf-4 -O0 -ffunction-sections -Weverything -Wno-packed -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -I./RTE/Device/ARMCM33_DSP_FP_TZ-I./RTE/_FVP_Simulation_Model-ID:/Arm/Arm/Packs/ARM/CMSIS/5.8.0/CMSIS/Core/Include-ID:/Arm/Arm/Packs/ARM/CMSIS/5.8.0/Device/ARM/ARMCM33/Include-D__UVISION_VERSION="536" -D_RTE_ -DARMCM33_DSP_FP_TZ -D_RTE_-o ./objects/interface.o -MD)
-I (D:\Arm\Keil_v5\ARM\ARMCLANG\include\arm_cmse.h)(0x602AE43E)
-I (D:\Arm\Keil_v5\ARM\ARMCLANG\include\stddef.h)(0x6035B090)
-I (D:\Arm\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6035B090)
-I (interface.h)(0x60D491A2)
-F (.\Abstract.txt)(0x60D491A2)()
-F (RTE\Device\ARMCM33_DSP_FP_TZ\ARMCM33_ac6_s.sct)(0x60D491A2)()
-F (RTE\Device\ARMCM33_DSP_FP_TZ\partition_ARMCM33.h)(0x60D491A2)()
-F (RTE\Device\ARMCM33_DSP_FP_TZ\startup_ARMCM33.c)(0x616749C4)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m33 -mfpu=fpv5-sp-d16 -mfloat-abi=hard -mcmse -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -mlittle-endian -gdwarf-4 -O0 -ffunction-sections -Weverything -Wno-packed -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -I./RTE/Device/ARMCM33_DSP_FP_TZ-I./RTE/_FVP_Simulation_Model-ID:/Arm/Arm/Packs/ARM/CMSIS/5.8.0/CMSIS/Core/Include-ID:/Arm/Arm/Packs/ARM/CMSIS/5.8.0/Device/ARM/ARMCM33/Include-D__UVISION_VERSION="536" -D_RTE_ -DARMCM33_DSP_FP_TZ -D_RTE_-o ./objects/startup_armcm33.o -MD)
-I (D:\Arm\Arm\Packs\ARM\CMSIS\5.8.0\Device\ARM\ARMCM33\Include\ARMCM33_DSP_FP_TZ.h)(0x60D491A2)
-I (D:\Arm\Arm\Packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include\core_cm33.h)(0x60D491A2)
-I (D:\Arm\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6035B090)
-I (D:\Arm\Arm\Packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include\cmsis_version.h)(0x60D491A2)
-I (D:\Arm\Arm\Packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include\cmsis_compiler.h)(0x60D491A2)
-I (D:\Arm\Arm\Packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include\cmsis_armclang.h)(0x60D491A2)
-I (D:\Arm\Arm\Packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include\mpu_armv8.h)(0x60D491A2)
-I (D:\Arm\Arm\Packs\ARM\CMSIS\5.8.0\Device\ARM\ARMCM33\Include\system_ARMCM33.h)(0x60D491A2)
-F (RTE\Device\ARMCM33_DSP_FP_TZ\system_ARMCM33.c)(0x60D491A2)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m33 -mfpu=fpv5-sp-d16 -mfloat-abi=hard -mcmse -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -mlittle-endian -gdwarf-4 -O0 -ffunction-sections -Weverything -Wno-packed -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -I./RTE/Device/ARMCM33_DSP_FP_TZ-I./RTE/_FVP_Simulation_Model-ID:/Arm/Arm/Packs/ARM/CMSIS/5.8.0/CMSIS/Core/Include-ID:/Arm/Arm/Packs/ARM/CMSIS/5.8.0/Device/ARM/ARMCM33/Include-D__UVISION_VERSION="536" -D_RTE_ -DARMCM33_DSP_FP_TZ -D_RTE_-o ./objects/system_armcm33.o -MD)
-I (D:\Arm\Arm\Packs\ARM\CMSIS\5.8.0\Device\ARM\ARMCM33\Include\ARMCM33_DSP_FP_TZ.h)(0x60D491A2)
-I (D:\Arm\Arm\Packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include\core_cm33.h)(0x60D491A2)
-I (D:\Arm\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6035B090)
-I (D:\Arm\Arm\Packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include\cmsis_version.h)(0x60D491A2)
-I (D:\Arm\Arm\Packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include\cmsis_compiler.h)(0x60D491A2)
-I (D:\Arm\Arm\Packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include\cmsis_armclang.h)(0x60D491A2)
-I (D:\Arm\Arm\Packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include\mpu_armv8.h)(0x60D491A2)
-I (D:\Arm\Arm\Packs\ARM\CMSIS\5.8.0\Device\ARM\ARMCM33\Include\system_ARMCM33.h)(0x60D491A2)
-I (RTE\Device\ARMCM33_DSP_FP_TZ\partition_ARMCM33.h)(0x60D491A2)
