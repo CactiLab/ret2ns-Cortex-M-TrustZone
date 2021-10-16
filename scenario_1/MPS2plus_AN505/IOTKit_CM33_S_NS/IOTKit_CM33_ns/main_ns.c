@@ -57,6 +57,37 @@ void SysTick_Handler (void) {
   }
 }
 
+/* change privileged mode */
+void SVC_Handler_Main(unsigned int *svc_args)
+{
+   //	DISABLE_IRQ;
+   //	#ifdef MISSED_CYCLES
+   //		elapsed_time_start(2);
+   //	#endif
+   uint32_t svc_number;
+   /* stack contains: r0, r1, r2, r3, r12, r14, the return address and xPSR */
+   svc_number = ((char *)svc_args[6])[-2];
+   switch (svc_number)
+   {
+   case 0: /* EnablePrivilegeMode*/
+      __set_CONTROL(__get_CONTROL() & ~CONTROL_nPRIV_Msk);
+      break;
+
+   default:
+      break;
+   }
+}
+
+void SVC_Handler(void)
+{
+   __asm volatile(
+       "TST    LR, #0b0100;      "
+       "ITE    EQ;               "
+       "MRSEQ  R0, MSP;          "
+       "MRSNE  R0, PSP;          "
+       "MOV    R1, LR;           "
+       "B      SVC_Handler_Main;  ");
+}
 
 static uint32_t x;
 /*----------------------------------------------------------------------------

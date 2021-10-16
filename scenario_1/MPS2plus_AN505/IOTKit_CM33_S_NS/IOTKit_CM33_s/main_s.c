@@ -116,6 +116,18 @@ void SysTick_Handler (void) {
 	*/
 }
 
+void SwitchStackPointer_s()
+{
+   // store MSP
+   int stack = __get_MSP();
+   // change MSP to new location
+   __set_MSP(stack);
+   // store current stack pointer is PSP
+   __set_PSP(stack);
+   // switch to PSP
+   __set_CONTROL(0x2);
+}
+
 
 static uint32_t x;
 /*----------------------------------------------------------------------------
@@ -141,7 +153,9 @@ int main (void)
   stdout_init();                          /* Initializ Serial interface */
 
   SysTick_Config(SystemCoreClock / 100);  /* Generate interrupt each 10 ms */
-
+	
+	SwitchStackPointer_s();
+	
   NonSecure_ResetHandler();
 }
 
