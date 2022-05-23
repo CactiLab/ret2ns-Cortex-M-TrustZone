@@ -1,0 +1,334 @@
+
+TZ-GetStart-NS.elf:     file format elf32-littlearm
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000002cc  00008000  00008000  00008000  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .relocate     00000000  20002000  20002000  000082cc  2**0
+                  CONTENTS
+  2 .bss          00000024  20002000  20002000  00012000  2**2
+                  ALLOC
+  3 .heap         00000204  20002024  20002024  00012000  2**0
+                  ALLOC
+  4 .stack        00000400  20002228  20002228  00012000  2**0
+                  ALLOC
+  5 .ARM.attributes 0000002c  00000000  00000000  000082cc  2**0
+                  CONTENTS, READONLY
+  6 .comment      00000059  00000000  00000000  000082f8  2**0
+                  CONTENTS, READONLY
+  7 .debug_info   00000ac7  00000000  00000000  00008351  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_abbrev 00000475  00000000  00000000  00008e18  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_loc    000001d4  00000000  00000000  0000928d  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_aranges 000000d0  00000000  00000000  00009461  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 00000080  00000000  00000000  00009531  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_macro  000150d1  00000000  00000000  000095b1  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 13 .debug_line   00002ff7  00000000  00000000  0001e682  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 14 .debug_str    000803ce  00000000  00000000  00021679  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 15 .debug_frame  0000015c  00000000  00000000  000a1a48  2**2
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00008000 <exception_table>:
+    8000:	28 26 00 20 71 81 00 00 6f 81 00 00 6f 81 00 00     (&. q...o...o...
+	...
+    802c:	2b 82 00 00 00 00 00 00 00 00 00 00 6f 81 00 00     +...........o...
+    803c:	6f 81 00 00 6f 81 00 00 6f 81 00 00 6f 81 00 00     o...o...o...o...
+    804c:	6f 81 00 00 6f 81 00 00 6f 81 00 00 6f 81 00 00     o...o...o...o...
+    805c:	6f 81 00 00 6f 81 00 00 6f 81 00 00 6f 81 00 00     o...o...o...o...
+    806c:	6f 81 00 00 6f 81 00 00 6f 81 00 00 6f 81 00 00     o...o...o...o...
+    807c:	6f 81 00 00 6f 81 00 00 6f 81 00 00 6f 81 00 00     o...o...o...o...
+    808c:	6f 81 00 00 6f 81 00 00 6f 81 00 00 6f 81 00 00     o...o...o...o...
+    809c:	6f 81 00 00 6f 81 00 00 6f 81 00 00 6f 81 00 00     o...o...o...o...
+    80ac:	6f 81 00 00 6f 81 00 00 6f 81 00 00 6f 81 00 00     o...o...o...o...
+    80bc:	6f 81 00 00 6f 81 00 00 6f 81 00 00 6f 81 00 00     o...o...o...o...
+    80cc:	6f 81 00 00 6f 81 00 00 6f 81 00 00 6f 81 00 00     o...o...o...o...
+    80dc:	6f 81 00 00 6f 81 00 00 6f 81 00 00 6f 81 00 00     o...o...o...o...
+    80ec:	6f 81 00 00 6f 81 00 00                             o...o...
+
+000080f4 <__do_global_dtors_aux>:
+    80f4:	b510      	push	{r4, lr}
+    80f6:	f242 0400 	movw	r4, #8192	; 0x2000
+    80fa:	f2c2 0400 	movt	r4, #8192	; 0x2000
+    80fe:	7823      	ldrb	r3, [r4, #0]
+    8100:	b963      	cbnz	r3, 811c <__do_global_dtors_aux+0x28>
+    8102:	f240 0300 	movw	r3, #0
+    8106:	f2c0 0300 	movt	r3, #0
+    810a:	b12b      	cbz	r3, 8118 <__do_global_dtors_aux+0x24>
+    810c:	f248 20cc 	movw	r0, #33484	; 0x82cc
+    8110:	f2c0 0000 	movt	r0, #0
+    8114:	e000      	b.n	8118 <__do_global_dtors_aux+0x24>
+    8116:	bf00      	nop
+    8118:	2301      	movs	r3, #1
+    811a:	7023      	strb	r3, [r4, #0]
+    811c:	bd10      	pop	{r4, pc}
+    811e:	46c0      	nop			; (mov r8, r8)
+
+00008120 <frame_dummy>:
+    8120:	f240 0300 	movw	r3, #0
+    8124:	f2c0 0300 	movt	r3, #0
+    8128:	b510      	push	{r4, lr}
+    812a:	b14b      	cbz	r3, 8140 <frame_dummy+0x20>
+    812c:	f242 0104 	movw	r1, #8196	; 0x2004
+    8130:	f248 20cc 	movw	r0, #33484	; 0x82cc
+    8134:	f2c2 0100 	movt	r1, #8192	; 0x2000
+    8138:	f2c0 0000 	movt	r0, #0
+    813c:	e000      	b.n	8140 <frame_dummy+0x20>
+    813e:	bf00      	nop
+    8140:	f248 20cc 	movw	r0, #33484	; 0x82cc
+    8144:	f2c0 0000 	movt	r0, #0
+    8148:	6803      	ldr	r3, [r0, #0]
+    814a:	b903      	cbnz	r3, 814e <frame_dummy+0x2e>
+    814c:	bd10      	pop	{r4, pc}
+    814e:	f240 0300 	movw	r3, #0
+    8152:	f2c0 0300 	movt	r3, #0
+    8156:	2b00      	cmp	r3, #0
+    8158:	d0f8      	beq.n	814c <frame_dummy+0x2c>
+    815a:	4798      	blx	r3
+    815c:	e7f6      	b.n	814c <frame_dummy+0x2c>
+    815e:	46c0      	nop			; (mov r8, r8)
+
+00008160 <atmel_start_init>:
+
+/**
+ * Initializes MCU, drivers and middleware in the project
+ **/
+void atmel_start_init(void)
+{
+    8160:	b510      	push	{r4, lr}
+	system_init();
+    8162:	f248 13f5 	movw	r3, #33269	; 0x81f5
+    8166:	f2c0 0300 	movt	r3, #0
+    816a:	4798      	blx	r3
+}
+    816c:	bd10      	pop	{r4, pc}
+
+0000816e <Dummy_Handler>:
+
+/**
+ * \brief Default interrupt handler for unused IRQs.
+ */
+void Dummy_Handler(void)
+{
+    816e:	e7fe      	b.n	816e <Dummy_Handler>
+
+00008170 <Reset_Handler>:
+{
+    8170:	b510      	push	{r4, lr}
+        if (pSrc != pDest) {
+    8172:	f248 22cc 	movw	r2, #33484	; 0x82cc
+    8176:	f2c0 0200 	movt	r2, #0
+    817a:	f242 0300 	movw	r3, #8192	; 0x2000
+    817e:	f2c2 0300 	movt	r3, #8192	; 0x2000
+    8182:	429a      	cmp	r2, r3
+    8184:	d012      	beq.n	81ac <Reset_Handler+0x3c>
+    8186:	f242 0300 	movw	r3, #8192	; 0x2000
+    818a:	f2c2 0300 	movt	r3, #8192	; 0x2000
+    818e:	f248 22cc 	movw	r2, #33484	; 0x82cc
+    8192:	f2c0 0200 	movt	r2, #0
+    8196:	e003      	b.n	81a0 <Reset_Handler+0x30>
+                        *pDest++ = *pSrc++;
+    8198:	6811      	ldr	r1, [r2, #0]
+    819a:	6019      	str	r1, [r3, #0]
+    819c:	3304      	adds	r3, #4
+    819e:	3204      	adds	r2, #4
+                for (; pDest < &_erelocate;) {
+    81a0:	f242 0100 	movw	r1, #8192	; 0x2000
+    81a4:	f2c2 0100 	movt	r1, #8192	; 0x2000
+    81a8:	428b      	cmp	r3, r1
+    81aa:	d3f5      	bcc.n	8198 <Reset_Handler+0x28>
+                        *pDest++ = *pSrc++;
+    81ac:	f242 0300 	movw	r3, #8192	; 0x2000
+    81b0:	f2c2 0300 	movt	r3, #8192	; 0x2000
+    81b4:	e002      	b.n	81bc <Reset_Handler+0x4c>
+                *pDest++ = 0;
+    81b6:	2200      	movs	r2, #0
+    81b8:	601a      	str	r2, [r3, #0]
+    81ba:	3304      	adds	r3, #4
+        for (pDest = &_szero; pDest < &_ezero;) {
+    81bc:	f242 0224 	movw	r2, #8228	; 0x2024
+    81c0:	f2c2 0200 	movt	r2, #8192	; 0x2000
+    81c4:	4293      	cmp	r3, r2
+    81c6:	d3f6      	bcc.n	81b6 <Reset_Handler+0x46>
+        SCB->VTOR = ((uint32_t) pSrc & SCB_VTOR_TBLOFF_Msk);
+    81c8:	f248 0300 	movw	r3, #32768	; 0x8000
+    81cc:	f2c0 0300 	movt	r3, #0
+    81d0:	227f      	movs	r2, #127	; 0x7f
+    81d2:	4393      	bics	r3, r2
+    81d4:	f64e 5200 	movw	r2, #60672	; 0xed00
+    81d8:	f2ce 0200 	movt	r2, #57344	; 0xe000
+    81dc:	6093      	str	r3, [r2, #8]
+        __libc_init_array();
+    81de:	f248 235d 	movw	r3, #33373	; 0x825d
+    81e2:	f2c0 0300 	movt	r3, #0
+    81e6:	4798      	blx	r3
+        main();
+    81e8:	f248 13f7 	movw	r3, #33271	; 0x81f7
+    81ec:	f2c0 0300 	movt	r3, #0
+    81f0:	4798      	blx	r3
+    81f2:	e7fe      	b.n	81f2 <Reset_Handler+0x82>
+
+000081f4 <system_init>:
+{
+#if (defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U))
+	/* Only initialize MCU clock when the project is TrustZone secure project  */
+	init_mcu();
+#endif
+}
+    81f4:	4770      	bx	lr
+
+000081f6 <main>:
+
+volatile int gs_val[2];
+
+/* Non-secure main() */
+int main(void)
+{
+    81f6:	b510      	push	{r4, lr}
+	/* Initializes MCU, drivers and middleware */
+	atmel_start_init();
+    81f8:	f248 1361 	movw	r3, #33121	; 0x8161
+    81fc:	f2c0 0300 	movt	r3, #0
+    8200:	4798      	blx	r3
+	
+//	ret2nw_ns();
+	
+	/* Call non-secure callable function 1 */
+	gs_val[0] = nsc_func_plus3(1);
+    8202:	2001      	movs	r0, #1
+    8204:	f647 4301 	movw	r3, #31745	; 0x7c01
+    8208:	f2c0 0300 	movt	r3, #0
+    820c:	4798      	blx	r3
+    820e:	f242 041c 	movw	r4, #8220	; 0x201c
+    8212:	f2c2 0400 	movt	r4, #8192	; 0x2000
+    8216:	6020      	str	r0, [r4, #0]
+
+	/* Call non-secure callable function 2 */
+	gs_val[1] = nsc_func_minus2(7);
+    8218:	2007      	movs	r0, #7
+    821a:	f647 4309 	movw	r3, #31753	; 0x7c09
+    821e:	f2c0 0300 	movt	r3, #0
+    8222:	4798      	blx	r3
+    8224:	6060      	str	r0, [r4, #4]
+
+	/* Replace with your application code */
+	while (1) {
+		__NOP();
+    8226:	46c0      	nop			; (mov r8, r8)
+    8228:	e7fd      	b.n	8226 <main+0x30>
+
+0000822a <SVCall_Handler>:
+	}
+}
+
+void SVC_Handler(void)
+{
+	__asm volatile(
+    822a:	4670      	mov	r0, lr
+    822c:	4669      	mov	r1, sp
+    822e:	e007      	b.n	8240 <SVC_Handler_Main>
+	"mov r0, lr\n\t"
+	"mov r1, sp\n\t"
+	"B      SVC_Handler_Main;  ");
+}
+    8230:	4770      	bx	lr
+
+00008232 <print_in_s_handler>:
+
+void print_in_s_handler(char* content)
+{
+    8232:	b510      	push	{r4, lr}
+	print_nsc(content);
+    8234:	f647 4311 	movw	r3, #31761	; 0x7c11
+    8238:	f2c0 0300 	movt	r3, #0
+    823c:	4798      	blx	r3
+}
+    823e:	bd10      	pop	{r4, pc}
+
+00008240 <SVC_Handler_Main>:
+{
+    8240:	b510      	push	{r4, lr}
+	svc_number = ((char *)svc_args[6])[-2];
+    8242:	6983      	ldr	r3, [r0, #24]
+    8244:	3b02      	subs	r3, #2
+    8246:	781b      	ldrb	r3, [r3, #0]
+	switch (svc_number)
+    8248:	b103      	cbz	r3, 824c <SVC_Handler_Main+0xc>
+}
+    824a:	bd10      	pop	{r4, pc}
+		print_in_s_handler((char *)svc_args[0]);
+    824c:	6800      	ldr	r0, [r0, #0]
+    824e:	f248 2333 	movw	r3, #33331	; 0x8233
+    8252:	f2c0 0300 	movt	r3, #0
+    8256:	4798      	blx	r3
+}
+    8258:	e7f7      	b.n	824a <SVC_Handler_Main+0xa>
+	...
+
+0000825c <__libc_init_array>:
+    825c:	b570      	push	{r4, r5, r6, lr}
+    825e:	2500      	movs	r5, #0
+    8260:	4b0e      	ldr	r3, [pc, #56]	; (829c <__libc_init_array+0x40>)
+    8262:	4c0f      	ldr	r4, [pc, #60]	; (82a0 <__libc_init_array+0x44>)
+    8264:	1ae4      	subs	r4, r4, r3
+    8266:	10a4      	asrs	r4, r4, #2
+    8268:	42a5      	cmp	r5, r4
+    826a:	d109      	bne.n	8280 <__libc_init_array+0x24>
+    826c:	2500      	movs	r5, #0
+    826e:	f000 f81d 	bl	82ac <_init>
+    8272:	4c0c      	ldr	r4, [pc, #48]	; (82a4 <__libc_init_array+0x48>)
+    8274:	4b0c      	ldr	r3, [pc, #48]	; (82a8 <__libc_init_array+0x4c>)
+    8276:	1ae4      	subs	r4, r4, r3
+    8278:	10a4      	asrs	r4, r4, #2
+    827a:	42a5      	cmp	r5, r4
+    827c:	d107      	bne.n	828e <__libc_init_array+0x32>
+    827e:	bd70      	pop	{r4, r5, r6, pc}
+    8280:	4a06      	ldr	r2, [pc, #24]	; (829c <__libc_init_array+0x40>)
+    8282:	00ab      	lsls	r3, r5, #2
+    8284:	189b      	adds	r3, r3, r2
+    8286:	681b      	ldr	r3, [r3, #0]
+    8288:	4798      	blx	r3
+    828a:	3501      	adds	r5, #1
+    828c:	e7ec      	b.n	8268 <__libc_init_array+0xc>
+    828e:	4a06      	ldr	r2, [pc, #24]	; (82a8 <__libc_init_array+0x4c>)
+    8290:	00ab      	lsls	r3, r5, #2
+    8292:	189b      	adds	r3, r3, r2
+    8294:	681b      	ldr	r3, [r3, #0]
+    8296:	4798      	blx	r3
+    8298:	3501      	adds	r5, #1
+    829a:	e7ee      	b.n	827a <__libc_init_array+0x1e>
+    829c:	000082b8 	.word	0x000082b8
+    82a0:	000082b8 	.word	0x000082b8
+    82a4:	000082bc 	.word	0x000082bc
+    82a8:	000082b8 	.word	0x000082b8
+
+000082ac <_init>:
+    82ac:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+    82ae:	46c0      	nop			; (mov r8, r8)
+    82b0:	bcf8      	pop	{r3, r4, r5, r6, r7}
+    82b2:	bc08      	pop	{r3}
+    82b4:	469e      	mov	lr, r3
+    82b6:	4770      	bx	lr
+
+000082b8 <__init_array_start>:
+    82b8:	00008121 	.word	0x00008121
+
+000082bc <_fini>:
+    82bc:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+    82be:	46c0      	nop			; (mov r8, r8)
+    82c0:	bcf8      	pop	{r3, r4, r5, r6, r7}
+    82c2:	bc08      	pop	{r3}
+    82c4:	469e      	mov	lr, r3
+    82c6:	4770      	bx	lr
+
+000082c8 <__fini_array_start>:
+    82c8:	000080f5 	.word	0x000080f5

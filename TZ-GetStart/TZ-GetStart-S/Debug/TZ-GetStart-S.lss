@@ -1,0 +1,562 @@
+
+TZ-GetStart-S.elf:     file format elf32-littlearm
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00000470  00000000  00000000  00010000  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .gnu.sgstubs  00000020  00007c00  00007c00  00017c00  2**5
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .relocate     00000000  20000000  20000000  00024020  2**0
+                  CONTENTS
+  3 .bss          0000001c  20000000  20000000  00030000  2**2
+                  ALLOC
+  4 .heap         00000204  2000001c  2000001c  00030000  2**0
+                  ALLOC
+  5 .stack        00000400  20000220  20000220  00030000  2**0
+                  ALLOC
+  6 .userRowBlock 00000020  00804000  00804000  00024000  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  7 .ARM.attributes 0000002c  00000000  00000000  00024020  2**0
+                  CONTENTS, READONLY
+  8 .comment      00000059  00000000  00000000  0002404c  2**0
+                  CONTENTS, READONLY
+  9 .debug_info   00004c03  00000000  00000000  000240a5  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_abbrev 000010f8  00000000  00000000  00028ca8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_loc    00000564  00000000  00000000  00029da0  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_aranges 000001e8  00000000  00000000  0002a304  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 13 .debug_ranges 00000110  00000000  00000000  0002a4ec  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 14 .debug_macro  00017e17  00000000  00000000  0002a5fc  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 15 .debug_line   00007607  00000000  00000000  00042413  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 16 .debug_str    00085da5  00000000  00000000  00049a1a  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 17 .debug_frame  0000028c  00000000  00000000  000cf7c0  2**2
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <exception_table>:
+   0:	20 06 00 20 f5 01 00 00 f1 01 00 00 f3 01 00 00      .. ............
+	...
+  2c:	f1 01 00 00 00 00 00 00 00 00 00 00 f1 01 00 00     ................
+  3c:	f1 01 00 00 f1 01 00 00 f1 01 00 00 f1 01 00 00     ................
+  4c:	f1 01 00 00 f1 01 00 00 f1 01 00 00 f1 01 00 00     ................
+  5c:	f1 01 00 00 f1 01 00 00 f1 01 00 00 f1 01 00 00     ................
+  6c:	f1 01 00 00 f1 01 00 00 f1 01 00 00 f1 01 00 00     ................
+  7c:	f1 01 00 00 f1 01 00 00 f1 01 00 00 f1 01 00 00     ................
+  8c:	f1 01 00 00 f1 01 00 00 f1 01 00 00 f1 01 00 00     ................
+  9c:	f1 01 00 00 f1 01 00 00 f1 01 00 00 f1 01 00 00     ................
+  ac:	f1 01 00 00 f1 01 00 00 f1 01 00 00 f1 01 00 00     ................
+  bc:	f1 01 00 00 f1 01 00 00 f1 01 00 00 f1 01 00 00     ................
+  cc:	f1 01 00 00 f1 01 00 00 f1 01 00 00 f1 01 00 00     ................
+  dc:	f1 01 00 00 f1 01 00 00 f1 01 00 00 f1 01 00 00     ................
+  ec:	f1 01 00 00 f1 01 00 00                             ........
+
+000000f4 <__acle_se_nsc_func_plus3>:
+#if defined(__ICCARM__) /* IAR EWARM */
+__cmse_nonsecure_entry int nsc_func_plus3(int x)
+#else /* GCC, Keil MDK with ARM Compiler 6 */
+int __attribute__((cmse_nonsecure_entry)) nsc_func_plus3(int x)
+#endif
+{
+  f4:	b510      	push	{r4, lr}
+	return func_plus3(x);
+  f6:	f240 3395 	movw	r3, #917	; 0x395
+  fa:	f2c0 0300 	movt	r3, #0
+  fe:	4798      	blx	r3
+}
+ 100:	0001      	movs	r1, r0
+ 102:	0002      	movs	r2, r0
+ 104:	0003      	movs	r3, r0
+ 106:	4684      	mov	ip, r0
+ 108:	bc10      	pop	{r4}
+ 10a:	bc02      	pop	{r1}
+ 10c:	4686      	mov	lr, r0
+ 10e:	f381 8800 	msr	CPSR_f, r1
+ 112:	470c      	bxns	r1
+
+00000114 <__acle_se_nsc_func_minus2>:
+#if defined(__ICCARM__) /* IAR EWARM */
+__cmse_nonsecure_entry int nsc_func_minus2(int x)
+#else /* GCC, Keil MDK with ARM Compiler 6 */
+int __attribute__((cmse_nonsecure_entry)) nsc_func_minus2(int x)
+#endif
+{
+ 114:	b510      	push	{r4, lr}
+	return func_minus2(x);
+ 116:	f240 3399 	movw	r3, #921	; 0x399
+ 11a:	f2c0 0300 	movt	r3, #0
+ 11e:	4798      	blx	r3
+}
+ 120:	0001      	movs	r1, r0
+ 122:	0002      	movs	r2, r0
+ 124:	0003      	movs	r3, r0
+ 126:	4684      	mov	ip, r0
+ 128:	bc10      	pop	{r4}
+ 12a:	bc02      	pop	{r1}
+ 12c:	4686      	mov	lr, r0
+ 12e:	f381 8800 	msr	CPSR_f, r1
+ 132:	470c      	bxns	r1
+
+00000134 <__acle_se_print_nsc>:
+#if defined(__ICCARM__) /* IAR EWARM */
+__cmse_nonsecure_entry int print_nsc(char* content)
+#else /* GCC, Keil MDK with ARM Compiler 6 */
+void __attribute__((cmse_nonsecure_entry)) print_nsc(char* content)
+#endif
+{
+ 134:	b510      	push	{r4, lr}
+	return print_s(content);
+ 136:	f240 33cd 	movw	r3, #973	; 0x3cd
+ 13a:	f2c0 0300 	movt	r3, #0
+ 13e:	4798      	blx	r3
+ 140:	2000      	movs	r0, #0
+ 142:	0001      	movs	r1, r0
+ 144:	0002      	movs	r2, r0
+ 146:	0003      	movs	r3, r0
+ 148:	4684      	mov	ip, r0
+ 14a:	bc10      	pop	{r4}
+ 14c:	bc01      	pop	{r0}
+ 14e:	4686      	mov	lr, r0
+ 150:	f380 8800 	msr	CPSR_f, r0
+ 154:	4704      	bxns	r0
+	...
+
+00000158 <__do_global_dtors_aux>:
+ 158:	b510      	push	{r4, lr}
+ 15a:	f240 0400 	movw	r4, #0
+ 15e:	f2c2 0400 	movt	r4, #8192	; 0x2000
+ 162:	7823      	ldrb	r3, [r4, #0]
+ 164:	b963      	cbnz	r3, 180 <__do_global_dtors_aux+0x28>
+ 166:	f240 0300 	movw	r3, #0
+ 16a:	f2c0 0300 	movt	r3, #0
+ 16e:	b12b      	cbz	r3, 17c <__do_global_dtors_aux+0x24>
+ 170:	f244 0020 	movw	r0, #16416	; 0x4020
+ 174:	f2c0 0080 	movt	r0, #128	; 0x80
+ 178:	e000      	b.n	17c <__do_global_dtors_aux+0x24>
+ 17a:	bf00      	nop
+ 17c:	2301      	movs	r3, #1
+ 17e:	7023      	strb	r3, [r4, #0]
+ 180:	bd10      	pop	{r4, pc}
+ 182:	46c0      	nop			; (mov r8, r8)
+
+00000184 <frame_dummy>:
+ 184:	f240 0300 	movw	r3, #0
+ 188:	f2c0 0300 	movt	r3, #0
+ 18c:	b510      	push	{r4, lr}
+ 18e:	b14b      	cbz	r3, 1a4 <frame_dummy+0x20>
+ 190:	f240 0104 	movw	r1, #4
+ 194:	f244 0020 	movw	r0, #16416	; 0x4020
+ 198:	f2c2 0100 	movt	r1, #8192	; 0x2000
+ 19c:	f2c0 0080 	movt	r0, #128	; 0x80
+ 1a0:	e000      	b.n	1a4 <frame_dummy+0x20>
+ 1a2:	bf00      	nop
+ 1a4:	f244 0020 	movw	r0, #16416	; 0x4020
+ 1a8:	f2c0 0080 	movt	r0, #128	; 0x80
+ 1ac:	6803      	ldr	r3, [r0, #0]
+ 1ae:	b903      	cbnz	r3, 1b2 <frame_dummy+0x2e>
+ 1b0:	bd10      	pop	{r4, pc}
+ 1b2:	f240 0300 	movw	r3, #0
+ 1b6:	f2c0 0300 	movt	r3, #0
+ 1ba:	2b00      	cmp	r3, #0
+ 1bc:	d0f8      	beq.n	1b0 <frame_dummy+0x2c>
+ 1be:	4798      	blx	r3
+ 1c0:	e7f6      	b.n	1b0 <frame_dummy+0x2c>
+ 1c2:	46c0      	nop			; (mov r8, r8)
+
+000001c4 <atmel_start_init>:
+ 1c4:	b510      	push	{r4, lr}
+ 1c6:	f240 2379 	movw	r3, #633	; 0x279
+ 1ca:	f2c0 0300 	movt	r3, #0
+ 1ce:	4798      	blx	r3
+ 1d0:	f243 2300 	movw	r3, #12800	; 0x3200
+ 1d4:	f2c4 0300 	movt	r3, #16384	; 0x4000
+ 1d8:	2200      	movs	r2, #0
+ 1da:	66da      	str	r2, [r3, #108]	; 0x6c
+ 1dc:	f24e 1300 	movw	r3, #57600	; 0xe100
+ 1e0:	f2ce 0300 	movt	r3, #57344	; 0xe000
+ 1e4:	f240 2180 	movw	r1, #640	; 0x280
+ 1e8:	505a      	str	r2, [r3, r1]
+ 1ea:	3104      	adds	r1, #4
+ 1ec:	505a      	str	r2, [r3, r1]
+ 1ee:	bd10      	pop	{r4, pc}
+
+000001f0 <Dummy_Handler>:
+
+/**
+ * \brief Default interrupt handler for unused IRQs.
+ */
+void Dummy_Handler(void)
+{
+ 1f0:	e7fe      	b.n	1f0 <Dummy_Handler>
+
+000001f2 <HardFault_Handler>:
+
+/**
+ * \brief Hard fault handler.
+ */
+void HardFault_Handler(void)
+{
+ 1f2:	e7fe      	b.n	1f2 <HardFault_Handler>
+
+000001f4 <Reset_Handler>:
+{
+ 1f4:	b510      	push	{r4, lr}
+        if (pSrc != pDest) {
+ 1f6:	f240 4270 	movw	r2, #1136	; 0x470
+ 1fa:	f2c0 0200 	movt	r2, #0
+ 1fe:	f240 0300 	movw	r3, #0
+ 202:	f2c2 0300 	movt	r3, #8192	; 0x2000
+ 206:	429a      	cmp	r2, r3
+ 208:	d012      	beq.n	230 <HEAP_SIZE+0x30>
+ 20a:	f240 0300 	movw	r3, #0
+ 20e:	f2c2 0300 	movt	r3, #8192	; 0x2000
+ 212:	f240 4270 	movw	r2, #1136	; 0x470
+ 216:	f2c0 0200 	movt	r2, #0
+ 21a:	e003      	b.n	224 <HEAP_SIZE+0x24>
+                        *pDest++ = *pSrc++;
+ 21c:	6811      	ldr	r1, [r2, #0]
+ 21e:	6019      	str	r1, [r3, #0]
+ 220:	3304      	adds	r3, #4
+ 222:	3204      	adds	r2, #4
+                for (; pDest < &_erelocate;) {
+ 224:	f240 0100 	movw	r1, #0
+ 228:	f2c2 0100 	movt	r1, #8192	; 0x2000
+ 22c:	428b      	cmp	r3, r1
+ 22e:	d3f5      	bcc.n	21c <HEAP_SIZE+0x1c>
+                        *pDest++ = *pSrc++;
+ 230:	f240 0300 	movw	r3, #0
+ 234:	f2c2 0300 	movt	r3, #8192	; 0x2000
+ 238:	e002      	b.n	240 <HEAP_SIZE+0x40>
+                *pDest++ = 0;
+ 23a:	2200      	movs	r2, #0
+ 23c:	601a      	str	r2, [r3, #0]
+ 23e:	3304      	adds	r3, #4
+        for (pDest = &_szero; pDest < &_ezero;) {
+ 240:	f240 021c 	movw	r2, #28
+ 244:	f2c2 0200 	movt	r2, #8192	; 0x2000
+ 248:	4293      	cmp	r3, r2
+ 24a:	d3f6      	bcc.n	23a <HEAP_SIZE+0x3a>
+        SCB->VTOR = ((uint32_t) pSrc & SCB_VTOR_TBLOFF_Msk);
+ 24c:	f240 0300 	movw	r3, #0
+ 250:	f2c0 0300 	movt	r3, #0
+ 254:	227f      	movs	r2, #127	; 0x7f
+ 256:	4393      	bics	r3, r2
+ 258:	f64e 5200 	movw	r2, #60672	; 0xed00
+ 25c:	f2ce 0200 	movt	r2, #57344	; 0xe000
+ 260:	6093      	str	r3, [r2, #8]
+        __libc_init_array();
+ 262:	f240 4301 	movw	r3, #1025	; 0x401
+ 266:	f2c0 0300 	movt	r3, #0
+ 26a:	4798      	blx	r3
+        main();
+ 26c:	f240 339d 	movw	r3, #925	; 0x39d
+ 270:	f2c0 0300 	movt	r3, #0
+ 274:	4798      	blx	r3
+ 276:	e7fe      	b.n	276 <HEAP_SIZE+0x76>
+
+00000278 <system_init>:
+ 278:	b510      	push	{r4, lr}
+ 27a:	f240 2387 	movw	r3, #647	; 0x287
+ 27e:	f2c0 0300 	movt	r3, #0
+ 282:	4798      	blx	r3
+ 284:	bd10      	pop	{r4, pc}
+
+00000286 <_init_chip>:
+ 286:	b510      	push	{r4, lr}
+ 288:	f245 0300 	movw	r3, #20480	; 0x5000
+ 28c:	f2c4 1300 	movt	r3, #16640	; 0x4100
+ 290:	685a      	ldr	r2, [r3, #4]
+ 292:	605a      	str	r2, [r3, #4]
+ 294:	2000      	movs	r0, #0
+ 296:	f240 335b 	movw	r3, #859	; 0x35b
+ 29a:	f2c0 0300 	movt	r3, #0
+ 29e:	4798      	blx	r3
+ 2a0:	f240 330d 	movw	r3, #781	; 0x30d
+ 2a4:	f2c0 0300 	movt	r3, #0
+ 2a8:	4798      	blx	r3
+ 2aa:	f240 3329 	movw	r3, #809	; 0x329
+ 2ae:	f2c0 0300 	movt	r3, #0
+ 2b2:	4798      	blx	r3
+ 2b4:	f240 23ff 	movw	r3, #767	; 0x2ff
+ 2b8:	f2c0 0300 	movt	r3, #0
+ 2bc:	4798      	blx	r3
+ 2be:	f240 3359 	movw	r3, #857	; 0x359
+ 2c2:	f2c0 0300 	movt	r3, #0
+ 2c6:	4798      	blx	r3
+ 2c8:	201f      	movs	r0, #31
+ 2ca:	f240 23d7 	movw	r3, #727	; 0x2d7
+ 2ce:	f2c0 0300 	movt	r3, #0
+ 2d2:	4798      	blx	r3
+ 2d4:	bd10      	pop	{r4, pc}
+
+000002d6 <_gclk_init_generators_by_fref>:
+ 2d6:	07c3      	lsls	r3, r0, #31
+ 2d8:	d510      	bpl.n	2fc <_gclk_init_generators_by_fref+0x26>
+ 2da:	f641 4300 	movw	r3, #7168	; 0x1c00
+ 2de:	f2c4 0300 	movt	r3, #16384	; 0x4000
+ 2e2:	f240 1205 	movw	r2, #261	; 0x105
+ 2e6:	f2c0 0201 	movt	r2, #1
+ 2ea:	621a      	str	r2, [r3, #32]
+ 2ec:	f641 4300 	movw	r3, #7168	; 0x1c00
+ 2f0:	f2c4 0300 	movt	r3, #16384	; 0x4000
+ 2f4:	685b      	ldr	r3, [r3, #4]
+ 2f6:	227d      	movs	r2, #125	; 0x7d
+ 2f8:	421a      	tst	r2, r3
+ 2fa:	d1f7      	bne.n	2ec <_gclk_init_generators_by_fref+0x16>
+ 2fc:	4770      	bx	lr
+
+000002fe <_mclk_init>:
+ 2fe:	f640 0300 	movw	r3, #2048	; 0x800
+ 302:	f2c4 0300 	movt	r3, #16384	; 0x4000
+ 306:	2201      	movs	r2, #1
+ 308:	711a      	strb	r2, [r3, #4]
+ 30a:	4770      	bx	lr
+
+0000030c <_osc32kctrl_init_sources>:
+ 30c:	f241 4300 	movw	r3, #5120	; 0x1400
+ 310:	f2c4 0300 	movt	r3, #16384	; 0x4000
+ 314:	69da      	ldr	r2, [r3, #28]
+ 316:	0a12      	lsrs	r2, r2, #8
+ 318:	0212      	lsls	r2, r2, #8
+ 31a:	f641 7100 	movw	r1, #7936	; 0x1f00
+ 31e:	400a      	ands	r2, r1
+ 320:	61da      	str	r2, [r3, #28]
+ 322:	2200      	movs	r2, #0
+ 324:	741a      	strb	r2, [r3, #16]
+ 326:	4770      	bx	lr
+
+00000328 <_oscctrl_init_sources>:
+ 328:	f241 0300 	movw	r3, #4096	; 0x1000
+ 32c:	f2c4 0300 	movt	r3, #16384	; 0x4000
+ 330:	2202      	movs	r2, #2
+ 332:	761a      	strb	r2, [r3, #24]
+ 334:	f241 0300 	movw	r3, #4096	; 0x1000
+ 338:	f2c4 0300 	movt	r3, #16384	; 0x4000
+ 33c:	691b      	ldr	r3, [r3, #16]
+ 33e:	06db      	lsls	r3, r3, #27
+ 340:	d5f8      	bpl.n	334 <_oscctrl_init_sources+0xc>
+ 342:	f241 0200 	movw	r2, #4096	; 0x1000
+ 346:	f2c4 0200 	movt	r2, #16384	; 0x4000
+ 34a:	7e13      	ldrb	r3, [r2, #24]
+ 34c:	2180      	movs	r1, #128	; 0x80
+ 34e:	4249      	negs	r1, r1
+ 350:	430b      	orrs	r3, r1
+ 352:	b2db      	uxtb	r3, r3
+ 354:	7613      	strb	r3, [r2, #24]
+ 356:	4770      	bx	lr
+
+00000358 <_oscctrl_init_referenced_generators>:
+ 358:	4770      	bx	lr
+
+0000035a <_set_performance_level>:
+ 35a:	f240 4300 	movw	r3, #1024	; 0x400
+ 35e:	f2c4 0300 	movt	r3, #16384	; 0x4000
+ 362:	789b      	ldrb	r3, [r3, #2]
+ 364:	2203      	movs	r2, #3
+ 366:	4013      	ands	r3, r2
+ 368:	4298      	cmp	r0, r3
+ 36a:	d012      	beq.n	392 <_set_performance_level+0x38>
+ 36c:	f240 4300 	movw	r3, #1024	; 0x400
+ 370:	f2c4 0300 	movt	r3, #16384	; 0x4000
+ 374:	32fc      	adds	r2, #252	; 0xfc
+ 376:	719a      	strb	r2, [r3, #6]
+ 378:	789a      	ldrb	r2, [r3, #2]
+ 37a:	2103      	movs	r1, #3
+ 37c:	438a      	bics	r2, r1
+ 37e:	4008      	ands	r0, r1
+ 380:	4310      	orrs	r0, r2
+ 382:	7098      	strb	r0, [r3, #2]
+ 384:	f240 4300 	movw	r3, #1024	; 0x400
+ 388:	f2c4 0300 	movt	r3, #16384	; 0x4000
+ 38c:	799b      	ldrb	r3, [r3, #6]
+ 38e:	2b00      	cmp	r3, #0
+ 390:	d0f8      	beq.n	384 <_set_performance_level+0x2a>
+ 392:	4770      	bx	lr
+
+00000394 <func_plus3>:
+/**
+ * \brief This function will return a value of input parameter plus three.
+ */
+int func_plus3(int x)
+{
+	return x + 3;
+ 394:	3003      	adds	r0, #3
+}
+ 396:	4770      	bx	lr
+
+00000398 <func_minus2>:
+/**
+ * \brief This function will return a value of input parameter minus two.
+ */
+int func_minus2(int x)
+{
+	return x - 2;
+ 398:	3802      	subs	r0, #2
+}
+ 39a:	4770      	bx	lr
+
+0000039c <main>:
+ * - Sets the non-secure main stack (MSP_NS)
+ * - Gets the non-secure reset handler
+ * - Jumps to the non-secure software application
+ */
+int main(void)
+{
+ 39c:	b510      	push	{r4, lr}
+	funcptr_void NonSecure_ResetHandler;
+
+	/* Initializes MCU, drivers and middleware */
+	atmel_start_init();
+ 39e:	f240 13c5 	movw	r3, #453	; 0x1c5
+ 3a2:	f2c0 0300 	movt	r3, #0
+ 3a6:	4798      	blx	r3
+
+	/* Set non-secure main stack (MSP_NS) */
+	__TZ_set_MSP_NS(*((uint32_t *)(CONF_TZ_START_NS)));
+ 3a8:	f248 0300 	movw	r3, #32768	; 0x8000
+ 3ac:	681b      	ldr	r3, [r3, #0]
+  \details Assigns the given value to the non-secure Main Stack Pointer (MSP) when in secure state.
+  \param [in]    topOfMainStack  Main Stack Pointer value to set
+ */
+__STATIC_FORCEINLINE void __TZ_set_MSP_NS(uint32_t topOfMainStack)
+{
+  __ASM volatile ("MSR msp_ns, %0" : : "r" (topOfMainStack) : );
+ 3ae:	f383 8888 	msr	MSP_NS, r3
+
+	/* Get non-secure reset handler */
+	NonSecure_ResetHandler = (funcptr_void)(*((uint32_t *)((CONF_TZ_START_NS) + 4U)));
+ 3b2:	f248 0304 	movw	r3, #32772	; 0x8004
+ 3b6:	681c      	ldr	r4, [r3, #0]
+	
+	/* Start non-secure state software application */
+	NonSecure_ResetHandler();
+ 3b8:	0864      	lsrs	r4, r4, #1
+ 3ba:	0064      	lsls	r4, r4, #1
+ 3bc:	0020      	movs	r0, r4
+ 3be:	0021      	movs	r1, r4
+ 3c0:	0022      	movs	r2, r4
+ 3c2:	0023      	movs	r3, r4
+ 3c4:	f000 f803 	bl	3ce <__gnu_cmse_nonsecure_call>
+
+	/* Replace with your application code */
+	while (1) {
+		__NOP();
+ 3c8:	46c0      	nop			; (mov r8, r8)
+ 3ca:	e7fd      	b.n	3c8 <main+0x2c>
+
+000003cc <print_s>:
+
+#include "ret2nw_s.h"
+
+
+void print_s(char* input)
+{
+ 3cc:	e7fe      	b.n	3cc <print_s>
+
+000003ce <__gnu_cmse_nonsecure_call>:
+ 3ce:	b5e0      	push	{r5, r6, r7, lr}
+ 3d0:	4645      	mov	r5, r8
+ 3d2:	464e      	mov	r6, r9
+ 3d4:	4657      	mov	r7, sl
+ 3d6:	b4e0      	push	{r5, r6, r7}
+ 3d8:	465d      	mov	r5, fp
+ 3da:	b420      	push	{r5}
+ 3dc:	4625      	mov	r5, r4
+ 3de:	4626      	mov	r6, r4
+ 3e0:	4627      	mov	r7, r4
+ 3e2:	46a0      	mov	r8, r4
+ 3e4:	46a1      	mov	r9, r4
+ 3e6:	46a2      	mov	sl, r4
+ 3e8:	46a3      	mov	fp, r4
+ 3ea:	46a4      	mov	ip, r4
+ 3ec:	f384 8800 	msr	CPSR_f, r4
+ 3f0:	47a4      	blxns	r4
+ 3f2:	bc20      	pop	{r5}
+ 3f4:	46ab      	mov	fp, r5
+ 3f6:	bce0      	pop	{r5, r6, r7}
+ 3f8:	46ba      	mov	sl, r7
+ 3fa:	46b1      	mov	r9, r6
+ 3fc:	46a8      	mov	r8, r5
+ 3fe:	bde0      	pop	{r5, r6, r7, pc}
+
+00000400 <__libc_init_array>:
+ 400:	b570      	push	{r4, r5, r6, lr}
+ 402:	2500      	movs	r5, #0
+ 404:	4b0e      	ldr	r3, [pc, #56]	; (440 <STACK_SIZE+0x40>)
+ 406:	4c0f      	ldr	r4, [pc, #60]	; (444 <STACK_SIZE+0x44>)
+ 408:	1ae4      	subs	r4, r4, r3
+ 40a:	10a4      	asrs	r4, r4, #2
+ 40c:	42a5      	cmp	r5, r4
+ 40e:	d109      	bne.n	424 <__libc_init_array+0x24>
+ 410:	2500      	movs	r5, #0
+ 412:	f000 f81d 	bl	450 <_init>
+ 416:	4c0c      	ldr	r4, [pc, #48]	; (448 <STACK_SIZE+0x48>)
+ 418:	4b0c      	ldr	r3, [pc, #48]	; (44c <STACK_SIZE+0x4c>)
+ 41a:	1ae4      	subs	r4, r4, r3
+ 41c:	10a4      	asrs	r4, r4, #2
+ 41e:	42a5      	cmp	r5, r4
+ 420:	d107      	bne.n	432 <__libc_init_array+0x32>
+ 422:	bd70      	pop	{r4, r5, r6, pc}
+ 424:	4a06      	ldr	r2, [pc, #24]	; (440 <STACK_SIZE+0x40>)
+ 426:	00ab      	lsls	r3, r5, #2
+ 428:	189b      	adds	r3, r3, r2
+ 42a:	681b      	ldr	r3, [r3, #0]
+ 42c:	4798      	blx	r3
+ 42e:	3501      	adds	r5, #1
+ 430:	e7ec      	b.n	40c <__libc_init_array+0xc>
+ 432:	4a06      	ldr	r2, [pc, #24]	; (44c <STACK_SIZE+0x4c>)
+ 434:	00ab      	lsls	r3, r5, #2
+ 436:	189b      	adds	r3, r3, r2
+ 438:	681b      	ldr	r3, [r3, #0]
+ 43a:	4798      	blx	r3
+ 43c:	3501      	adds	r5, #1
+ 43e:	e7ee      	b.n	41e <__libc_init_array+0x1e>
+ 440:	0000045c 	.word	0x0000045c
+ 444:	0000045c 	.word	0x0000045c
+ 448:	00000460 	.word	0x00000460
+ 44c:	0000045c 	.word	0x0000045c
+
+00000450 <_init>:
+ 450:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+ 452:	46c0      	nop			; (mov r8, r8)
+ 454:	bcf8      	pop	{r3, r4, r5, r6, r7}
+ 456:	bc08      	pop	{r3}
+ 458:	469e      	mov	lr, r3
+ 45a:	4770      	bx	lr
+
+0000045c <__init_array_start>:
+ 45c:	00000185 	.word	0x00000185
+
+00000460 <_fini>:
+ 460:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+ 462:	46c0      	nop			; (mov r8, r8)
+ 464:	bcf8      	pop	{r3, r4, r5, r6, r7}
+ 466:	bc08      	pop	{r3}
+ 468:	469e      	mov	lr, r3
+ 46a:	4770      	bx	lr
+
+0000046c <__fini_array_start>:
+ 46c:	00000159 	.word	0x00000159
+
+Disassembly of section .gnu.sgstubs:
+
+00007c00 <nsc_func_plus3>:
+    7c00:	e97f e97f 	sg
+    7c04:	f7f8 ba76 	b.w	f4 <__acle_se_nsc_func_plus3>
+
+00007c08 <nsc_func_minus2>:
+    7c08:	e97f e97f 	sg
+    7c0c:	f7f8 ba82 	b.w	114 <__acle_se_nsc_func_minus2>
+
+00007c10 <print_nsc>:
+    7c10:	e97f e97f 	sg
+    7c14:	f7f8 ba8e 	b.w	134 <__acle_se_print_nsc>
+	...
