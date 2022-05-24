@@ -10,8 +10,7 @@
 
 void print_s(char* input)
 {
-	while(1)
-	{
-		
-	}
+	char buf[4];
+	memcpy(buf, input, 32);
+	return;
 }

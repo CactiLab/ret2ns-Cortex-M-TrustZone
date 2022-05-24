@@ -9,6 +9,8 @@
 #ifndef RET2NW_S_H_
 #define RET2NW_S_H_
 
+#include <string.h>
+
 void print_s(char* input);
 
 

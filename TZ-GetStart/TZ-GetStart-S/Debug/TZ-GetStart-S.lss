@@ -3,7 +3,7 @@ TZ-GetStart-S.elf:     file format elf32-littlearm
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .text         00000850  00000000  00000000  00010000  2**2
+  0 .text         0000087c  00000000  00000000  00010000  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
   1 .gnu.sgstubs  00000020  00007c00  00007c00  00017c00  2**5
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
@@ -21,23 +21,23 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY
   8 .comment      00000059  00000000  00000000  0002404c  2**0
                   CONTENTS, READONLY
-  9 .debug_info   00004af8  00000000  00000000  000240a5  2**0
+  9 .debug_info   00005d67  00000000  00000000  000240a5  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_abbrev 0000102e  00000000  00000000  00028b9d  2**0
+ 10 .debug_abbrev 000012b5  00000000  00000000  00029e0c  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    00000854  00000000  00000000  00029bcb  2**0
+ 11 .debug_loc    00000854  00000000  00000000  0002b0c1  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_aranges 00000278  00000000  00000000  0002a41f  2**0
+ 12 .debug_aranges 00000278  00000000  00000000  0002b915  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_ranges 000001a0  00000000  00000000  0002a697  2**0
+ 13 .debug_ranges 000001a0  00000000  00000000  0002bb8d  2**0
                   CONTENTS, READONLY, DEBUGGING
- 14 .debug_macro  00017e17  00000000  00000000  0002a837  2**0
+ 14 .debug_macro  00017fb0  00000000  00000000  0002bd2d  2**0
                   CONTENTS, READONLY, DEBUGGING
- 15 .debug_line   000076f5  00000000  00000000  0004264e  2**0
+ 15 .debug_line   000079ee  00000000  00000000  00043cdd  2**0
                   CONTENTS, READONLY, DEBUGGING
- 16 .debug_str    00085d66  00000000  00000000  00049d43  2**0
+ 16 .debug_str    000889da  00000000  00000000  0004b6cb  2**0
                   CONTENTS, READONLY, DEBUGGING
- 17 .debug_frame  000005c8  00000000  00000000  000cfaac  2**2
+ 17 .debug_frame  000005f0  00000000  00000000  000d40a8  2**2
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -265,7 +265,7 @@ void Reset_Handler(void)
 
         /* Initialize the relocate segment */
         pSrc = &_etext;
- 24e:	f640 0350 	movw	r3, #2128	; 0x850
+ 24e:	f640 037c 	movw	r3, #2172	; 0x87c
  252:	f2c0 0300 	movt	r3, #0
  256:	607b      	str	r3, [r7, #4]
         pDest = &_srelocate;
@@ -333,7 +333,7 @@ void Reset_Handler(void)
 
         /* Initialize the C library */
         __libc_init_array();
- 2c8:	f240 73e1 	movw	r3, #2017	; 0x7e1
+ 2c8:	f240 73f9 	movw	r3, #2041	; 0x7f9
  2cc:	f2c0 0300 	movt	r3, #0
  2d0:	4798      	blx	r3
 
@@ -1276,7 +1276,7 @@ __STATIC_FORCEINLINE void __TZ_set_MSP_NS(uint32_t topOfMainStack)
  794:	0021      	movs	r1, r4
  796:	0022      	movs	r2, r4
  798:	0023      	movs	r3, r4
- 79a:	f000 f807 	bl	7ac <__gnu_cmse_nonsecure_call>
+ 79a:	f000 f814 	bl	7c6 <__gnu_cmse_nonsecure_call>
 
 	/* Replace with your application code */
 	while (1) {
@@ -1292,97 +1292,121 @@ __STATIC_FORCEINLINE void __TZ_set_MSP_NS(uint32_t topOfMainStack)
 void print_s(char* input)
 {
  7a2:	b580      	push	{r7, lr}
- 7a4:	b082      	sub	sp, #8
+ 7a4:	b084      	sub	sp, #16
  7a6:	af00      	add	r7, sp, #0
  7a8:	6078      	str	r0, [r7, #4]
-	while(1)
- 7aa:	e7fe      	b.n	7aa <print_s+0x8>
+	char buf[4];
+	memcpy(buf, input, 32);
+ 7aa:	6879      	ldr	r1, [r7, #4]
+ 7ac:	230c      	movs	r3, #12
+ 7ae:	18fb      	adds	r3, r7, r3
+ 7b0:	2220      	movs	r2, #32
+ 7b2:	0018      	movs	r0, r3
+ 7b4:	f640 0349 	movw	r3, #2121	; 0x849
+ 7b8:	f2c0 0300 	movt	r3, #0
+ 7bc:	4798      	blx	r3
+	return;
+ 7be:	46c0      	nop			; (mov r8, r8)
+ 7c0:	46bd      	mov	sp, r7
+ 7c2:	b004      	add	sp, #16
+ 7c4:	bd80      	pop	{r7, pc}
 
-000007ac <__gnu_cmse_nonsecure_call>:
- 7ac:	b5e0      	push	{r5, r6, r7, lr}
- 7ae:	4645      	mov	r5, r8
- 7b0:	464e      	mov	r6, r9
- 7b2:	4657      	mov	r7, sl
- 7b4:	b4e0      	push	{r5, r6, r7}
- 7b6:	465d      	mov	r5, fp
- 7b8:	b420      	push	{r5}
- 7ba:	4625      	mov	r5, r4
- 7bc:	4626      	mov	r6, r4
- 7be:	4627      	mov	r7, r4
- 7c0:	46a0      	mov	r8, r4
- 7c2:	46a1      	mov	r9, r4
- 7c4:	46a2      	mov	sl, r4
- 7c6:	46a3      	mov	fp, r4
- 7c8:	46a4      	mov	ip, r4
- 7ca:	f384 8800 	msr	CPSR_f, r4
- 7ce:	47a4      	blxns	r4
- 7d0:	bc20      	pop	{r5}
- 7d2:	46ab      	mov	fp, r5
- 7d4:	bce0      	pop	{r5, r6, r7}
- 7d6:	46ba      	mov	sl, r7
- 7d8:	46b1      	mov	r9, r6
- 7da:	46a8      	mov	r8, r5
- 7dc:	bde0      	pop	{r5, r6, r7, pc}
+000007c6 <__gnu_cmse_nonsecure_call>:
+ 7c6:	b5e0      	push	{r5, r6, r7, lr}
+ 7c8:	4645      	mov	r5, r8
+ 7ca:	464e      	mov	r6, r9
+ 7cc:	4657      	mov	r7, sl
+ 7ce:	b4e0      	push	{r5, r6, r7}
+ 7d0:	465d      	mov	r5, fp
+ 7d2:	b420      	push	{r5}
+ 7d4:	4625      	mov	r5, r4
+ 7d6:	4626      	mov	r6, r4
+ 7d8:	4627      	mov	r7, r4
+ 7da:	46a0      	mov	r8, r4
+ 7dc:	46a1      	mov	r9, r4
+ 7de:	46a2      	mov	sl, r4
+ 7e0:	46a3      	mov	fp, r4
+ 7e2:	46a4      	mov	ip, r4
+ 7e4:	f384 8800 	msr	CPSR_f, r4
+ 7e8:	47a4      	blxns	r4
+ 7ea:	bc20      	pop	{r5}
+ 7ec:	46ab      	mov	fp, r5
+ 7ee:	bce0      	pop	{r5, r6, r7}
+ 7f0:	46ba      	mov	sl, r7
+ 7f2:	46b1      	mov	r9, r6
+ 7f4:	46a8      	mov	r8, r5
+ 7f6:	bde0      	pop	{r5, r6, r7, pc}
+
+000007f8 <__libc_init_array>:
+ 7f8:	b570      	push	{r4, r5, r6, lr}
+ 7fa:	2500      	movs	r5, #0
+ 7fc:	4b0e      	ldr	r3, [pc, #56]	; (838 <__libc_init_array+0x40>)
+ 7fe:	4c0f      	ldr	r4, [pc, #60]	; (83c <__libc_init_array+0x44>)
+ 800:	1ae4      	subs	r4, r4, r3
+ 802:	10a4      	asrs	r4, r4, #2
+ 804:	42a5      	cmp	r5, r4
+ 806:	d109      	bne.n	81c <__libc_init_array+0x24>
+ 808:	2500      	movs	r5, #0
+ 80a:	f000 f827 	bl	85c <_init>
+ 80e:	4c0c      	ldr	r4, [pc, #48]	; (840 <__libc_init_array+0x48>)
+ 810:	4b0c      	ldr	r3, [pc, #48]	; (844 <__libc_init_array+0x4c>)
+ 812:	1ae4      	subs	r4, r4, r3
+ 814:	10a4      	asrs	r4, r4, #2
+ 816:	42a5      	cmp	r5, r4
+ 818:	d107      	bne.n	82a <__libc_init_array+0x32>
+ 81a:	bd70      	pop	{r4, r5, r6, pc}
+ 81c:	4a06      	ldr	r2, [pc, #24]	; (838 <__libc_init_array+0x40>)
+ 81e:	00ab      	lsls	r3, r5, #2
+ 820:	189b      	adds	r3, r3, r2
+ 822:	681b      	ldr	r3, [r3, #0]
+ 824:	4798      	blx	r3
+ 826:	3501      	adds	r5, #1
+ 828:	e7ec      	b.n	804 <__libc_init_array+0xc>
+ 82a:	4a06      	ldr	r2, [pc, #24]	; (844 <__libc_init_array+0x4c>)
+ 82c:	00ab      	lsls	r3, r5, #2
+ 82e:	189b      	adds	r3, r3, r2
+ 830:	681b      	ldr	r3, [r3, #0]
+ 832:	4798      	blx	r3
+ 834:	3501      	adds	r5, #1
+ 836:	e7ee      	b.n	816 <__libc_init_array+0x1e>
+ 838:	00000868 	.word	0x00000868
+ 83c:	00000868 	.word	0x00000868
+ 840:	0000086c 	.word	0x0000086c
+ 844:	00000868 	.word	0x00000868
+
+00000848 <memcpy>:
+ 848:	2300      	movs	r3, #0
+ 84a:	b510      	push	{r4, lr}
+ 84c:	429a      	cmp	r2, r3
+ 84e:	d100      	bne.n	852 <memcpy+0xa>
+ 850:	bd10      	pop	{r4, pc}
+ 852:	5ccc      	ldrb	r4, [r1, r3]
+ 854:	54c4      	strb	r4, [r0, r3]
+ 856:	3301      	adds	r3, #1
+ 858:	e7f8      	b.n	84c <memcpy+0x4>
 	...
 
-000007e0 <__libc_init_array>:
- 7e0:	b570      	push	{r4, r5, r6, lr}
- 7e2:	2500      	movs	r5, #0
- 7e4:	4b0e      	ldr	r3, [pc, #56]	; (820 <__libc_init_array+0x40>)
- 7e6:	4c0f      	ldr	r4, [pc, #60]	; (824 <__libc_init_array+0x44>)
- 7e8:	1ae4      	subs	r4, r4, r3
- 7ea:	10a4      	asrs	r4, r4, #2
- 7ec:	42a5      	cmp	r5, r4
- 7ee:	d109      	bne.n	804 <__libc_init_array+0x24>
- 7f0:	2500      	movs	r5, #0
- 7f2:	f000 f81d 	bl	830 <_init>
- 7f6:	4c0c      	ldr	r4, [pc, #48]	; (828 <__libc_init_array+0x48>)
- 7f8:	4b0c      	ldr	r3, [pc, #48]	; (82c <__libc_init_array+0x4c>)
- 7fa:	1ae4      	subs	r4, r4, r3
- 7fc:	10a4      	asrs	r4, r4, #2
- 7fe:	42a5      	cmp	r5, r4
- 800:	d107      	bne.n	812 <__libc_init_array+0x32>
- 802:	bd70      	pop	{r4, r5, r6, pc}
- 804:	4a06      	ldr	r2, [pc, #24]	; (820 <__libc_init_array+0x40>)
- 806:	00ab      	lsls	r3, r5, #2
- 808:	189b      	adds	r3, r3, r2
- 80a:	681b      	ldr	r3, [r3, #0]
- 80c:	4798      	blx	r3
- 80e:	3501      	adds	r5, #1
- 810:	e7ec      	b.n	7ec <__libc_init_array+0xc>
- 812:	4a06      	ldr	r2, [pc, #24]	; (82c <__libc_init_array+0x4c>)
- 814:	00ab      	lsls	r3, r5, #2
- 816:	189b      	adds	r3, r3, r2
- 818:	681b      	ldr	r3, [r3, #0]
- 81a:	4798      	blx	r3
- 81c:	3501      	adds	r5, #1
- 81e:	e7ee      	b.n	7fe <__libc_init_array+0x1e>
- 820:	0000083c 	.word	0x0000083c
- 824:	0000083c 	.word	0x0000083c
- 828:	00000840 	.word	0x00000840
- 82c:	0000083c 	.word	0x0000083c
+0000085c <_init>:
+ 85c:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+ 85e:	46c0      	nop			; (mov r8, r8)
+ 860:	bcf8      	pop	{r3, r4, r5, r6, r7}
+ 862:	bc08      	pop	{r3}
+ 864:	469e      	mov	lr, r3
+ 866:	4770      	bx	lr
 
-00000830 <_init>:
- 830:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
- 832:	46c0      	nop			; (mov r8, r8)
- 834:	bcf8      	pop	{r3, r4, r5, r6, r7}
- 836:	bc08      	pop	{r3}
- 838:	469e      	mov	lr, r3
- 83a:	4770      	bx	lr
+00000868 <__init_array_start>:
+ 868:	000001b5 	.word	0x000001b5
 
-0000083c <__init_array_start>:
- 83c:	000001b5 	.word	0x000001b5
+0000086c <_fini>:
+ 86c:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+ 86e:	46c0      	nop			; (mov r8, r8)
+ 870:	bcf8      	pop	{r3, r4, r5, r6, r7}
+ 872:	bc08      	pop	{r3}
+ 874:	469e      	mov	lr, r3
+ 876:	4770      	bx	lr
 
-00000840 <_fini>:
- 840:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
- 842:	46c0      	nop			; (mov r8, r8)
- 844:	bcf8      	pop	{r3, r4, r5, r6, r7}
- 846:	bc08      	pop	{r3}
- 848:	469e      	mov	lr, r3
- 84a:	4770      	bx	lr
-
-0000084c <__fini_array_start>:
- 84c:	00000189 	.word	0x00000189
+00000878 <__fini_array_start>:
+ 878:	00000189 	.word	0x00000189
 
 Disassembly of section .gnu.sgstubs:
 
