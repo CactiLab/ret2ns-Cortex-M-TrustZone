@@ -14,7 +14,7 @@ void print_in_s_handler(char* content);
 
 void SVC_Handler_Main(unsigned int *svc_args)
 {
-	uint32_t svc_number;
+	uint32_t svc_number = 1;
 	// stack contains: r0, r1, r2, r3, r12, r14, the return address and xPSR
 	svc_number = ((char *)svc_args[6])[-2];
 	switch (svc_number)
@@ -32,7 +32,15 @@ void SVC_Handler(void)
 	__asm volatile(
 	"mov r0, lr\n\t"
 	"mov r1, sp\n\t"
-	"B      SVC_Handler_Main;  ");
+	"b      SVC_Handler_Main; ");
+	/*
+	__asm volatile(
+	  "TST    LR, #0b0100;      "
+	  "ITE    EQ;               "
+	  "MRSEQ  R0, MSP;          "
+	  "MRSNE  R0, PSP;          "
+	  "MOV    R1, LR;           "
+	  "B      SVC_Handler_Main;  ");*/
 }
 
 void print_in_s_handler(char* content)

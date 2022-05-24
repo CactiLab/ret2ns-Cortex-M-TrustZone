@@ -31,7 +31,7 @@
 
 #include "atmel_start.h"
 #include "trustzone_veneer.h"
-//#include "ret2nw_ns.h"
+#include "ret2nw_ns.h"
 
 volatile int gs_val[2];
 
@@ -41,7 +41,7 @@ int main(void)
 	/* Initializes MCU, drivers and middleware */
 	atmel_start_init();
 	
-//	ret2nw_ns();
+	ret2nw_ns();
 	
 	/* Call non-secure callable function 1 */
 	gs_val[0] = nsc_func_plus3(1);
