@@ -12,35 +12,41 @@ char user_input[] = "AAAA Hello World (ns)\r\n";
 
 void print_in_s_handler(char* content);
 
-void SVC_Handler_Main(unsigned int *svc_args)
+void SVC_Handler_Main(uint32_t exc_return_code, uint32_t msp_val)
 {
-	uint32_t svc_number = 1;
+	uint32_t stack_frame_addr;
+	unsigned int *svc_args;
+	uint8_t svc_number;
+	char* stacked_r0;
+	// Determines which stack pointer was used
+	if (exc_return_code & 0x4) stack_frame_addr = __get_PSP();
+	else stack_frame_addr = msp_val;
+	// Determines whether additional state context is present
+	if (exc_return_code & 0x20) {
+		svc_args = (unsigned *) stack_frame_addr;}
+	else {// additional state context present (only for Secure SVC)
+		svc_args = (unsigned *) (stack_frame_addr+40);}
 	// stack contains: r0, r1, r2, r3, r12, r14, the return address and xPSR
-	svc_number = ((char *)svc_args[6])[-2];
+	// extracts SVC number
+	svc_number = ((char *) svc_args[6])[-2]; // Memory[(stacked_pc)-2]
+	stacked_r0 = (char *) svc_args[0];
 	switch (svc_number)
 	{
 		case 0:
-		print_in_s_handler((char *)svc_args[0]);
+		print_in_s_handler(stacked_r0);
 		break;
 		default:
 		break;
 	}
 }
 
-void SVC_Handler(void)
+void __attribute__((naked)) SVC_Handler(void)
 {
 	__asm volatile(
-	"mov r0, lr\n\t"
-	"mov r1, sp\n\t"
-	"b      SVC_Handler_Main; ");
-	/*
-	__asm volatile(
-	  "TST    LR, #0b0100;      "
-	  "ITE    EQ;               "
-	  "MRSEQ  R0, MSP;          "
-	  "MRSNE  R0, PSP;          "
-	  "MOV    R1, LR;           "
-	  "B      SVC_Handler_Main;  ");*/
+		"mov r0, lr\n\t"
+		"mov r1, sp\n\t"
+		"b      SVC_Handler_Main\n\t"
+	);
 }
 
 void print_in_s_handler(char* content)
@@ -50,9 +56,10 @@ void print_in_s_handler(char* content)
 
 void print_in_s_ns(char* user_str)
 {
-	__asm volatile (
-		"ldr r0, [sp, #0];"
-		"svc #0;"
+	register char* r0 __asm("r0") = user_str;
+	__asm volatile("svc #0"
+		:
+		: "r"  (r0)
 	);
 }
 
