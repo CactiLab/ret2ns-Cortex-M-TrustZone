@@ -72,13 +72,48 @@ int __attribute__((cmse_nonsecure_entry)) nsc_func_minus2(int x)
 #include "ret2nw_s.h"
 
 /*
- * \brief Non-secure callable function 2
+ * \brief Non-secure callable function print_nsc
  */
 #if defined(__ICCARM__) /* IAR EWARM */
-__cmse_nonsecure_entry int print_nsc(char* content)
+__cmse_nonsecure_entry void print_nsc(char* content)
 #else /* GCC, Keil MDK with ARM Compiler 6 */
 void __attribute__((cmse_nonsecure_entry)) print_nsc(char* content)
 #endif
 {
 	return print_s(content);
+}
+
+
+/* ======== Secure callable functions initialization ======== */
+
+typedef int __attribute__((cmse_nonsecure_call)) tdef_nsfunc_o_int_i_int(int x);
+void default_callback(void);
+void default_callback(void) {
+	__BKPT(0);
+	while(1);
+}
+
+/*
+ * Declare function pointer *fp
+ * fp can point to either a secure or a non-secure function
+ * Initialized to a default callback
+*/
+tdef_nsfunc_o_int_i_int *fp = (tdef_nsfunc_o_int_i_int *) default_callback;
+
+// This is a Secure API with a function pointer as an input parameter
+#if defined(__ICCARM__) /* IAR EWARM */
+__cmse_nonsecure_entry int pass_nsfunc_ptr_o_int_i_int(tdef_nsfunc_o_int_i_int *callback)
+#else /* GCC, Keil MDK with ARM Compiler 6 */
+int __attribute__((cmse_nonsecure_entry)) pass_nsfunc_ptr_o_int_i_int(tdef_nsfunc_o_int_i_int *callback);
+#endif
+{
+	// Result for the function pointer
+	cmse_address_info_t tt_payload;
+	tt_payload = cmse_TTA_fptr(callback);
+	if (tt_payload.flags.nonsecure_read_ok) {
+		fp = cmse_nsfptr_create(callback); // Non-secure function pointer
+		return (0);
+	} else {
+		return (1); // Function pointer is not accessible from the Non-secure side
+	}
 }
