@@ -15,5 +15,8 @@
 
 
 void ret2nw_ns();
+void ret2nw_2_ns();
+
+int get_driver_status();
 
 #endif /* RET2NW_NS_H_ */

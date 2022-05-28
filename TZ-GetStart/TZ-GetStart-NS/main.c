@@ -41,7 +41,16 @@ int main(void)
 	/* Initializes MCU, drivers and middleware */
 	atmel_start_init();
 	
-	ret2nw_ns();
+	int status;
+	status = pass_nsfunc_ptr_o_int_i_void(&get_driver_status);
+	
+	if (status!=0) {
+		__BKPT(0);
+		while(1);
+	}
+	
+// 	ret2nw_ns();
+	ret2nw_2_ns();
 	
 	/* Call non-secure callable function 1 */
 	gs_val[0] = nsc_func_plus3(1);

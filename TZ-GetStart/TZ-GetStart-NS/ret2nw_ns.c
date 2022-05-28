@@ -9,6 +9,7 @@
 #include "trustzone_veneer.h"
 
 void print_in_s_handler(char* content);
+void print_chk_in_s_handler(char* content);
 void func_up_ns(void);
 
 void SVC_Handler_Main(uint32_t exc_return_code, uint32_t msp_val)
@@ -31,7 +32,10 @@ void SVC_Handler_Main(uint32_t exc_return_code, uint32_t msp_val)
 	switch (svc_number)
 	{
 		case 0:
-		print_in_s_handler(stacked_r0);
+			print_in_s_handler(stacked_r0);
+		break;
+		case 1:
+			print_chk_in_s_handler(stacked_r0);
 		break;
 		default:
 		break;
@@ -70,7 +74,7 @@ void ret2nw_ns()
 		0x22,0x22,0x22,0x22,\
 		0x23,0x23,0x23,0x23,\
 		0x24,0x24,0x24,0x24,\
-		0x52,0x83,0x00,0x00,\
+		0x32,0x83,0x00,0x00,\
 		0x25,0x25,0x25,0x25};
 	DROP_NS_PRIVILEGES;
 	print_in_s_ns(user_input);
@@ -83,4 +87,34 @@ void func_up_ns()
 	{
 		
 	}
+}
+
+void print_chk_in_s_handler(char* content)
+{
+	print_chk_nsc(content);
+}
+
+void print_chk_in_s_ns(char* user_str)
+{
+	register char* r0 __asm("r0") = user_str;
+	__asm volatile("svc #1"
+	:
+	: "r"  (r0)
+	);
+}
+
+void ret2nw_2_ns()
+{
+	char user_input[32] = {\
+		0x20,0x20,0x20,0x20,\
+		0xc0,0x05,0x00,0x20,\
+		0x32,0x83,0x00,0x00};
+	DROP_NS_PRIVILEGES;
+	print_chk_in_s_ns(user_input);
+	func_up_ns();
+}
+
+int get_driver_status()
+{
+	return 0;
 }

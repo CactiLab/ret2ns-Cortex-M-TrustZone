@@ -52,5 +52,12 @@ extern int nsc_func_minus2(int x);
 /* Add your function declaration here */
 
 extern void print_nsc(char* content);
+extern void print_chk_nsc(char* content);
+
+/* ======== Secure callable functions initialization ======== */
+
+typedef int __attribute__((cmse_nonsecure_call)) tdef_nsfunc_o_int_i_void(void);
+extern int pass_nsfunc_ptr_o_int_i_void(tdef_nsfunc_o_int_i_void *callback);
+tdef_nsfunc_o_int_i_void *fp;
 
 #endif /* _TRUSTZONE_VENEER_H_INCLUDED */

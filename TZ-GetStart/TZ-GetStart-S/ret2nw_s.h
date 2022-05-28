@@ -10,9 +10,11 @@
 #define RET2NW_S_H_
 
 #include <string.h>
+#include "atmel_start.h"
+#include "trustzone_veneer.h"
 
 void print_s(char* input);
-
+void print_and_chk_s(char* input);
 
 
 #endif /* RET2NW_S_H_ */

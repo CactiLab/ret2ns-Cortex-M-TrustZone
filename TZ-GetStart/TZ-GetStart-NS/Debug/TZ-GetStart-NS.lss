@@ -3,37 +3,37 @@ TZ-GetStart-NS.elf:     file format elf32-littlearm
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .text         000003e8  00008000  00008000  00008000  2**2
+  0 .text         0000046c  00008000  00008000  00008000  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  1 .relocate     00000000  20002000  20002000  000083e8  2**0
+  1 .relocate     00000000  20002000  20002000  0000846c  2**0
                   CONTENTS
-  2 .bss          00000024  20002000  20002000  00012000  2**2
+  2 .bss          00000028  20002000  20002000  00012000  2**2
                   ALLOC
-  3 .heap         00000204  20002024  20002024  00012000  2**0
+  3 .heap         00000200  20002028  20002028  00012000  2**0
                   ALLOC
   4 .stack        00000400  20002228  20002228  00012000  2**0
                   ALLOC
-  5 .ARM.attributes 0000002c  00000000  00000000  000083e8  2**0
+  5 .ARM.attributes 0000002c  00000000  00000000  0000846c  2**0
                   CONTENTS, READONLY
-  6 .comment      00000059  00000000  00000000  00008414  2**0
+  6 .comment      00000059  00000000  00000000  00008498  2**0
                   CONTENTS, READONLY
-  7 .debug_info   00000b73  00000000  00000000  0000846d  2**0
+  7 .debug_info   00000ccb  00000000  00000000  000084f1  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_abbrev 0000045b  00000000  00000000  00008fe0  2**0
+  8 .debug_abbrev 000004cd  00000000  00000000  000091bc  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_loc    0000022c  00000000  00000000  0000943b  2**0
+  9 .debug_loc    0000030c  00000000  00000000  00009689  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_aranges 000000d8  00000000  00000000  00009667  2**0
+ 10 .debug_aranges 000000f8  00000000  00000000  00009995  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_ranges 00000088  00000000  00000000  0000973f  2**0
+ 11 .debug_ranges 000000a8  00000000  00000000  00009a8d  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_macro  000150db  00000000  00000000  000097c7  2**0
+ 12 .debug_macro  000150db  00000000  00000000  00009b35  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_line   0000304b  00000000  00000000  0001e8a2  2**0
+ 13 .debug_line   000030a7  00000000  00000000  0001ec10  2**0
                   CONTENTS, READONLY, DEBUGGING
- 14 .debug_str    00080435  00000000  00000000  000218ed  2**0
+ 14 .debug_str    000804c7  00000000  00000000  00021cb7  2**0
                   CONTENTS, READONLY, DEBUGGING
- 15 .debug_frame  000001d8  00000000  00000000  000a1d24  2**2
+ 15 .debug_frame  00000278  00000000  00000000  000a2180  2**2
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -41,7 +41,7 @@ Disassembly of section .text:
 00008000 <exception_table>:
     8000:	28 26 00 20 75 81 00 00 0b 82 00 00 0b 82 00 00     (&. u...........
 	...
-    802c:	d7 82 00 00 00 00 00 00 00 00 00 00 0b 82 00 00     ................
+    802c:	0d 83 00 00 00 00 00 00 00 00 00 00 0b 82 00 00     ................
     803c:	0b 82 00 00 0b 82 00 00 0b 82 00 00 0b 82 00 00     ................
     804c:	0b 82 00 00 0b 82 00 00 0b 82 00 00 0b 82 00 00     ................
     805c:	0b 82 00 00 0b 82 00 00 0b 82 00 00 0b 82 00 00     ................
@@ -64,7 +64,7 @@ Disassembly of section .text:
     8102:	f240 0300 	movw	r3, #0
     8106:	f2c0 0300 	movt	r3, #0
     810a:	b12b      	cbz	r3, 8118 <__do_global_dtors_aux+0x24>
-    810c:	f248 30e8 	movw	r0, #33768	; 0x83e8
+    810c:	f248 406c 	movw	r0, #33900	; 0x846c
     8110:	f2c0 0000 	movt	r0, #0
     8114:	e000      	b.n	8118 <__do_global_dtors_aux+0x24>
     8116:	bf00      	nop
@@ -79,12 +79,12 @@ Disassembly of section .text:
     8128:	b510      	push	{r4, lr}
     812a:	b14b      	cbz	r3, 8140 <frame_dummy+0x20>
     812c:	f242 0104 	movw	r1, #8196	; 0x2004
-    8130:	f248 30e8 	movw	r0, #33768	; 0x83e8
+    8130:	f248 406c 	movw	r0, #33900	; 0x846c
     8134:	f2c2 0100 	movt	r1, #8192	; 0x2000
     8138:	f2c0 0000 	movt	r0, #0
     813c:	e000      	b.n	8140 <frame_dummy+0x20>
     813e:	bf00      	nop
-    8140:	f248 30e8 	movw	r0, #33768	; 0x83e8
+    8140:	f248 406c 	movw	r0, #33900	; 0x846c
     8144:	f2c0 0000 	movt	r0, #0
     8148:	6803      	ldr	r3, [r0, #0]
     814a:	b903      	cbnz	r3, 814e <frame_dummy+0x2e>
@@ -129,7 +129,7 @@ void Reset_Handler(void)
 
         /* Initialize the relocate segment */
         pSrc = &_etext;
-    817a:	f248 33e8 	movw	r3, #33768	; 0x83e8
+    817a:	f248 436c 	movw	r3, #33900	; 0x846c
     817e:	f2c0 0300 	movt	r3, #0
     8182:	607b      	str	r3, [r7, #4]
         pDest = &_srelocate;
@@ -176,7 +176,7 @@ void Reset_Handler(void)
     81ca:	601a      	str	r2, [r3, #0]
         for (pDest = &_szero; pDest < &_ezero;) {
     81cc:	683a      	ldr	r2, [r7, #0]
-    81ce:	f242 0324 	movw	r3, #8228	; 0x2024
+    81ce:	f242 0328 	movw	r3, #8232	; 0x2028
     81d2:	f2c2 0300 	movt	r3, #8192	; 0x2000
     81d6:	429a      	cmp	r2, r3
     81d8:	d3f3      	bcc.n	81c2 <Reset_Handler+0x4e>
@@ -197,7 +197,7 @@ void Reset_Handler(void)
 
         /* Initialize the C library */
         __libc_init_array();
-    81f4:	f248 3359 	movw	r3, #33625	; 0x8359
+    81f4:	f248 33ed 	movw	r3, #33773	; 0x83ed
     81f8:	f2c0 0300 	movt	r3, #0
     81fc:	4798      	blx	r3
 
@@ -249,309 +249,405 @@ volatile int gs_val[2];
 int main(void)
 {
     821a:	b580      	push	{r7, lr}
-    821c:	af00      	add	r7, sp, #0
+    821c:	b082      	sub	sp, #8
+    821e:	af00      	add	r7, sp, #0
 	/* Initializes MCU, drivers and middleware */
 	atmel_start_init();
-    821e:	f248 1361 	movw	r3, #33121	; 0x8161
-    8222:	f2c0 0300 	movt	r3, #0
-    8226:	4798      	blx	r3
+    8220:	f248 1361 	movw	r3, #33121	; 0x8161
+    8224:	f2c0 0300 	movt	r3, #0
+    8228:	4798      	blx	r3
 	
-	ret2nw_ns();
-    8228:	f248 3311 	movw	r3, #33553	; 0x8311
-    822c:	f2c0 0300 	movt	r3, #0
-    8230:	4798      	blx	r3
+	int status;
+	status = pass_nsfunc_ptr_o_int_i_void(&get_driver_status);
+    822a:	f248 33e1 	movw	r3, #33761	; 0x83e1
+    822e:	f2c0 0300 	movt	r3, #0
+    8232:	0018      	movs	r0, r3
+    8234:	f647 4311 	movw	r3, #31761	; 0x7c11
+    8238:	f2c0 0300 	movt	r3, #0
+    823c:	4798      	blx	r3
+    823e:	0003      	movs	r3, r0
+    8240:	607b      	str	r3, [r7, #4]
+	
+	if (status!=0) {
+    8242:	687b      	ldr	r3, [r7, #4]
+    8244:	b10b      	cbz	r3, 824a <main+0x30>
+		__BKPT(0);
+    8246:	be00      	bkpt	0x0000
+		while(1);
+    8248:	e7fe      	b.n	8248 <main+0x2e>
+	}
+	
+// 	ret2nw_ns();
+	ret2nw_2_ns();
+    824a:	f248 336b 	movw	r3, #33643	; 0x836b
+    824e:	f2c0 0300 	movt	r3, #0
+    8252:	4798      	blx	r3
 	
 	/* Call non-secure callable function 1 */
 	gs_val[0] = nsc_func_plus3(1);
-    8232:	2001      	movs	r0, #1
-    8234:	f647 4301 	movw	r3, #31745	; 0x7c01
-    8238:	f2c0 0300 	movt	r3, #0
-    823c:	4798      	blx	r3
-    823e:	0002      	movs	r2, r0
-    8240:	f242 031c 	movw	r3, #8220	; 0x201c
-    8244:	f2c2 0300 	movt	r3, #8192	; 0x2000
-    8248:	601a      	str	r2, [r3, #0]
+    8254:	2001      	movs	r0, #1
+    8256:	f647 4301 	movw	r3, #31745	; 0x7c01
+    825a:	f2c0 0300 	movt	r3, #0
+    825e:	4798      	blx	r3
+    8260:	0002      	movs	r2, r0
+    8262:	f242 0320 	movw	r3, #8224	; 0x2020
+    8266:	f2c2 0300 	movt	r3, #8192	; 0x2000
+    826a:	601a      	str	r2, [r3, #0]
 
 	/* Call non-secure callable function 2 */
 	gs_val[1] = nsc_func_minus2(7);
-    824a:	2007      	movs	r0, #7
-    824c:	f647 4309 	movw	r3, #31753	; 0x7c09
-    8250:	f2c0 0300 	movt	r3, #0
-    8254:	4798      	blx	r3
-    8256:	0002      	movs	r2, r0
-    8258:	f242 031c 	movw	r3, #8220	; 0x201c
-    825c:	f2c2 0300 	movt	r3, #8192	; 0x2000
-    8260:	605a      	str	r2, [r3, #4]
+    826c:	2007      	movs	r0, #7
+    826e:	f647 4309 	movw	r3, #31753	; 0x7c09
+    8272:	f2c0 0300 	movt	r3, #0
+    8276:	4798      	blx	r3
+    8278:	0002      	movs	r2, r0
+    827a:	f242 0320 	movw	r3, #8224	; 0x2020
+    827e:	f2c2 0300 	movt	r3, #8192	; 0x2000
+    8282:	605a      	str	r2, [r3, #4]
 
 	/* Replace with your application code */
 	while (1) {
 		__NOP();
-    8262:	46c0      	nop			; (mov r8, r8)
-    8264:	e7fd      	b.n	8262 <main+0x48>
+    8284:	46c0      	nop			; (mov r8, r8)
+    8286:	e7fd      	b.n	8284 <main+0x6a>
 
-00008266 <SVC_Handler_Main>:
-
+00008288 <SVC_Handler_Main>:
 void print_in_s_handler(char* content);
+void print_chk_in_s_handler(char* content);
 void func_up_ns(void);
 
 void SVC_Handler_Main(uint32_t exc_return_code, uint32_t msp_val)
 {
-    8266:	b580      	push	{r7, lr}
-    8268:	b088      	sub	sp, #32
-    826a:	af00      	add	r7, sp, #0
-    826c:	6078      	str	r0, [r7, #4]
-    826e:	6039      	str	r1, [r7, #0]
+    8288:	b580      	push	{r7, lr}
+    828a:	b088      	sub	sp, #32
+    828c:	af00      	add	r7, sp, #0
+    828e:	6078      	str	r0, [r7, #4]
+    8290:	6039      	str	r1, [r7, #0]
 	uint32_t stack_frame_addr;
 	unsigned int *svc_args;
 	uint8_t svc_number;
 	char* stacked_r0;
 	// Determines which stack pointer was used
 	if (exc_return_code & 0x4) stack_frame_addr = __get_PSP();
-    8270:	687b      	ldr	r3, [r7, #4]
-    8272:	2204      	movs	r2, #4
-    8274:	4013      	ands	r3, r2
-    8276:	b12b      	cbz	r3, 8284 <SVC_Handler_Main+0x1e>
+    8292:	687b      	ldr	r3, [r7, #4]
+    8294:	2204      	movs	r2, #4
+    8296:	4013      	ands	r3, r2
+    8298:	b12b      	cbz	r3, 82a6 <SVC_Handler_Main+0x1e>
  */
 __STATIC_FORCEINLINE uint32_t __get_PSP(void)
 {
   uint32_t result;
 
   __ASM volatile ("MRS %0, psp"  : "=r" (result) );
-    8278:	f3ef 8309 	mrs	r3, PSP
-    827c:	60fb      	str	r3, [r7, #12]
+    829a:	f3ef 8309 	mrs	r3, PSP
+    829e:	60fb      	str	r3, [r7, #12]
   return(result);
-    827e:	68fb      	ldr	r3, [r7, #12]
-    8280:	61fb      	str	r3, [r7, #28]
-    8282:	e001      	b.n	8288 <SVC_Handler_Main+0x22>
+    82a0:	68fb      	ldr	r3, [r7, #12]
+    82a2:	61fb      	str	r3, [r7, #28]
+    82a4:	e001      	b.n	82aa <SVC_Handler_Main+0x22>
 	else stack_frame_addr = msp_val;
-    8284:	683b      	ldr	r3, [r7, #0]
-    8286:	61fb      	str	r3, [r7, #28]
+    82a6:	683b      	ldr	r3, [r7, #0]
+    82a8:	61fb      	str	r3, [r7, #28]
 	// Determines whether additional state context is present
 	if (exc_return_code & 0x20) {
-    8288:	687b      	ldr	r3, [r7, #4]
-    828a:	2220      	movs	r2, #32
-    828c:	4013      	ands	r3, r2
-    828e:	b113      	cbz	r3, 8296 <SVC_Handler_Main+0x30>
+    82aa:	687b      	ldr	r3, [r7, #4]
+    82ac:	2220      	movs	r2, #32
+    82ae:	4013      	ands	r3, r2
+    82b0:	b113      	cbz	r3, 82b8 <SVC_Handler_Main+0x30>
 		svc_args = (unsigned *) stack_frame_addr;}
-    8290:	69fb      	ldr	r3, [r7, #28]
-    8292:	61bb      	str	r3, [r7, #24]
-    8294:	e002      	b.n	829c <SVC_Handler_Main+0x36>
+    82b2:	69fb      	ldr	r3, [r7, #28]
+    82b4:	61bb      	str	r3, [r7, #24]
+    82b6:	e002      	b.n	82be <SVC_Handler_Main+0x36>
 	else {// additional state context present (only for Secure SVC)
 		svc_args = (unsigned *) (stack_frame_addr+40);}
-    8296:	69fb      	ldr	r3, [r7, #28]
-    8298:	3328      	adds	r3, #40	; 0x28
-    829a:	61bb      	str	r3, [r7, #24]
+    82b8:	69fb      	ldr	r3, [r7, #28]
+    82ba:	3328      	adds	r3, #40	; 0x28
+    82bc:	61bb      	str	r3, [r7, #24]
 	// extracts SVC number
 	svc_number = ((char *) svc_args[6])[-2]; // Memory[(stacked_pc)-2]
-    829c:	69bb      	ldr	r3, [r7, #24]
-    829e:	3318      	adds	r3, #24
-    82a0:	681b      	ldr	r3, [r3, #0]
-    82a2:	3b02      	subs	r3, #2
-    82a4:	001a      	movs	r2, r3
-    82a6:	2317      	movs	r3, #23
-    82a8:	18fb      	adds	r3, r7, r3
-    82aa:	7812      	ldrb	r2, [r2, #0]
-    82ac:	701a      	strb	r2, [r3, #0]
+    82be:	69bb      	ldr	r3, [r7, #24]
+    82c0:	3318      	adds	r3, #24
+    82c2:	681b      	ldr	r3, [r3, #0]
+    82c4:	3b02      	subs	r3, #2
+    82c6:	001a      	movs	r2, r3
+    82c8:	2317      	movs	r3, #23
+    82ca:	18fb      	adds	r3, r7, r3
+    82cc:	7812      	ldrb	r2, [r2, #0]
+    82ce:	701a      	strb	r2, [r3, #0]
 	stacked_r0 = (char *) svc_args[0];
-    82ae:	69bb      	ldr	r3, [r7, #24]
-    82b0:	681b      	ldr	r3, [r3, #0]
-    82b2:	613b      	str	r3, [r7, #16]
+    82d0:	69bb      	ldr	r3, [r7, #24]
+    82d2:	681b      	ldr	r3, [r3, #0]
+    82d4:	613b      	str	r3, [r7, #16]
 	switch (svc_number)
-    82b4:	2317      	movs	r3, #23
-    82b6:	18fb      	adds	r3, r7, r3
-    82b8:	781b      	ldrb	r3, [r3, #0]
-    82ba:	b103      	cbz	r3, 82be <SVC_Handler_Main+0x58>
-	{
-		case 0:
-		print_in_s_handler(stacked_r0);
+    82d6:	2317      	movs	r3, #23
+    82d8:	18fb      	adds	r3, r7, r3
+    82da:	781b      	ldrb	r3, [r3, #0]
+    82dc:	b113      	cbz	r3, 82e4 <SVC_Handler_Main+0x5c>
+    82de:	2b01      	cmp	r3, #1
+    82e0:	d008      	beq.n	82f4 <SVC_Handler_Main+0x6c>
+		break;
+		case 1:
+			print_chk_in_s_handler(stacked_r0);
 		break;
 		default:
 		break;
-    82bc:	e007      	b.n	82ce <SVC_Handler_Main+0x68>
-		print_in_s_handler(stacked_r0);
-    82be:	693b      	ldr	r3, [r7, #16]
-    82c0:	0018      	movs	r0, r3
-    82c2:	f248 23df 	movw	r3, #33503	; 0x82df
-    82c6:	f2c0 0300 	movt	r3, #0
-    82ca:	4798      	blx	r3
+    82e2:	e00f      	b.n	8304 <SVC_Handler_Main+0x7c>
+			print_in_s_handler(stacked_r0);
+    82e4:	693b      	ldr	r3, [r7, #16]
+    82e6:	0018      	movs	r0, r3
+    82e8:	f248 3315 	movw	r3, #33557	; 0x8315
+    82ec:	f2c0 0300 	movt	r3, #0
+    82f0:	4798      	blx	r3
 		break;
-    82cc:	46c0      	nop			; (mov r8, r8)
+    82f2:	e007      	b.n	8304 <SVC_Handler_Main+0x7c>
+			print_chk_in_s_handler(stacked_r0);
+    82f4:	693b      	ldr	r3, [r7, #16]
+    82f6:	0018      	movs	r0, r3
+    82f8:	f248 3339 	movw	r3, #33593	; 0x8339
+    82fc:	f2c0 0300 	movt	r3, #0
+    8300:	4798      	blx	r3
+		break;
+    8302:	46c0      	nop			; (mov r8, r8)
 	}
 }
-    82ce:	46c0      	nop			; (mov r8, r8)
-    82d0:	46bd      	mov	sp, r7
-    82d2:	b008      	add	sp, #32
-    82d4:	bd80      	pop	{r7, pc}
+    8304:	46c0      	nop			; (mov r8, r8)
+    8306:	46bd      	mov	sp, r7
+    8308:	b008      	add	sp, #32
+    830a:	bd80      	pop	{r7, pc}
 
-000082d6 <SVCall_Handler>:
+0000830c <SVCall_Handler>:
 
 void __attribute__((naked)) SVC_Handler(void)
 {
 	__asm volatile(
-    82d6:	4670      	mov	r0, lr
-    82d8:	4669      	mov	r1, sp
-    82da:	e7c4      	b.n	8266 <SVC_Handler_Main>
+    830c:	4670      	mov	r0, lr
+    830e:	4669      	mov	r1, sp
+    8310:	e7ba      	b.n	8288 <SVC_Handler_Main>
 		"mov r0, lr\n\t"
 		"mov r1, sp\n\t"
 		"b      SVC_Handler_Main\n\t"
 	);
 }
-    82dc:	46c0      	nop			; (mov r8, r8)
+    8312:	46c0      	nop			; (mov r8, r8)
 
-000082de <print_in_s_handler>:
+00008314 <print_in_s_handler>:
 
 void print_in_s_handler(char* content)
 {
-    82de:	b580      	push	{r7, lr}
-    82e0:	b082      	sub	sp, #8
-    82e2:	af00      	add	r7, sp, #0
-    82e4:	6078      	str	r0, [r7, #4]
+    8314:	b580      	push	{r7, lr}
+    8316:	b082      	sub	sp, #8
+    8318:	af00      	add	r7, sp, #0
+    831a:	6078      	str	r0, [r7, #4]
 	print_nsc(content);
-    82e6:	687b      	ldr	r3, [r7, #4]
-    82e8:	0018      	movs	r0, r3
-    82ea:	f647 4311 	movw	r3, #31761	; 0x7c11
-    82ee:	f2c0 0300 	movt	r3, #0
-    82f2:	4798      	blx	r3
+    831c:	687b      	ldr	r3, [r7, #4]
+    831e:	0018      	movs	r0, r3
+    8320:	f647 4321 	movw	r3, #31777	; 0x7c21
+    8324:	f2c0 0300 	movt	r3, #0
+    8328:	4798      	blx	r3
 }
-    82f4:	46c0      	nop			; (mov r8, r8)
-    82f6:	46bd      	mov	sp, r7
-    82f8:	b002      	add	sp, #8
-    82fa:	bd80      	pop	{r7, pc}
+    832a:	46c0      	nop			; (mov r8, r8)
+    832c:	46bd      	mov	sp, r7
+    832e:	b002      	add	sp, #8
+    8330:	bd80      	pop	{r7, pc}
 
-000082fc <print_in_s_ns>:
-
-void print_in_s_ns(char* user_str)
-{
-    82fc:	b580      	push	{r7, lr}
-    82fe:	b082      	sub	sp, #8
-    8300:	af00      	add	r7, sp, #0
-    8302:	6078      	str	r0, [r7, #4]
-	register char* r0 __asm("r0") = user_str;
-    8304:	6878      	ldr	r0, [r7, #4]
-	__asm volatile("svc #0"
-    8306:	df00      	svc	0
-		:
-		: "r"  (r0)
-	);
-}
-    8308:	46c0      	nop			; (mov r8, r8)
-    830a:	46bd      	mov	sp, r7
-    830c:	b002      	add	sp, #8
-    830e:	bd80      	pop	{r7, pc}
-
-00008310 <ret2nw_ns>:
-
-void ret2nw_ns()
-{
-    8310:	b590      	push	{r4, r7, lr}
-    8312:	b089      	sub	sp, #36	; 0x24
-    8314:	af00      	add	r7, sp, #0
-	char user_input[32] = {\
-    8316:	003b      	movs	r3, r7
-    8318:	f248 32a8 	movw	r2, #33704	; 0x83a8
-    831c:	f2c0 0200 	movt	r2, #0
-    8320:	ca13      	ldmia	r2!, {r0, r1, r4}
-    8322:	c313      	stmia	r3!, {r0, r1, r4}
-    8324:	ca13      	ldmia	r2!, {r0, r1, r4}
-    8326:	c313      	stmia	r3!, {r0, r1, r4}
-    8328:	ca03      	ldmia	r2!, {r0, r1}
-    832a:	c303      	stmia	r3!, {r0, r1}
-		0x22,0x22,0x22,0x22,\
-		0x23,0x23,0x23,0x23,\
-		0x24,0x24,0x24,0x24,\
-		0x52,0x83,0x00,0x00,\
-		0x25,0x25,0x25,0x25};
-	DROP_NS_PRIVILEGES;
-    832c:	2301      	movs	r3, #1
-    832e:	f383 8814 	msr	CONTROL, r3
+00008332 <func_up_ns>:
 	print_in_s_ns(user_input);
-    8332:	003b      	movs	r3, r7
-    8334:	0018      	movs	r0, r3
-    8336:	f248 23fd 	movw	r3, #33533	; 0x82fd
-    833a:	f2c0 0300 	movt	r3, #0
-    833e:	4798      	blx	r3
 	func_up_ns();
-    8340:	f248 3353 	movw	r3, #33619	; 0x8353
-    8344:	f2c0 0300 	movt	r3, #0
-    8348:	4798      	blx	r3
 }
-    834a:	46c0      	nop			; (mov r8, r8)
-    834c:	46bd      	mov	sp, r7
-    834e:	b009      	add	sp, #36	; 0x24
-    8350:	bd90      	pop	{r4, r7, pc}
-
-00008352 <func_up_ns>:
 
 void func_up_ns()
 {
-    8352:	b580      	push	{r7, lr}
-    8354:	af00      	add	r7, sp, #0
+    8332:	b580      	push	{r7, lr}
+    8334:	af00      	add	r7, sp, #0
 	while(1)
-    8356:	e7fe      	b.n	8356 <func_up_ns+0x4>
+    8336:	e7fe      	b.n	8336 <func_up_ns+0x4>
 
-00008358 <__libc_init_array>:
-    8358:	b570      	push	{r4, r5, r6, lr}
-    835a:	2500      	movs	r5, #0
-    835c:	4b0e      	ldr	r3, [pc, #56]	; (8398 <__libc_init_array+0x40>)
-    835e:	4c0f      	ldr	r4, [pc, #60]	; (839c <__libc_init_array+0x44>)
-    8360:	1ae4      	subs	r4, r4, r3
-    8362:	10a4      	asrs	r4, r4, #2
-    8364:	42a5      	cmp	r5, r4
-    8366:	d109      	bne.n	837c <__libc_init_array+0x24>
-    8368:	2500      	movs	r5, #0
-    836a:	f000 f82d 	bl	83c8 <_init>
-    836e:	4c0c      	ldr	r4, [pc, #48]	; (83a0 <__libc_init_array+0x48>)
-    8370:	4b0c      	ldr	r3, [pc, #48]	; (83a4 <__libc_init_array+0x4c>)
-    8372:	1ae4      	subs	r4, r4, r3
-    8374:	10a4      	asrs	r4, r4, #2
-    8376:	42a5      	cmp	r5, r4
-    8378:	d107      	bne.n	838a <__libc_init_array+0x32>
-    837a:	bd70      	pop	{r4, r5, r6, pc}
-    837c:	4a06      	ldr	r2, [pc, #24]	; (8398 <__libc_init_array+0x40>)
-    837e:	00ab      	lsls	r3, r5, #2
-    8380:	189b      	adds	r3, r3, r2
-    8382:	681b      	ldr	r3, [r3, #0]
-    8384:	4798      	blx	r3
-    8386:	3501      	adds	r5, #1
-    8388:	e7ec      	b.n	8364 <__libc_init_array+0xc>
-    838a:	4a06      	ldr	r2, [pc, #24]	; (83a4 <__libc_init_array+0x4c>)
-    838c:	00ab      	lsls	r3, r5, #2
-    838e:	189b      	adds	r3, r3, r2
-    8390:	681b      	ldr	r3, [r3, #0]
-    8392:	4798      	blx	r3
-    8394:	3501      	adds	r5, #1
-    8396:	e7ee      	b.n	8376 <__libc_init_array+0x1e>
-    8398:	000083d4 	.word	0x000083d4
-    839c:	000083d4 	.word	0x000083d4
-    83a0:	000083d8 	.word	0x000083d8
-    83a4:	000083d4 	.word	0x000083d4
-    83a8:	20202020 	.word	0x20202020
-    83ac:	200005c0 	.word	0x200005c0
-    83b0:	0000016f 	.word	0x0000016f
-    83b4:	22222222 	.word	0x22222222
-    83b8:	23232323 	.word	0x23232323
-    83bc:	24242424 	.word	0x24242424
-    83c0:	00008352 	.word	0x00008352
-    83c4:	25252525 	.word	0x25252525
+00008338 <print_chk_in_s_handler>:
+		
+	}
+}
 
-000083c8 <_init>:
-    83c8:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
-    83ca:	46c0      	nop			; (mov r8, r8)
-    83cc:	bcf8      	pop	{r3, r4, r5, r6, r7}
-    83ce:	bc08      	pop	{r3}
-    83d0:	469e      	mov	lr, r3
-    83d2:	4770      	bx	lr
+void print_chk_in_s_handler(char* content)
+{
+    8338:	b580      	push	{r7, lr}
+    833a:	b082      	sub	sp, #8
+    833c:	af00      	add	r7, sp, #0
+    833e:	6078      	str	r0, [r7, #4]
+	print_chk_nsc(content);
+    8340:	687b      	ldr	r3, [r7, #4]
+    8342:	0018      	movs	r0, r3
+    8344:	f647 4319 	movw	r3, #31769	; 0x7c19
+    8348:	f2c0 0300 	movt	r3, #0
+    834c:	4798      	blx	r3
+}
+    834e:	46c0      	nop			; (mov r8, r8)
+    8350:	46bd      	mov	sp, r7
+    8352:	b002      	add	sp, #8
+    8354:	bd80      	pop	{r7, pc}
 
-000083d4 <__init_array_start>:
-    83d4:	00008121 	.word	0x00008121
+00008356 <print_chk_in_s_ns>:
 
-000083d8 <_fini>:
-    83d8:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
-    83da:	46c0      	nop			; (mov r8, r8)
-    83dc:	bcf8      	pop	{r3, r4, r5, r6, r7}
-    83de:	bc08      	pop	{r3}
-    83e0:	469e      	mov	lr, r3
-    83e2:	4770      	bx	lr
+void print_chk_in_s_ns(char* user_str)
+{
+    8356:	b580      	push	{r7, lr}
+    8358:	b082      	sub	sp, #8
+    835a:	af00      	add	r7, sp, #0
+    835c:	6078      	str	r0, [r7, #4]
+	register char* r0 __asm("r0") = user_str;
+    835e:	6878      	ldr	r0, [r7, #4]
+	__asm volatile("svc #1"
+    8360:	df01      	svc	1
+	:
+	: "r"  (r0)
+	);
+}
+    8362:	46c0      	nop			; (mov r8, r8)
+    8364:	46bd      	mov	sp, r7
+    8366:	b002      	add	sp, #8
+    8368:	bd80      	pop	{r7, pc}
 
-000083e4 <__fini_array_start>:
-    83e4:	000080f5 	.word	0x000080f5
+0000836a <ret2nw_2_ns>:
+
+void ret2nw_2_ns()
+{
+    836a:	b580      	push	{r7, lr}
+    836c:	b088      	sub	sp, #32
+    836e:	af00      	add	r7, sp, #0
+	char user_input[32] = {\
+    8370:	003b      	movs	r3, r7
+    8372:	0018      	movs	r0, r3
+    8374:	2320      	movs	r3, #32
+    8376:	001a      	movs	r2, r3
+    8378:	2100      	movs	r1, #0
+    837a:	f248 433d 	movw	r3, #33853	; 0x843d
+    837e:	f2c0 0300 	movt	r3, #0
+    8382:	4798      	blx	r3
+    8384:	003b      	movs	r3, r7
+    8386:	2220      	movs	r2, #32
+    8388:	701a      	strb	r2, [r3, #0]
+    838a:	003b      	movs	r3, r7
+    838c:	2220      	movs	r2, #32
+    838e:	705a      	strb	r2, [r3, #1]
+    8390:	003b      	movs	r3, r7
+    8392:	2220      	movs	r2, #32
+    8394:	709a      	strb	r2, [r3, #2]
+    8396:	003b      	movs	r3, r7
+    8398:	2220      	movs	r2, #32
+    839a:	70da      	strb	r2, [r3, #3]
+    839c:	003b      	movs	r3, r7
+    839e:	22c0      	movs	r2, #192	; 0xc0
+    83a0:	711a      	strb	r2, [r3, #4]
+    83a2:	003b      	movs	r3, r7
+    83a4:	2205      	movs	r2, #5
+    83a6:	715a      	strb	r2, [r3, #5]
+    83a8:	003b      	movs	r3, r7
+    83aa:	2220      	movs	r2, #32
+    83ac:	71da      	strb	r2, [r3, #7]
+    83ae:	003b      	movs	r3, r7
+    83b0:	2232      	movs	r2, #50	; 0x32
+    83b2:	721a      	strb	r2, [r3, #8]
+    83b4:	003b      	movs	r3, r7
+    83b6:	2283      	movs	r2, #131	; 0x83
+    83b8:	725a      	strb	r2, [r3, #9]
+		0x20,0x20,0x20,0x20,\
+		0xc0,0x05,0x00,0x20,\
+		0x32,0x83,0x00,0x00};
+	DROP_NS_PRIVILEGES;
+    83ba:	2301      	movs	r3, #1
+    83bc:	f383 8814 	msr	CONTROL, r3
+	print_chk_in_s_ns(user_input);
+    83c0:	003b      	movs	r3, r7
+    83c2:	0018      	movs	r0, r3
+    83c4:	f248 3357 	movw	r3, #33623	; 0x8357
+    83c8:	f2c0 0300 	movt	r3, #0
+    83cc:	4798      	blx	r3
+	func_up_ns();
+    83ce:	f248 3333 	movw	r3, #33587	; 0x8333
+    83d2:	f2c0 0300 	movt	r3, #0
+    83d6:	4798      	blx	r3
+}
+    83d8:	46c0      	nop			; (mov r8, r8)
+    83da:	46bd      	mov	sp, r7
+    83dc:	b008      	add	sp, #32
+    83de:	bd80      	pop	{r7, pc}
+
+000083e0 <get_driver_status>:
+
+int get_driver_status()
+{
+    83e0:	b580      	push	{r7, lr}
+    83e2:	af00      	add	r7, sp, #0
+	return 0;
+    83e4:	2300      	movs	r3, #0
+    83e6:	0018      	movs	r0, r3
+    83e8:	46bd      	mov	sp, r7
+    83ea:	bd80      	pop	{r7, pc}
+
+000083ec <__libc_init_array>:
+    83ec:	b570      	push	{r4, r5, r6, lr}
+    83ee:	2500      	movs	r5, #0
+    83f0:	4b0e      	ldr	r3, [pc, #56]	; (842c <__libc_init_array+0x40>)
+    83f2:	4c0f      	ldr	r4, [pc, #60]	; (8430 <__libc_init_array+0x44>)
+    83f4:	1ae4      	subs	r4, r4, r3
+    83f6:	10a4      	asrs	r4, r4, #2
+    83f8:	42a5      	cmp	r5, r4
+    83fa:	d109      	bne.n	8410 <__libc_init_array+0x24>
+    83fc:	2500      	movs	r5, #0
+    83fe:	f000 f825 	bl	844c <_init>
+    8402:	4c0c      	ldr	r4, [pc, #48]	; (8434 <__libc_init_array+0x48>)
+    8404:	4b0c      	ldr	r3, [pc, #48]	; (8438 <__libc_init_array+0x4c>)
+    8406:	1ae4      	subs	r4, r4, r3
+    8408:	10a4      	asrs	r4, r4, #2
+    840a:	42a5      	cmp	r5, r4
+    840c:	d107      	bne.n	841e <__libc_init_array+0x32>
+    840e:	bd70      	pop	{r4, r5, r6, pc}
+    8410:	4a06      	ldr	r2, [pc, #24]	; (842c <__libc_init_array+0x40>)
+    8412:	00ab      	lsls	r3, r5, #2
+    8414:	189b      	adds	r3, r3, r2
+    8416:	681b      	ldr	r3, [r3, #0]
+    8418:	4798      	blx	r3
+    841a:	3501      	adds	r5, #1
+    841c:	e7ec      	b.n	83f8 <__libc_init_array+0xc>
+    841e:	4a06      	ldr	r2, [pc, #24]	; (8438 <__libc_init_array+0x4c>)
+    8420:	00ab      	lsls	r3, r5, #2
+    8422:	189b      	adds	r3, r3, r2
+    8424:	681b      	ldr	r3, [r3, #0]
+    8426:	4798      	blx	r3
+    8428:	3501      	adds	r5, #1
+    842a:	e7ee      	b.n	840a <__libc_init_array+0x1e>
+    842c:	00008458 	.word	0x00008458
+    8430:	00008458 	.word	0x00008458
+    8434:	0000845c 	.word	0x0000845c
+    8438:	00008458 	.word	0x00008458
+
+0000843c <memset>:
+    843c:	0003      	movs	r3, r0
+    843e:	1882      	adds	r2, r0, r2
+    8440:	4293      	cmp	r3, r2
+    8442:	d100      	bne.n	8446 <memset+0xa>
+    8444:	4770      	bx	lr
+    8446:	7019      	strb	r1, [r3, #0]
+    8448:	3301      	adds	r3, #1
+    844a:	e7f9      	b.n	8440 <memset+0x4>
+
+0000844c <_init>:
+    844c:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+    844e:	46c0      	nop			; (mov r8, r8)
+    8450:	bcf8      	pop	{r3, r4, r5, r6, r7}
+    8452:	bc08      	pop	{r3}
+    8454:	469e      	mov	lr, r3
+    8456:	4770      	bx	lr
+
+00008458 <__init_array_start>:
+    8458:	00008121 	.word	0x00008121
+
+0000845c <_fini>:
+    845c:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+    845e:	46c0      	nop			; (mov r8, r8)
+    8460:	bcf8      	pop	{r3, r4, r5, r6, r7}
+    8462:	bc08      	pop	{r3}
+    8464:	469e      	mov	lr, r3
+    8466:	4770      	bx	lr
+
+00008468 <__fini_array_start>:
+    8468:	000080f5 	.word	0x000080f5
