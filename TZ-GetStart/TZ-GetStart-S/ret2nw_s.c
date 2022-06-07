@@ -21,8 +21,8 @@ void print_and_chk_s(char* input)
 	int driver_status;
 	chk_func_ptr *check_fp;
 	check_fp = cmse_nsfptr_create(fp);
-// 	char buf[4];
-// 	memcpy(buf, input, 12);
+ 	char buf[4];
+ 	memcpy(buf, input, 12);
 	driver_status = check_fp();
 	if (driver_status == 0) {
 		// do something...	

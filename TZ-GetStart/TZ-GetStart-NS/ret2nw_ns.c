@@ -152,3 +152,19 @@ void ret2nw_3_ns()
 	DROP_NS_PRIVILEGES;
 	func_up_ns();
 }
+
+/**
+ * \brief BXNS - CONTROL.nPRIV
+ */
+
+void ret2nw_4_ns()
+{
+	char user_input[32] = {\
+		0x20,0x20,0x20,0x20,\
+		0x21,0x21,0x21,0x21,\
+		0x44,0x83,0x00,0x00};
+	escalate_priv();
+	print_chk_nsc(user_input);
+	DROP_NS_PRIVILEGES;
+	func_up_ns();
+}

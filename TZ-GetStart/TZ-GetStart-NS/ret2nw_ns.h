@@ -19,6 +19,7 @@
 void ret2nw_ns();
 void ret2nw_2_ns();
 void ret2nw_3_ns();
+void ret2nw_4_ns();
 
 int get_driver_status();
 
