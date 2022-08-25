@@ -13,6 +13,7 @@ extern "C" {
  **/
 void atmel_start_init(void);
 void mpu_ns_init(void);
+void check_pointer(void);
 
 #ifdef __cplusplus
 }

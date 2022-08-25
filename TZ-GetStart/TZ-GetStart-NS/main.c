@@ -30,17 +30,31 @@
  */
 
 #include "atmel_start.h"
+#include "arm_cmse.h"
 #include "trustzone_veneer.h"
 #include "ret2nw_ns.h"
 
 volatile int gs_val[2];
 
+void check_pointer_ns(void)
+{
+	void *p1 = (void *)0x8320;
+	cmse_address_info_t result1 = cmse_TT(p1);
+	
+	void *p2 = (void *)0x8394;
+	cmse_address_info_t result2 = cmse_TT(p2);
+	
+	void *p3 = (void *)0x8420;
+	cmse_address_info_t result3 = cmse_TT(p3);
+	
+	while (1) {}
+}
 /* Non-secure main() */
 int main(void)
 {
 	/* Initializes MCU, drivers and middleware */
 	atmel_start_init();
-	
+	check_pointer_ns();
 	int status;
 	status = pass_nsfunc_ptr_o_int_i_void(&get_driver_status);
 	

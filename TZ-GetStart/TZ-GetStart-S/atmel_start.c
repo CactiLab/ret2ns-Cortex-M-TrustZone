@@ -31,7 +31,7 @@ void mpu_ns_init(void)
 	rlar = ARM_MPU_RLAR(0x3FFFFFFF, 0);
 	ARM_MPU_SetRegion_NS(2, rbar, rlar);
 	
-	for (uint32_t i=3; i < dregion; i++)
+	for (uint32_t i=2; i < dregion; i++)
 	{
 		ARM_MPU_ClrRegion_NS(i);
 	}
@@ -41,4 +41,19 @@ void mpu_ns_init(void)
 	
 	__DSB();
 	__ISB();
+}
+
+void check_pointer(void)
+{
+	void *p1 = (void *)0x8320;
+	cmse_address_info_t result1 = cmse_TTA(p1);
+	uint32_t dregion = (MPU->TYPE & MPU_TYPE_DREGION_Msk) >> MPU_TYPE_DREGION_Pos;
+	
+	void *p2 = (void *)0x8394;
+	cmse_address_info_t result2 = cmse_TTA(p2);
+	
+	void *p3 = (void *)0x8420;
+	cmse_address_info_t result3 = cmse_TTA(p3);
+	uint8_t r3 = result3.flags.mpu_region;
+	while (1) {}
 }
