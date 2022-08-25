@@ -64,6 +64,7 @@ int main(void)
 
 	/* Initializes MCU, drivers and middleware */
 	atmel_start_init();
+	mpu_ns_init();
 
 	/* Set non-secure main stack (MSP_NS) */
 	__TZ_set_MSP_NS(*((uint32_t *)(CONF_TZ_START_NS)));

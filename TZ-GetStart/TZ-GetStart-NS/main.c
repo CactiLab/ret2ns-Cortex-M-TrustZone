@@ -49,11 +49,11 @@ int main(void)
 		while(1);
 	}
 	
-	DROP_NS_PRIVILEGES;
-// 	ret2nw_ns();
+// 	DROP_NS_PRIVILEGES;
+	ret2nw_ns();
 // 	ret2nw_2_ns();
 // 	ret2nw_3_ns();
-	ret2nw_4_ns();
+// 	ret2nw_4_ns();
 	
 	/* Call non-secure callable function 1 */
 	gs_val[0] = nsc_func_plus3(1);
