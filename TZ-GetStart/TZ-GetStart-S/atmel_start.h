@@ -15,6 +15,13 @@ void atmel_start_init(void);
 void mpu_ns_init(void);
 void check_pointer(void);
 
+#define MPU_RO (1U)
+#define MPU_RW (0U)
+#define MPU_UP_ALLOWED (1U)
+#define MPU_UP_BLOCK (0U)
+#define MPU_NO_EXE (1U)
+#define MPU_EXE (0U)
+
 #ifdef __cplusplus
 }
 #endif
