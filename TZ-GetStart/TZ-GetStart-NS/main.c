@@ -34,27 +34,12 @@
 #include "trustzone_veneer.h"
 #include "ret2nw_ns.h"
 
-volatile int gs_val[2];
-
-void check_pointer_ns(void)
-{
-	void *p1 = (void *)0x8320;
-	cmse_address_info_t result1 = cmse_TT(p1);
-	
-	void *p2 = (void *)0x8394;
-	cmse_address_info_t result2 = cmse_TT(p2);
-	
-	void *p3 = (void *)0x8420;
-	cmse_address_info_t result3 = cmse_TT(p3);
-	
-	while (1) {}
-}
 /* Non-secure main() */
 int main(void)
 {
 	/* Initializes MCU, drivers and middleware */
 	atmel_start_init();
-	check_pointer_ns();
+	
 	int status;
 	status = pass_nsfunc_ptr_o_int_i_void(&get_driver_status);
 	
@@ -69,12 +54,6 @@ int main(void)
 // 	ret2nw_3_ns();
 // 	ret2nw_4_ns();
 	
-	/* Call non-secure callable function 1 */
-	gs_val[0] = nsc_func_plus3(1);
-
-	/* Call non-secure callable function 2 */
-	gs_val[1] = nsc_func_minus2(7);
-
 	/* Replace with your application code */
 	while (1) {
 		__NOP();

@@ -35,34 +35,6 @@
 #include "trustzone_veneer.h"
 #include "trustzone_config.h"
 
-/* ======== Non-secure callable functions for Getting Started Example ======== */
-extern int func_plus3(int x);
-extern int func_minus2(int x);
-
-/*
- * \brief Non-secure callable function 1
- */
-#if defined(__ICCARM__) /* IAR EWARM */
-__cmse_nonsecure_entry int nsc_func_plus3(int x)
-#else /* GCC, Keil MDK with ARM Compiler 6 */
-int __attribute__((cmse_nonsecure_entry)) nsc_func_plus3(int x)
-#endif
-{
-	return func_plus3(x);
-}
-
-/*
- * \brief Non-secure callable function 2
- */
-#if defined(__ICCARM__) /* IAR EWARM */
-__cmse_nonsecure_entry int nsc_func_minus2(int x)
-#else /* GCC, Keil MDK with ARM Compiler 6 */
-int __attribute__((cmse_nonsecure_entry)) nsc_func_minus2(int x)
-#endif
-{
-	return func_minus2(x);
-}
-
 /* ======== Non-secure callable functions defined by customer ======== */
 /*
  * You may add your secure gateway veneer functions in this file

@@ -35,22 +35,6 @@
 /** Typedef for non-secure callback functions */
 typedef void (*funcptr_void)(void) __attribute__((cmse_nonsecure_call));
 
-/**
- * \brief This function will return a value of input parameter plus three.
- */
-int func_plus3(int x)
-{
-	return x + 3;
-}
-
-/**
- * \brief This function will return a value of input parameter minus two.
- */
-int func_minus2(int x)
-{
-	return x - 2;
-}
-
 /*
  * The Secure Application:
  * - Initializes MCU, drivers and middleware

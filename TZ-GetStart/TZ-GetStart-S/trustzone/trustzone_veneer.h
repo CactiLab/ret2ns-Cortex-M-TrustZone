@@ -36,18 +36,6 @@
 
 #include <compiler.h>
 
-/* ======== Non-secure callable functions for Getting Started Example ======== */
-
-/**
- * \brief Non-secure callable function 1: return a value of input parameter plus three.
- */
-extern int nsc_func_plus3(int x);
-
-/**
- * \brief Non-secure callable function 2: return a value of input parameter minus two.
- */
-extern int nsc_func_minus2(int x);
-
 /* ======== Non-secure callable functions defined by customer ======== */
 /* Add your function declaration here */
 
