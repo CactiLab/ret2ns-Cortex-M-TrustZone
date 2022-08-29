@@ -29,3 +29,8 @@ void print_and_chk_s(char* input)
 	}
 	return;
 }
+
+void chk_pointer(void* pt)
+{
+	
+}

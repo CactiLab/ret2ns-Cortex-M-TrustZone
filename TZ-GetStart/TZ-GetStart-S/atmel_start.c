@@ -47,9 +47,19 @@ void check_pointer(void)
 {
 	void *p1 = (void *)0x82f0;
 	cmse_address_info_t result1 = cmse_TTA(p1);
+	cmse_address_info_t r1 = cmse_TTA_fptr(p1);
 	
 	void *p2 = (void *)0x8350;
 	cmse_address_info_t result2 = cmse_TTA(p2);
+	cmse_address_info_t r2 = cmse_TTA_fptr(p2);
+	if (result2.flags.mpu_region_valid == 1)
+	{
+		uint8_t mpu_region = result2.flags.mpu_region;
+		MPU_NS->RNR = mpu_region;
+		uint8_t rbar = MPU_NS->RBAR;
+		uint8_t rb = (rbar & 0b10) >> 1;
+		uint8_t rbt = rb;
+	}
 	
 	void *p3 = (void *)0x8460;
 	cmse_address_info_t result3 = cmse_TTA(p3);
