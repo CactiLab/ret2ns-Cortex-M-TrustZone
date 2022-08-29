@@ -57,8 +57,7 @@ void check_pointer(void)
 		uint8_t mpu_region = result2.flags.mpu_region;
 		MPU_NS->RNR = mpu_region;
 		uint8_t rbar = MPU_NS->RBAR;
-		uint8_t rb = (rbar & 0b10) >> 1;
-		uint8_t rbt = rb;
+		uint8_t up_read = (rbar & 0b10) >> 1;  /* UP read access */
 	}
 	
 	void *p3 = (void *)0x8460;
