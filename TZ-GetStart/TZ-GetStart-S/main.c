@@ -55,7 +55,7 @@ int main(void)
 
 	/* Get non-secure reset handler */
 	NonSecure_ResetHandler = (funcptr_void)(*((uint32_t *)((CONF_TZ_START_NS) + 4U)));
-	check_pointer();
+// 	check_pointer();
 	/* Start non-secure state software application */
 	NonSecure_ResetHandler();
 

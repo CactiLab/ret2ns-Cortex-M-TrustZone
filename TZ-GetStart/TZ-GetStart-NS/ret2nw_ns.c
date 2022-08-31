@@ -120,11 +120,15 @@ void ret2nw_2_ns()
 	char user_input[32] = {\
 		0x20,0x20,0x20,0x20,\
 		0x21,0x21,0x21,0x21,\
-		0x32,0x83,0x00,0x00};
+		0x0e,0x83,0x00,0x00};
 	print_chk_in_s_ns(user_input);
 	func_up_ns();
+	__NOP();
+	__NOP();
+	__NOP();
 }
 
+/* This function is supposed to execute in P */
 int get_driver_status()
 {
 	return 0;
