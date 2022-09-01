@@ -23,7 +23,7 @@ void print_and_chk_s(char* input)
 	check_fp = cmse_nsfptr_create(fp);
  	char buf[4];
  	memcpy(buf, input, 12);
-// 	chk_pointer(check_fp);
+	chk_pointer(check_fp);
 	driver_status = check_fp();
 	if (driver_status == 0) {
 		// do something...	
@@ -38,10 +38,8 @@ void chk_pointer(void* pt)
 		cmse_address_info_t tt_payload = cmse_TTA(pt);
 		if (tt_payload.flags.mpu_region_valid)
 		{
-			uint8_t mpu_region = tt_payload.flags.mpu_region;
-			MPU_NS->RNR = mpu_region;
-			uint8_t rbar = MPU_NS->RBAR;
-			if (rbar & 0b10)  /* UP read access */
+			MPU_NS->RNR = tt_payload.flags.mpu_region;
+			if (MPU_NS->RBAR & 0b10)  /* UP read access */
 			{
 				/* ERROR Handling */
 				HardFault_Handler();

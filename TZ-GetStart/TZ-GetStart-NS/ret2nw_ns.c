@@ -89,13 +89,6 @@ void ret2nw_ns()
 	func_up_ns();
 }
 
-void func_up_ns()
-{
-	while(1)
-	{
-		
-	}
-}
 
 /**
  * \brief BLXNS - IPSR
@@ -117,15 +110,21 @@ void print_chk_in_s_ns(char* user_str)
 
 void ret2nw_2_ns()
 {
-	char user_input[32] = {\
-		0x20,0x20,0x20,0x20,\
-		0x21,0x21,0x21,0x21,\
-		0x0e,0x83,0x00,0x00};
+	DROP_NS_PRIVILEGES;
+	char user_input[32] = {
+		0x20,0x20,0x20,0x20,
+		0x21,0x21,0x21,0x21,
+		0xbc,0x83,0x00,0x00};
 	print_chk_in_s_ns(user_input);
 	func_up_ns();
-	__NOP();
-	__NOP();
-	__NOP();
+}
+
+void func_up_ns()
+{
+	while(1)
+	{
+		
+	}
 }
 
 /* This function is supposed to execute in P */
