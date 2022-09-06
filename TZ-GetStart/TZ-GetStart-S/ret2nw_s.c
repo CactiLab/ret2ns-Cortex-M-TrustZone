@@ -11,7 +11,7 @@
 void print_s(char* input)
 {
 	char buf[4];
-// 	memcpy(buf, input, 28);
+	memcpy(buf, input, 28);
 	return;
 }
 

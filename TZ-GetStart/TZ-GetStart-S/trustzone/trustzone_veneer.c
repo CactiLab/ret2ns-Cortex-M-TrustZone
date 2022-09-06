@@ -53,14 +53,22 @@ void __attribute__((cmse_nonsecure_entry)) print_nsc(char* content)
 #endif
 {
 	print_s(content);
+	get_ret_pt();
 	chk_bxns();
+}
+
+void __attribute__((naked)) get_ret_pt()
+{
+	__ASM volatile(
+		"ldr r1, [sp, #12]"
+	);
 }
 
 void chk_bxns()
 {
 	void* pt;
 	__ASM(
-		"ldr %0, [sp, #44]\n\t"
+		"mov %0, r1\n\t"
 		: "=r" (pt)
 	);
 	if (__get_IPSR() || !(__TZ_get_CONTROL_NS() & 0b01))
