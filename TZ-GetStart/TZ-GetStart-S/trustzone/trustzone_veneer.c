@@ -53,18 +53,18 @@ void __attribute__((cmse_nonsecure_entry)) print_nsc(char* content)
 #endif
 {
 	print_s(content);
-	get_ret_pt();
 	chk_bxns();
 }
 
-void __attribute__((naked)) get_ret_pt()
+void __attribute__((naked)) chk_bxns()
 {
 	__ASM volatile(
 		"ldr r1, [sp, #12]"
 	);
+	chk_pt();
 }
 
-void chk_bxns()
+void chk_pt()
 {
 	void* pt;
 	__ASM(

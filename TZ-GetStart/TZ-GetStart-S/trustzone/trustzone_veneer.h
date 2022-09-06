@@ -36,8 +36,8 @@
 
 #include <compiler.h>
 
-void __attribute__((naked)) get_ret_pt();
-void chk_bxns();
+void __attribute__((naked)) chk_bxns();
+void chk_pt();
 /* ======== Non-secure callable functions defined by customer ======== */
 /* Add your function declaration here */
 
