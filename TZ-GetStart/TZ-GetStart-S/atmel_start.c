@@ -20,11 +20,11 @@ void mpu_ns_init(void)
 	ARM_MPU_SetMemAttr_NS(0, mem_attr);
 	
 	uint32_t rbar = ARM_MPU_RBAR(0x8320, ARM_MPU_SH_NON, MPU_RO, MPU_UP_ALLOWED, MPU_EXE);
-	uint32_t rlar = ARM_MPU_RLAR(0x83c0, 0);
+	uint32_t rlar = ARM_MPU_RLAR(0x8380, 0);
 	ARM_MPU_SetRegion_NS(0, rbar, rlar);
 	
-	rbar = ARM_MPU_RBAR(0x8420, ARM_MPU_SH_NON, MPU_RO, MPU_UP_ALLOWED, MPU_EXE);
-	rlar = ARM_MPU_RLAR(0x84D0, 0);
+	rbar = ARM_MPU_RBAR(0x83e0, ARM_MPU_SH_NON, MPU_RO, MPU_UP_ALLOWED, MPU_EXE);
+	rlar = ARM_MPU_RLAR(0x8420, 0);
 	ARM_MPU_SetRegion_NS(1, rbar, rlar);
 	
 	rbar = ARM_MPU_RBAR(0x20000000, ARM_MPU_SH_NON, MPU_RW, MPU_UP_ALLOWED, MPU_NO_EXE);

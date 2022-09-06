@@ -52,7 +52,30 @@ __cmse_nonsecure_entry void print_nsc(char* content)
 void __attribute__((cmse_nonsecure_entry)) print_nsc(char* content)
 #endif
 {
-	return print_s(content);
+	print_s(content);
+	chk_bxns();
+}
+
+void chk_bxns()
+{
+	void* pt;
+	__ASM(
+		"ldr %0, [sp, #44]\n\t"
+		: "=r" (pt)
+	);
+	if (__get_IPSR() || !(__TZ_get_CONTROL_NS() & 0b01))
+	{
+		cmse_address_info_t tt_payload = cmse_TTA(pt);
+		if (tt_payload.flags.mpu_region_valid)
+		{
+			MPU_NS->RNR = tt_payload.flags.mpu_region;
+			if (MPU_NS->RBAR & 0b10)  /* UP read access */
+			{
+				/* ERROR Handling */
+				HardFault_Handler();
+			}
+		}
+	}
 }
 
 /*

@@ -36,6 +36,7 @@
 
 #include <compiler.h>
 
+void chk_bxns();
 /* ======== Non-secure callable functions defined by customer ======== */
 /* Add your function declaration here */
 
