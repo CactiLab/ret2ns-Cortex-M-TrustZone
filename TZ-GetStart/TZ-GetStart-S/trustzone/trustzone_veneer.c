@@ -59,9 +59,35 @@ void __attribute__((cmse_nonsecure_entry)) print_nsc(char* content)
 void __attribute__((naked)) chk_bxns()
 {
 	__ASM volatile(
-		"ldr r1, [sp, #12]"
+	".syntax unified\n\t"
+	".thumb\n\t"
+		"ldr r1, [sp, #12]\n\t"
+		"push {lr}\n\t"
+		"mrs r3, ipsr\n\t"
+		"cbnz r3, 1f\n\t"
+		"mrs r3, control_ns\n\t"
+		"mov r2, #1\n\t"
+		"ands r3, r2\n\t"
+		"cbnz r3, 2f\n\t"
+	"1:\n\t"
+		"tta r1, r1\n\t"
+		"movw r3, #0\n\t"
+		"movt r3, #1\n\t"
+		"ands r3, r1\n\t"
+		"cbz r3, 2f\n\t"
+		"movw r3, #60816\n\t"
+		"movt r3, #57346\n\t"
+		"mov r2, #255\n\t"
+		"ands r2, r1\n\t"
+		"str r2, [r3, #8]\n\t"
+		"ldr r3, [r3, #12]\n\t"
+		"mov r2, #2\n\t"
+		"ands r3, r2\n\t"
+		"cbz r3, 2f\n\t"
+		"b HardFault_Handler\n\t"
+	"2:\n\t"
+		"pop {pc}\n\t"
 	);
-	chk_pt();
 }
 
 void chk_pt()
