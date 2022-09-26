@@ -1,0 +1,10 @@
+--cpu=Cortex-M33
+".\objects\main_ns.o"
+"..\IOTKit_CM33_s\Objects\IOTKit_CM33_s_CMSE_Lib.o"
+".\objects\led_v2m-mps2.o"
+".\objects\startup_iotkit_cm33.o"
+".\objects\system_iotkit_cm33.o"
+--strict --scatter ".\RTE\Device\IOTKit_CM33_FP\ac6_arm.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list ".\Listings\IOTKit_CM33_ns.map" -o .\Objects\IOTKit_CM33_ns.axf

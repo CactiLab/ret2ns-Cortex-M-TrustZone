@@ -1,0 +1,25 @@
+# Parameters:
+# instance.parameter=value       #(type, mode) default = 'def value' : description : [min..max]
+#------------------------------------------------------------------------------
+cpu0.BIGENDINIT=0                                     # (bool  , init-time) default = '0'      : Initialize processor to big endian mode
+cpu0.CPIF=1                                           # (bool  , init-time) default = '1'      : Specifies whether the external coprocessor interface is included
+cpu0.DSP=1                                            # (bool  , init-time) default = '1'      : Set whether the model has the DSP extension
+cpu0.FPU=1                                            # (bool  , init-time) default = '1'      : Set whether the model has VFP support
+cpu0.INITNSVTOR=0                                     # (int   , init-time) default = '0x0'    : Non-Secure vector-table offset at reset
+cpu0.INITSVTOR=0                                      # (int   , init-time) default = '0x10000000' : Secure vector-table offset at reset
+cpu0.IRQLVL=0x3                                       # (int   , init-time) default = '0x3'    : Number of bits of interrupt priority
+cpu0.ITM=0                                            # (bool  , init-time) default = '1'      : Level of instrumentation trace supported. false : No ITM trace included, true: ITM trace included
+cpu0.LOCK_NS_MPU=0                                    # (bool  , init-time) default = '0'      : Lock down of Non-Secure MPU registers write
+cpu0.LOCK_SAU=0                                       # (bool  , init-time) default = '0'      : Lock down of SAU registers write
+cpu0.LOCK_S_MPU=0                                     # (bool  , init-time) default = '0'      : Lock down of Secure MPU registers write
+cpu0.MPU_NS=0x8                                       # (int   , init-time) default = '0x8'    : Number of regions in the Non-Secure MPU. If Security Extentions are absent, this is the total number of MPU regions
+cpu0.MPU_S=0x8                                        # (int   , init-time) default = '0x8'    : Number of regions in the Secure MPU. If Security Extentions are absent, this is ignored
+cpu0.SAU=0x8                                          # (int   , init-time) default = '0x8'    : Number of SAU regions (0 => no SAU)
+cpu0.SAU_CTRL.ALLNS=0                                 # (bool  , init-time) default = '0'      : At reset, the SAU treats entire memory space as NS when the SAU is disabled if this is set
+cpu0.SAU_CTRL.ENABLE=0                                # (bool  , init-time) default = '0'      : Enable SAU at reset
+cpu0.SECEXT=1                                         # (bool  , init-time) default = '1'      : Whether the ARMv8-M Security Extensions are included
+cpu0.semihosting-enable=0                             # (bool  , init-time) default = '1'      : Enable semihosting SVC traps. Applications that do not use semihosting must set this parameter to false.
+fvp_mps2.DISABLE_GATING=1                             # (bool  , init-time) default = '0'      : Disable Memory gating logic
+fvp_mps2.platform_type=1                              # (int   , init-time) default = '0x0'    : 0:Original MPS2 ; 1:IoT Kit (cut-down SSE-200) ; 2:Full SSE-200; 3:SVOS
+idau.NUM_IDAU_REGION=0                                # (int   , init-time) default = '0x12'   : 
+#------------------------------------------------------------------------------
