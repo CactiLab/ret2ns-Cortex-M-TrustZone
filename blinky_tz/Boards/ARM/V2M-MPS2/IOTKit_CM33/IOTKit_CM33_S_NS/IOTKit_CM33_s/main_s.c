@@ -132,6 +132,12 @@ void Secure_printf(char *pString)
     );
 }
 
+void Secure_printf_int(uint32_t value) __attribute__((cmse_nonsecure_entry));
+void Secure_printf_int(uint32_t value)
+{
+    printf("%d", value);
+}
+
 /*----------------------------------------------------------------------------
   Secure function for NonSecure callbacks exported to NonSecure application
  *----------------------------------------------------------------------------*/
