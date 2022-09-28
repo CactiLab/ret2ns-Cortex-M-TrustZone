@@ -35,7 +35,7 @@ void SVC_Handler_Main(uint32_t exc_return_code, uint32_t msp_val)
 			print_in_s_handler(stacked_r0);
 			break;
 		case 1:
-			print_chk_in_s_handler(stacked_r0);
+			print_chk_nsc(stacked_r0);
 			break;
 		case 2:
 			SET_NS_PRIVILEGES;
