@@ -1,104 +1,0 @@
-Dependencies for Project 'IOTKit_CM33_s', Target 'FVP': (DO NOT MODIFY !)
-CompilerVersion: 6160000::V6.16::ARMCLANG
-F (.\main_s.c)(0x61E06FE2)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m33 -mfpu=fpv5-sp-d16 -mfloat-abi=hard -mcmse -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -O1 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -I./RTE/Device/IOTKit_CM33_FP-I./RTE/_FVP-IC:/Users/philo/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/Users/philo/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Driver/Include-IC:/Users/philo/AppData/Local/Arm/Packs/Keil/MDK-Middleware/7.15.0/Board-IC:/Users/philo/AppData/Local/Arm/Packs/Keil/V2M-MPS2_IOTKit_BSP/1.5.0/Boards/ARM/V2M-MPS2/Common-IC:/Users/philo/AppData/Local/Arm/Packs/Keil/V2M-MPS2_IOTKit_BSP/1.5.0/Device/IOTKit_CM33/Include-D__UVISION_VERSION="536" -D_RTE_ -DIOTKit_CM33_FP -D_RTE_-o ./objects/main_s.o -MD)
-I (C:\Keil_v5\ARM\ARMCLANG\include\arm_cmse.h)(0x602AF24E)
-I (C:\Keil_v5\ARM\ARMCLANG\include\stddef.h)(0x6035BEA0)
-I (C:\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6035BEA0)
-I (C:\Keil_v5\ARM\ARMCLANG\include\stdio.h)(0x6035BEA4)
-I (C:\Users\philo\AppData\Local\Arm\Packs\Keil\V2M-MPS2_IOTKit_BSP\1.5.0\Device\IOTKit_CM33\Include\IOTKit_CM33_FP.h)(0x61E06FE2)
-I (C:\Users\philo\AppData\Local\Arm\Packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include\core_cm33.h)(0x626FF39E)
-I (C:\Users\philo\AppData\Local\Arm\Packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include\cmsis_version.h)(0x626FF39E)
-I (C:\Users\philo\AppData\Local\Arm\Packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include\cmsis_compiler.h)(0x626FF39E)
-I (C:\Users\philo\AppData\Local\Arm\Packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include\cmsis_armclang.h)(0x626FF39E)
-I (C:\Users\philo\AppData\Local\Arm\Packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include\mpu_armv8.h)(0x626FF39E)
-I (C:\Users\philo\AppData\Local\Arm\Packs\Keil\V2M-MPS2_IOTKit_BSP\1.5.0\Device\IOTKit_CM33\Include\system_IOTKit_CM33.h)(0x61E06FE2)
-I (C:\Users\philo\AppData\Local\Arm\Packs\Keil\MDK-Middleware\7.15.0\Board\Board_LED.h)(0x5D14AA0A)
-I (C:\Users\philo\AppData\Local\Arm\Packs\Keil\MDK-Middleware\7.15.0\Board\Board_GLCD.h)(0x5D14AA0A)
-I (C:\Keil_v5\ARM\ARMCLANG\include\stdbool.h)(0x6035BE9A)
-I (C:\Users\philo\AppData\Local\Arm\Packs\Keil\V2M-MPS2_IOTKit_BSP\1.5.0\Boards\ARM\V2M-MPS2\Common\GLCD_Config.h)(0x5919BBBA)
-F (.\stdout_USART.c)(0x58503B36)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m33 -mfpu=fpv5-sp-d16 -mfloat-abi=hard -mcmse -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -O1 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -I./RTE/Device/IOTKit_CM33_FP-I./RTE/_FVP-IC:/Users/philo/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/Users/philo/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Driver/Include-IC:/Users/philo/AppData/Local/Arm/Packs/Keil/MDK-Middleware/7.15.0/Board-IC:/Users/philo/AppData/Local/Arm/Packs/Keil/V2M-MPS2_IOTKit_BSP/1.5.0/Boards/ARM/V2M-MPS2/Common-IC:/Users/philo/AppData/Local/Arm/Packs/Keil/V2M-MPS2_IOTKit_BSP/1.5.0/Device/IOTKit_CM33/Include-D__UVISION_VERSION="536" -D_RTE_ -DIOTKit_CM33_FP -D_RTE_-o ./objects/stdout_usart.o -MD)
-I (C:\Users\philo\AppData\Local\Arm\Packs\ARM\CMSIS\5.9.0\CMSIS\Driver\Include\Driver_USART.h)(0x626FF39E)
-I (C:\Users\philo\AppData\Local\Arm\Packs\ARM\CMSIS\5.9.0\CMSIS\Driver\Include\Driver_Common.h)(0x626FF39E)
-I (C:\Keil_v5\ARM\ARMCLANG\include\stddef.h)(0x6035BEA0)
-I (C:\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6035BEA0)
-I (C:\Keil_v5\ARM\ARMCLANG\include\stdbool.h)(0x6035BE9A)
-F (..\README.md)(0x61E5D21C)()
-F (C:\Users\philo\AppData\Local\Arm\Packs\Keil\V2M-MPS2_IOTKit_BSP\1.5.0\Boards\ARM\V2M-MPS2\Common\GLCD_Fonts.c)(0x59160A3E)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m33 -mfpu=fpv5-sp-d16 -mfloat-abi=hard -mcmse -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -O1 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -I./RTE/Device/IOTKit_CM33_FP-I./RTE/_FVP-IC:/Users/philo/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/Users/philo/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Driver/Include-IC:/Users/philo/AppData/Local/Arm/Packs/Keil/MDK-Middleware/7.15.0/Board-IC:/Users/philo/AppData/Local/Arm/Packs/Keil/V2M-MPS2_IOTKit_BSP/1.5.0/Boards/ARM/V2M-MPS2/Common-IC:/Users/philo/AppData/Local/Arm/Packs/Keil/V2M-MPS2_IOTKit_BSP/1.5.0/Device/IOTKit_CM33/Include-D__UVISION_VERSION="536" -D_RTE_ -DIOTKit_CM33_FP -D_RTE_-o ./objects/glcd_fonts.o -MD)
-I (C:\Users\philo\AppData\Local\Arm\Packs\Keil\MDK-Middleware\7.15.0\Board\Board_GLCD.h)(0x5D14AA0A)
-I (C:\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6035BEA0)
-I (C:\Keil_v5\ARM\ARMCLANG\include\stdbool.h)(0x6035BE9A)
-F (C:\Users\philo\AppData\Local\Arm\Packs\Keil\V2M-MPS2_IOTKit_BSP\1.5.0\Boards\ARM\V2M-MPS2\Common\GLCD_V2M-MPS2.c)(0x59849462)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m33 -mfpu=fpv5-sp-d16 -mfloat-abi=hard -mcmse -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -O1 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -I./RTE/Device/IOTKit_CM33_FP-I./RTE/_FVP-IC:/Users/philo/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/Users/philo/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Driver/Include-IC:/Users/philo/AppData/Local/Arm/Packs/Keil/MDK-Middleware/7.15.0/Board-IC:/Users/philo/AppData/Local/Arm/Packs/Keil/V2M-MPS2_IOTKit_BSP/1.5.0/Boards/ARM/V2M-MPS2/Common-IC:/Users/philo/AppData/Local/Arm/Packs/Keil/V2M-MPS2_IOTKit_BSP/1.5.0/Device/IOTKit_CM33/Include-D__UVISION_VERSION="536" -D_RTE_ -DIOTKit_CM33_FP -D_RTE_-o ./objects/glcd_v2m-mps2.o -MD)
-I (C:\Keil_v5\ARM\ARMCLANG\include\stddef.h)(0x6035BEA0)
-I (C:\Users\philo\AppData\Local\Arm\Packs\Keil\V2M-MPS2_IOTKit_BSP\1.5.0\Boards\ARM\V2M-MPS2\Common\SMM_MPS2.h)(0x59160A3E)
-I (C:\Users\philo\AppData\Local\Arm\Packs\Keil\V2M-MPS2_IOTKit_BSP\1.5.0\Boards\ARM\V2M-MPS2\Common\Device.h)(0x61D5C610)
-I (C:\Users\philo\AppData\Local\Arm\Packs\Keil\V2M-MPS2_IOTKit_BSP\1.5.0\Device\IOTKit_CM33\Include\IOTKit_CM33_FP.h)(0x61E06FE2)
-I (C:\Users\philo\AppData\Local\Arm\Packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include\core_cm33.h)(0x626FF39E)
-I (C:\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6035BEA0)
-I (C:\Users\philo\AppData\Local\Arm\Packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include\cmsis_version.h)(0x626FF39E)
-I (C:\Users\philo\AppData\Local\Arm\Packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include\cmsis_compiler.h)(0x626FF39E)
-I (C:\Users\philo\AppData\Local\Arm\Packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include\cmsis_armclang.h)(0x626FF39E)
-I (C:\Users\philo\AppData\Local\Arm\Packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include\mpu_armv8.h)(0x626FF39E)
-I (C:\Users\philo\AppData\Local\Arm\Packs\Keil\V2M-MPS2_IOTKit_BSP\1.5.0\Device\IOTKit_CM33\Include\system_IOTKit_CM33.h)(0x61E06FE2)
-I (C:\Users\philo\AppData\Local\Arm\Packs\Keil\V2M-MPS2_IOTKit_BSP\1.5.0\Boards\ARM\V2M-MPS2\Common\GLCD_Config.h)(0x5919BBBA)
-I (C:\Users\philo\AppData\Local\Arm\Packs\Keil\MDK-Middleware\7.15.0\Board\Board_GLCD.h)(0x5D14AA0A)
-I (C:\Keil_v5\ARM\ARMCLANG\include\stdbool.h)(0x6035BE9A)
-F (C:\Users\philo\AppData\Local\Arm\Packs\Keil\V2M-MPS2_IOTKit_BSP\1.5.0\Boards\ARM\V2M-MPS2\Common\LED_V2M-MPS2.c)(0x6082D98E)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m33 -mfpu=fpv5-sp-d16 -mfloat-abi=hard -mcmse -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -O1 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -I./RTE/Device/IOTKit_CM33_FP-I./RTE/_FVP-IC:/Users/philo/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/Users/philo/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Driver/Include-IC:/Users/philo/AppData/Local/Arm/Packs/Keil/MDK-Middleware/7.15.0/Board-IC:/Users/philo/AppData/Local/Arm/Packs/Keil/V2M-MPS2_IOTKit_BSP/1.5.0/Boards/ARM/V2M-MPS2/Common-IC:/Users/philo/AppData/Local/Arm/Packs/Keil/V2M-MPS2_IOTKit_BSP/1.5.0/Device/IOTKit_CM33/Include-D__UVISION_VERSION="536" -D_RTE_ -DIOTKit_CM33_FP -D_RTE_-o ./objects/led_v2m-mps2.o -MD)
-I (C:\Users\philo\AppData\Local\Arm\Packs\Keil\V2M-MPS2_IOTKit_BSP\1.5.0\Boards\ARM\V2M-MPS2\Common\SMM_MPS2.h)(0x59160A3E)
-I (C:\Users\philo\AppData\Local\Arm\Packs\Keil\V2M-MPS2_IOTKit_BSP\1.5.0\Boards\ARM\V2M-MPS2\Common\Device.h)(0x61D5C610)
-I (C:\Users\philo\AppData\Local\Arm\Packs\Keil\V2M-MPS2_IOTKit_BSP\1.5.0\Device\IOTKit_CM33\Include\IOTKit_CM33_FP.h)(0x61E06FE2)
-I (C:\Users\philo\AppData\Local\Arm\Packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include\core_cm33.h)(0x626FF39E)
-I (C:\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6035BEA0)
-I (C:\Users\philo\AppData\Local\Arm\Packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include\cmsis_version.h)(0x626FF39E)
-I (C:\Users\philo\AppData\Local\Arm\Packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include\cmsis_compiler.h)(0x626FF39E)
-I (C:\Users\philo\AppData\Local\Arm\Packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include\cmsis_armclang.h)(0x626FF39E)
-I (C:\Users\philo\AppData\Local\Arm\Packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include\mpu_armv8.h)(0x626FF39E)
-I (C:\Users\philo\AppData\Local\Arm\Packs\Keil\V2M-MPS2_IOTKit_BSP\1.5.0\Device\IOTKit_CM33\Include\system_IOTKit_CM33.h)(0x61E06FE2)
-I (C:\Users\philo\AppData\Local\Arm\Packs\Keil\MDK-Middleware\7.15.0\Board\Board_LED.h)(0x5D14AA0A)
-F (C:\Users\philo\AppData\Local\Arm\Packs\Keil\V2M-MPS2_IOTKit_BSP\1.5.0\CMSIS\Driver\USART_V2M-MPS2.c)(0x5919F140)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m33 -mfpu=fpv5-sp-d16 -mfloat-abi=hard -mcmse -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -O1 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -I./RTE/Device/IOTKit_CM33_FP-I./RTE/_FVP-IC:/Users/philo/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/Users/philo/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Driver/Include-IC:/Users/philo/AppData/Local/Arm/Packs/Keil/MDK-Middleware/7.15.0/Board-IC:/Users/philo/AppData/Local/Arm/Packs/Keil/V2M-MPS2_IOTKit_BSP/1.5.0/Boards/ARM/V2M-MPS2/Common-IC:/Users/philo/AppData/Local/Arm/Packs/Keil/V2M-MPS2_IOTKit_BSP/1.5.0/Device/IOTKit_CM33/Include-D__UVISION_VERSION="536" -D_RTE_ -DIOTKit_CM33_FP -D_RTE_-o ./objects/usart_v2m-mps2.o -MD)
-I (C:\Users\philo\AppData\Local\Arm\Packs\Keil\V2M-MPS2_IOTKit_BSP\1.5.0\CMSIS\Driver\USART_V2M-MPS2.h)(0x59160A3E)
-I (C:\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6035BEA0)
-I (C:\Keil_v5\ARM\ARMCLANG\include\string.h)(0x6035BEA0)
-I (C:\Users\philo\AppData\Local\Arm\Packs\ARM\CMSIS\5.9.0\CMSIS\Driver\Include\Driver_USART.h)(0x626FF39E)
-I (C:\Users\philo\AppData\Local\Arm\Packs\ARM\CMSIS\5.9.0\CMSIS\Driver\Include\Driver_Common.h)(0x626FF39E)
-I (C:\Keil_v5\ARM\ARMCLANG\include\stddef.h)(0x6035BEA0)
-I (C:\Keil_v5\ARM\ARMCLANG\include\stdbool.h)(0x6035BE9A)
-I (C:\Users\philo\AppData\Local\Arm\Packs\Keil\V2M-MPS2_IOTKit_BSP\1.5.0\Boards\ARM\V2M-MPS2\Common\Device.h)(0x61D5C610)
-I (C:\Users\philo\AppData\Local\Arm\Packs\Keil\V2M-MPS2_IOTKit_BSP\1.5.0\Device\IOTKit_CM33\Include\IOTKit_CM33_FP.h)(0x61E06FE2)
-I (C:\Users\philo\AppData\Local\Arm\Packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include\core_cm33.h)(0x626FF39E)
-I (C:\Users\philo\AppData\Local\Arm\Packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include\cmsis_version.h)(0x626FF39E)
-I (C:\Users\philo\AppData\Local\Arm\Packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include\cmsis_compiler.h)(0x626FF39E)
-I (C:\Users\philo\AppData\Local\Arm\Packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include\cmsis_armclang.h)(0x626FF39E)
-I (C:\Users\philo\AppData\Local\Arm\Packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include\mpu_armv8.h)(0x626FF39E)
-I (C:\Users\philo\AppData\Local\Arm\Packs\Keil\V2M-MPS2_IOTKit_BSP\1.5.0\Device\IOTKit_CM33\Include\system_IOTKit_CM33.h)(0x61E06FE2)
-I (RTE\Device\IOTKit_CM33_FP\RTE_Device.h)(0x58503B36)
-I (RTE\_FVP\RTE_Components.h)(0x63320F24)
-F (C:\Users\philo\AppData\Local\Arm\Packs\Keil\ARM_Compiler\1.7.2\Source\retarget_io.c)(0x584ED27E)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m33 -mfpu=fpv5-sp-d16 -mfloat-abi=hard -mcmse -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -O1 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -I./RTE/Device/IOTKit_CM33_FP-I./RTE/_FVP-IC:/Users/philo/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/Users/philo/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Driver/Include-IC:/Users/philo/AppData/Local/Arm/Packs/Keil/MDK-Middleware/7.15.0/Board-IC:/Users/philo/AppData/Local/Arm/Packs/Keil/V2M-MPS2_IOTKit_BSP/1.5.0/Boards/ARM/V2M-MPS2/Common-IC:/Users/philo/AppData/Local/Arm/Packs/Keil/V2M-MPS2_IOTKit_BSP/1.5.0/Device/IOTKit_CM33/Include-D__UVISION_VERSION="536" -D_RTE_ -DIOTKit_CM33_FP -D_RTE_-o ./objects/retarget_io.o -MD)
-I (C:\Keil_v5\ARM\ARMCLANG\include\string.h)(0x6035BEA0)
-I (C:\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6035BEA0)
-I (C:\Keil_v5\ARM\ARMCLANG\include\stdio.h)(0x6035BEA4)
-I (C:\Keil_v5\ARM\ARMCLANG\include\stdlib.h)(0x6035BEA0)
-I (C:\Keil_v5\ARM\ARMCLANG\include\assert.h)(0x6035BEA0)
-I (C:\Keil_v5\ARM\ARMCLANG\include\rt_sys.h)(0x6035BEA4)
-I (RTE\_FVP\RTE_Components.h)(0x63320F24)
-F (RTE\Device\IOTKit_CM33_FP\RTE_Device.h)(0x58503B36)()
-F (RTE\Device\IOTKit_CM33_FP\ac6_arm.sct)(0x61E06FE2)()
-F (RTE\Device\IOTKit_CM33_FP\partition_IOTKit_CM33.h)(0x61E06FE2)()
-F (RTE\Device\IOTKit_CM33_FP\startup_IOTKit_CM33.c)(0x61F2DBDC)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m33 -mfpu=fpv5-sp-d16 -mfloat-abi=hard -mcmse -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -O1 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -I./RTE/Device/IOTKit_CM33_FP-I./RTE/_FVP-IC:/Users/philo/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/Users/philo/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Driver/Include-IC:/Users/philo/AppData/Local/Arm/Packs/Keil/MDK-Middleware/7.15.0/Board-IC:/Users/philo/AppData/Local/Arm/Packs/Keil/V2M-MPS2_IOTKit_BSP/1.5.0/Boards/ARM/V2M-MPS2/Common-IC:/Users/philo/AppData/Local/Arm/Packs/Keil/V2M-MPS2_IOTKit_BSP/1.5.0/Device/IOTKit_CM33/Include-D__UVISION_VERSION="536" -D_RTE_ -DIOTKit_CM33_FP -D_RTE_-o ./objects/startup_iotkit_cm33.o -MD)
-I (C:\Users\philo\AppData\Local\Arm\Packs\Keil\V2M-MPS2_IOTKit_BSP\1.5.0\Device\IOTKit_CM33\Include\IOTKit_CM33_FP.h)(0x61E06FE2)
-I (C:\Users\philo\AppData\Local\Arm\Packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include\core_cm33.h)(0x626FF39E)
-I (C:\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6035BEA0)
-I (C:\Users\philo\AppData\Local\Arm\Packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include\cmsis_version.h)(0x626FF39E)
-I (C:\Users\philo\AppData\Local\Arm\Packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include\cmsis_compiler.h)(0x626FF39E)
-I (C:\Users\philo\AppData\Local\Arm\Packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include\cmsis_armclang.h)(0x626FF39E)
-I (C:\Users\philo\AppData\Local\Arm\Packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include\mpu_armv8.h)(0x626FF39E)
-I (C:\Users\philo\AppData\Local\Arm\Packs\Keil\V2M-MPS2_IOTKit_BSP\1.5.0\Device\IOTKit_CM33\Include\system_IOTKit_CM33.h)(0x61E06FE2)
-F (RTE\Device\IOTKit_CM33_FP\system_IOTKit_CM33.c)(0x61E06FE2)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m33 -mfpu=fpv5-sp-d16 -mfloat-abi=hard -mcmse -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -O1 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -I./RTE/Device/IOTKit_CM33_FP-I./RTE/_FVP-IC:/Users/philo/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/Users/philo/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Driver/Include-IC:/Users/philo/AppData/Local/Arm/Packs/Keil/MDK-Middleware/7.15.0/Board-IC:/Users/philo/AppData/Local/Arm/Packs/Keil/V2M-MPS2_IOTKit_BSP/1.5.0/Boards/ARM/V2M-MPS2/Common-IC:/Users/philo/AppData/Local/Arm/Packs/Keil/V2M-MPS2_IOTKit_BSP/1.5.0/Device/IOTKit_CM33/Include-D__UVISION_VERSION="536" -D_RTE_ -DIOTKit_CM33_FP -D_RTE_-o ./objects/system_iotkit_cm33.o -MD)
-I (C:\Users\philo\AppData\Local\Arm\Packs\Keil\V2M-MPS2_IOTKit_BSP\1.5.0\Device\IOTKit_CM33\Include\IOTKit_CM33_FP.h)(0x61E06FE2)
-I (C:\Users\philo\AppData\Local\Arm\Packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include\core_cm33.h)(0x626FF39E)
-I (C:\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6035BEA0)
-I (C:\Users\philo\AppData\Local\Arm\Packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include\cmsis_version.h)(0x626FF39E)
-I (C:\Users\philo\AppData\Local\Arm\Packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include\cmsis_compiler.h)(0x626FF39E)
-I (C:\Users\philo\AppData\Local\Arm\Packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include\cmsis_armclang.h)(0x626FF39E)
-I (C:\Users\philo\AppData\Local\Arm\Packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include\mpu_armv8.h)(0x626FF39E)
-I (C:\Users\philo\AppData\Local\Arm\Packs\Keil\V2M-MPS2_IOTKit_BSP\1.5.0\Device\IOTKit_CM33\Include\system_IOTKit_CM33.h)(0x61E06FE2)
-I (RTE\Device\IOTKit_CM33_FP\partition_IOTKit_CM33.h)(0x61E06FE2)

@@ -9,12 +9,12 @@
 
   <project>
     <PathAndName>.\IOTKit_CM33_s\IOTKit_CM33_s.uvprojx</PathAndName>
+    <NodeIsActive>1</NodeIsActive>
     <NodeIsExpanded>1</NodeIsExpanded>
   </project>
 
   <project>
     <PathAndName>.\IOTKit_CM33_ns\IOTKit_CM33_ns.uvprojx</PathAndName>
-    <NodeIsActive>1</NodeIsActive>
     <NodeIsExpanded>1</NodeIsExpanded>
   </project>
 
