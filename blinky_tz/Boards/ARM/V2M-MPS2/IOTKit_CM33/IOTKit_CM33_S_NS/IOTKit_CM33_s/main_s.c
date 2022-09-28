@@ -10,6 +10,8 @@
 #include "Board_GLCD.h"     /* ::Board Support:Graphic LCD */
 #include "GLCD_Config.h"    /* Keil.SAM4E-EK::Board Support:Graphic LCD */
 
+#define RET2NS_PROTECTION
+
 /* Start address of non-secure application */
 #define NONSECURE_START (0x00200000u)
 
@@ -38,6 +40,7 @@ int32_t Secure_LED_On(uint32_t num) __attribute__((cmse_nonsecure_entry));
 int32_t Secure_LED_On(uint32_t num)
 {
     int32_t val = LED_On(num);
+    #ifdef RET2NS_PROTECTION
     __ASM volatile(
         ".syntax unified\n\t"
         ".thumb\n\t"
@@ -64,6 +67,7 @@ int32_t Secure_LED_On(uint32_t num)
         "cbz r3, #2\n\t"
         "b HardFault_Handler\n\t"
     );
+    #endif
     return val;
 }
 
@@ -71,6 +75,7 @@ int32_t Secure_LED_Off(uint32_t num) __attribute__((cmse_nonsecure_entry));
 int32_t Secure_LED_Off(uint32_t num)
 {
     int32_t val = LED_Off(num);
+    #ifdef RET2NS_PROTECTION
     __ASM volatile(
         ".syntax unified\n\t"
         ".thumb\n\t"
@@ -97,6 +102,7 @@ int32_t Secure_LED_Off(uint32_t num)
         "cbz r3, #2\n\t"
         "b HardFault_Handler\n\t"
     );
+    #endif
     return val;
 }
 
@@ -104,6 +110,7 @@ void Secure_printf(char *pString) __attribute__((cmse_nonsecure_entry));
 void Secure_printf(char *pString)
 {
     printf("%s", pString);
+    #ifdef RET2NS_PROTECTION
     __ASM volatile(
         ".syntax unified\n\t"
         ".thumb\n\t"
@@ -130,12 +137,13 @@ void Secure_printf(char *pString)
         "cbz r3, #2\n\t"
         "b HardFault_Handler\n\t"
     );
+    #endif
 }
 
 void Secure_printf_int(uint32_t value) __attribute__((cmse_nonsecure_entry));
 void Secure_printf_int(uint32_t value)
 {
-    printf("%d", value);
+    printf("(EVL)cycles: %d\n", value);
 }
 
 /*----------------------------------------------------------------------------
@@ -175,6 +183,7 @@ void SysTick_Handler(void)
     case 30:
         if (pfNonSecure_LED_On != NULL)
         {
+            #ifdef RET2NS_PROTECTION
             __ASM volatile(
                 ".syntax unified\n\t"
                 ".thumb\n\t"
@@ -200,12 +209,14 @@ void SysTick_Handler(void)
                 "cbz r3, #2\n\t"
                 "b HardFault_Handler\n\t"
             );
+            #endif
             pfNonSecure_LED_On(1u);
         }
         break;
     case 50:
         if (pfNonSecure_LED_Off != NULL)
         {
+            #ifdef RET2NS_PROTECTION
             __ASM volatile(
                 ".syntax unified\n\t"
                 ".thumb\n\t"
@@ -231,6 +242,7 @@ void SysTick_Handler(void)
                 "cbz r3, #2\n\t"
                 "b HardFault_Handler\n\t"
             );
+            #endif
             pfNonSecure_LED_Off(1u);
         }
         break;

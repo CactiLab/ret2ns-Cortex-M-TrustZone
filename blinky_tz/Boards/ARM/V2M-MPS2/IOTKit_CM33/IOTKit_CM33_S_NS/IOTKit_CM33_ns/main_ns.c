@@ -106,10 +106,10 @@ int main(void)
     SystemCoreClockUpdate();
     SysTick_Config(SystemCoreClock / 100); /* Generate interrupt each 10 ms */
 
-    for (i = 0; i < 30; i++)
+    for (i = 0; i < 10; i++)
     {
         start = ARM_CM_DWT_CYCCNT;
-        for (j = 0; j < 100; j++)
+        for (j = 0; j < 50; j++)
         {
             LED_On(5u);
             for (k = 0; k < 0x100000; k++)
