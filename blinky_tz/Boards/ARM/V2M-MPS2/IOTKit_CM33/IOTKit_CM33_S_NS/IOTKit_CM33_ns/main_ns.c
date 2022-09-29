@@ -15,6 +15,9 @@ char text[] = "Hello World (non-secure)\r\n";
 #define ARM_CM_DWT_CTRL (*(uint32_t *)0xE0001000)
 #define ARM_CM_DWT_CYCCNT (*(uint32_t *)0xE0001004)
 
+// #define TEST_MACRO
+#define TEST_MICRO
+
 /*----------------------------------------------------------------------------
   NonSecure functions used for callbacks
  *----------------------------------------------------------------------------*/
@@ -106,6 +109,22 @@ int main(void)
     SystemCoreClockUpdate();
     SysTick_Config(SystemCoreClock / 100); /* Generate interrupt each 10 ms */
 
+    #ifdef TEST_MICRO
+    for (i = 0; i < 10; i++)
+    {
+        for (k = 0; k < 0x100000; k++)
+            __NOP();
+        
+        start = ARM_CM_DWT_CYCCNT;
+        Secure_printf(text);
+        stop = ARM_CM_DWT_CYCCNT;
+
+        delta = stop - start;
+        Secure_printf_int(delta);
+    }
+    #endif
+
+    #ifdef TEST_MACRO
     for (i = 0; i < 10; i++)
     {
         start = ARM_CM_DWT_CYCCNT;
@@ -126,10 +145,11 @@ int main(void)
 
             Secure_printf(text);
         }
-
         stop = ARM_CM_DWT_CYCCNT;
         delta = stop - start;
         Secure_printf_int(delta);
     }
+    #endif
+
     while (1) {}
 }
