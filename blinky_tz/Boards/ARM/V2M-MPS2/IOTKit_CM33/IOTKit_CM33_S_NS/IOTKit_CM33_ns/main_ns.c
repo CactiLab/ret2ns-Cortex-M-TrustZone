@@ -116,7 +116,7 @@ int main(void)
             __NOP();
         
         start = ARM_CM_DWT_CYCCNT;
-        Secure_printf(text);
+        Secure_empty();
         stop = ARM_CM_DWT_CYCCNT;
 
         delta = stop - start;

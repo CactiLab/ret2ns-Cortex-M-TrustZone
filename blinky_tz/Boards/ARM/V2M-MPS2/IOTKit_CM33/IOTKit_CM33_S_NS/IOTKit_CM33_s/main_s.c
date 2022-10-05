@@ -10,7 +10,7 @@
 #include "Board_GLCD.h"     /* ::Board Support:Graphic LCD */
 #include "GLCD_Config.h"    /* Keil.SAM4E-EK::Board Support:Graphic LCD */
 
-#define RET2NS_PROTECTION
+//#define RET2NS_PROTECTION
 
 /* Start address of non-secure application */
 #define NONSECURE_START (0x00200000u)
@@ -139,6 +139,47 @@ void Secure_printf(char *pString)
     );
     #endif
 }
+
+void __attribute__((optnone)) empty_function(void)
+{
+    return;
+}
+
+void Secure_empty(void) __attribute__((cmse_nonsecure_entry));
+void Secure_empty(void)
+{
+    empty_function();
+    #ifdef RET2NS_PROTECTION
+    __ASM volatile(
+        ".syntax unified\n\t"
+        ".thumb\n\t"
+        "ldr r0, [sp, #4]\n\t"
+        "mrs r3, ipsr\n\t"
+        "cbnz r3, #10\n\t"
+        "mrs r3, control_ns\n\t"
+        "mov r2, #1\n\t"
+        "ands r3, r2\n\t"
+        "cbnz r3, #44\n\t"
+        "tta r0, r0\n\t"
+        "movw r3, #0\n\t"
+        "movt r3, #1\n\t"
+        "ands r3, r0\n\t"
+        "cbz r3, #28\n\t"
+        "movw r3, #60816\n\t"
+        "movt r3, #57346\n\t"
+        "mov r2, #255\n\t"
+        "ands r2, r0\n\t"
+        "str r2, [r3, #8]\n\t"
+        "ldr r3, [r3, #12]\n\t"
+        "mov r2, #2\n\t"
+        "ands r3, r2\n\t"
+        "cbz r3, #2\n\t"
+        "b HardFault_Handler\n\t"
+    );
+    #endif
+}
+
+
 
 void Secure_printf_int(uint32_t value) __attribute__((cmse_nonsecure_entry));
 void Secure_printf_int(uint32_t value)
