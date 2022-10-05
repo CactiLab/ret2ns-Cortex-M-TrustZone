@@ -16,7 +16,7 @@
         <TargetCommonOption>
           <Device>IOTKit_CM33_FP</Device>
           <Vendor>ARM</Vendor>
-          <PackID>Keil.V2M-MPS2_IOTKit_BSP.1.5.0-rc1</PackID>
+          <PackID>Keil.V2M-MPS2_IOTKit_BSP.1.5.0</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x38000000,0x00200000) IRAM2(0x28200000,0x00200000) IROM(0x10000000,0x00200000) IROM2(0x00200000,0x00200000) CPUTYPE("Cortex-M33") FPU3(SFPU) DSP TZ CLOCK(12000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -432,7 +432,7 @@
         <TargetCommonOption>
           <Device>IOTKit_CM33_FP</Device>
           <Vendor>ARM</Vendor>
-          <PackID>Keil.V2M-MPS2_IOTKit_BSP.1.5.0-rc1</PackID>
+          <PackID>Keil.V2M-MPS2_IOTKit_BSP.1.5.0</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x38000000,0x00200000) IRAM2(0x28200000,0x00200000) IROM(0x10000000,0x00200000) IROM2(0x00200000,0x00200000) CPUTYPE("Cortex-M33") FPU3(SFPU) DSP TZ CLOCK(12000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -1063,7 +1063,7 @@
       <file attr="config" category="header" name="CMSIS\Config\RTE_Device.h" version="1.0.0">
         <instance index="0">RTE\Device\IOTKit_CM33_FP\RTE_Device.h</instance>
         <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cvendor="Keil" Cversion="1.2.0" condition="IOTKit_CM33 CMSIS" isDefaultVariant="1"/>
-        <package name="V2M-MPS2_IOTKit_BSP" schemaVersion="1.4.9" url="http://www.keil.com/pack/" vendor="Keil" version="1.5.0-rc1"/>
+        <package name="V2M-MPS2_IOTKit_BSP" schemaVersion="1.4.9" url="http://www.keil.com/pack/" vendor="Keil" version="1.5.0"/>
         <targetInfos>
           <targetInfo name="FVP"/>
           <targetInfo name="V2M-MPS2+"/>
@@ -1072,7 +1072,7 @@
       <file attr="config" category="linkerScript" condition="ARMCC" name="Device\IOTKit_CM33\Source\ARM\ac6_arm.sct" version="1.0.0">
         <instance index="0">RTE\Device\IOTKit_CM33_FP\ac6_arm.sct</instance>
         <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cvendor="Keil" Cversion="1.2.0" condition="IOTKit_CM33 CMSIS" isDefaultVariant="1"/>
-        <package name="V2M-MPS2_IOTKit_BSP" schemaVersion="1.4.9" url="http://www.keil.com/pack/" vendor="Keil" version="1.5.0-rc1"/>
+        <package name="V2M-MPS2_IOTKit_BSP" schemaVersion="1.4.9" url="http://www.keil.com/pack/" vendor="Keil" version="1.5.0"/>
         <targetInfos>
           <targetInfo name="FVP"/>
           <targetInfo name="V2M-MPS2+"/>
@@ -1081,7 +1081,7 @@
       <file attr="config" category="header" name="Device\IOTKit_CM33\Include\Template\partition_IOTKit_CM33.h" version="1.0.0">
         <instance index="0">RTE\Device\IOTKit_CM33_FP\partition_IOTKit_CM33.h</instance>
         <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cvendor="Keil" Cversion="1.2.0" condition="IOTKit_CM33 CMSIS" isDefaultVariant="1"/>
-        <package name="V2M-MPS2_IOTKit_BSP" schemaVersion="1.4.9" url="http://www.keil.com/pack/" vendor="Keil" version="1.5.0-rc1"/>
+        <package name="V2M-MPS2_IOTKit_BSP" schemaVersion="1.4.9" url="http://www.keil.com/pack/" vendor="Keil" version="1.5.0"/>
         <targetInfos>
           <targetInfo name="FVP"/>
           <targetInfo name="V2M-MPS2+"/>
@@ -1096,7 +1096,7 @@
       <file attr="config" category="sourceC" name="Device\IOTKit_CM33\Source\startup_IOTKit_CM33.c" version="1.2.0">
         <instance index="0">RTE\Device\IOTKit_CM33_FP\startup_IOTKit_CM33.c</instance>
         <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cvendor="Keil" Cversion="1.2.0" condition="IOTKit_CM33 CMSIS" isDefaultVariant="1"/>
-        <package name="V2M-MPS2_IOTKit_BSP" schemaVersion="1.4.9" url="http://www.keil.com/pack/" vendor="Keil" version="1.5.0-rc1"/>
+        <package name="V2M-MPS2_IOTKit_BSP" schemaVersion="1.4.9" url="http://www.keil.com/pack/" vendor="Keil" version="1.5.0"/>
         <targetInfos>
           <targetInfo name="FVP"/>
           <targetInfo name="V2M-MPS2+"/>
@@ -1105,7 +1105,7 @@
       <file attr="config" category="sourceC" name="Device\IOTKit_CM33\Source\system_IOTKit_CM33.c" version="1.2.0">
         <instance index="0">RTE\Device\IOTKit_CM33_FP\system_IOTKit_CM33.c</instance>
         <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cvendor="Keil" Cversion="1.2.0" condition="IOTKit_CM33 CMSIS" isDefaultVariant="1"/>
-        <package name="V2M-MPS2_IOTKit_BSP" schemaVersion="1.4.9" url="http://www.keil.com/pack/" vendor="Keil" version="1.5.0-rc1"/>
+        <package name="V2M-MPS2_IOTKit_BSP" schemaVersion="1.4.9" url="http://www.keil.com/pack/" vendor="Keil" version="1.5.0"/>
         <targetInfos>
           <targetInfo name="FVP"/>
           <targetInfo name="V2M-MPS2+"/>
