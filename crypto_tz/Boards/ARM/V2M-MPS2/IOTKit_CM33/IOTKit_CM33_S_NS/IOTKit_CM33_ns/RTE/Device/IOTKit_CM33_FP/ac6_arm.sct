@@ -85,7 +85,11 @@
   Scatter Region definition
  *----------------------------------------------------------------------------*/
 LR_ROM __RO_BASE __RO_SIZE  {                       ; load region size_region
-  ER_ROM __RO_BASE __RO_SIZE  {                     ; load address = execution address
+  ER_PRIV __RO_BASE FIXED {                      ; load address = execution address
+    *(privilege_code)
+  }
+
+  ER_ROM __RO_BASE+0x20000 FIXED  {                     ; load address = execution address
    *.o (RESET, +First)
    *(InRoot$$Sections)
    .ANY (+RO)
