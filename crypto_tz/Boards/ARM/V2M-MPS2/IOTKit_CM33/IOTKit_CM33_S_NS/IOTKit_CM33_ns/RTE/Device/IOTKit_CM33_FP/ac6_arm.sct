@@ -76,6 +76,7 @@
 
 #define __RO_BASE          ( __ROM_BASE )
 #define __RO_SIZE          ( __ROM_SIZE - __CV_SIZE )
+#define __PRIV_BASE        ( __ROM_BASE + 0x10000 )
 
 #define __RW_BASE          ( __RAM_BASE )
 #define __RW_SIZE          ( __RAM_SIZE - __STACK_SIZE - __HEAP_SIZE )
@@ -91,8 +92,9 @@ LR_ROM __RO_BASE __RO_SIZE  {                       ; load region size_region
    .ANY (+RO)
    .ANY (+XO)
   }
-  ER_PRIV __RO_BASE+0x20000 FIXED {                      ; load address = execution address
+  ER_PRIV __PRIV_BASE 0x30000 {                      ; load address = execution address
     *(privilege_code)
+    .ANY (+ZI)
   }
   
   RW_RAM __RW_BASE __RW_SIZE  {                     ; RW data
