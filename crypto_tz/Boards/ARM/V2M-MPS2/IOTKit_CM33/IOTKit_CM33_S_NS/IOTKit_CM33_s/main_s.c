@@ -40,7 +40,21 @@ NonSecure_fpParam pfNonSecure_LED_Off = (NonSecure_fpParam)NULL;
 int32_t Secure_LED_On(uint32_t num) __attribute__((cmse_nonsecure_entry));
 int32_t Secure_LED_On(uint32_t num)
 {
-    return LED_On(num);
+    int32_t val = LED_On(num);
+    __ASM volatile(
+        ".syntax unified\n\t"
+        ".thumb\n\t"
+        "ldr r1, [sp, #4]\n\t"
+        "mrs r2, ipsr\n\t"
+        "cbnz r2, #6\n\t"
+        "mrs r2, control_ns\n\t"
+        "lsls r2, r2, #31\n\t"
+        "bne #8\n\t"
+        "movw r2, #65535\n\t"
+        "movt r2, #33\n\t"
+        "ands r1, r1, r2\n\t"
+    );
+    return val;
 }
 
 int32_t Secure_LED_Off(uint32_t num) __attribute__((cmse_nonsecure_entry));
@@ -99,6 +113,18 @@ void SysTick_Handler(void)
     case 50:
         if (pfNonSecure_LED_Off != NULL)
         {
+            __ASM volatile(
+                ".syntax unified\n\t"
+                ".thumb\n\t"
+                "mrs r1, ipsr\n\t"
+                "cbnz r1, #6\n\t"
+                "mrs r1, control_ns\n\t"
+                "lsls r1, r1, #31\n\t"
+                "bne #8\n\t"
+                "movw r1, #65535\n\t"
+                "movt r1, #33\n\t"
+                "ands r0, r0, r1\n\t"
+            );
             pfNonSecure_LED_Off(1u);
         }
         break;
@@ -122,9 +148,11 @@ void * mask_pointer(void *pt)
 {
     if (__get_IPSR() || !(__TZ_get_CONTROL_NS() & 0b01))
     {
-        // address masking for pointer *pt
-        //printf("%p", (void*)&Image$$ER_PRIV__PRIV_BASE$$Base);
-        pt = (void *)((uint32_t)pt & 0x1FFFFFFF);
+        if (((uint32_t)pt | 0xff) != 0xffffffff)
+        {
+            // address masking for pointer *pt
+            pt = (void *)((uint32_t)pt & 0x0021ffff);
+        }
     }
     return pt;
 }

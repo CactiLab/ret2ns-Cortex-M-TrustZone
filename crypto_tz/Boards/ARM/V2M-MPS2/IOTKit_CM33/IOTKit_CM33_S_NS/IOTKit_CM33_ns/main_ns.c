@@ -19,13 +19,13 @@ char text[] = "Hello World (non-secure)\r\n";
 /*----------------------------------------------------------------------------
   NonSecure functions used for callbacks
  *----------------------------------------------------------------------------*/
-int32_t NonSecure_LED_On(uint32_t num);
+int32_t NonSecure_LED_On(uint32_t num) __attribute__((section("privilege_code")));
 int32_t NonSecure_LED_On(uint32_t num)
 {
     return LED_On(num);
 }
 
-int32_t NonSecure_LED_Off(uint32_t num);
+int32_t NonSecure_LED_Off(uint32_t num) __attribute__((section("privilege_code")));
 int32_t NonSecure_LED_Off(uint32_t num)
 {
     return LED_Off(num);

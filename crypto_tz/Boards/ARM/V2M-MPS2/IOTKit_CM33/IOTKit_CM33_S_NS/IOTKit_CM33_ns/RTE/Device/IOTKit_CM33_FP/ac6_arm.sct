@@ -92,7 +92,7 @@ LR_ROM __RO_BASE __RO_SIZE  {                       ; load region size_region
    .ANY (+RO)
    .ANY (+XO)
   }
-  ER_PRIV __PRIV_BASE 0x30000 {                      ; load address = execution address
+  ER_PRIV __PRIV_BASE 0x10000 {                      ; load address = execution address
     *(privilege_code)
     .ANY (+ZI)
   }
