@@ -10,10 +10,9 @@
 #include "Board_GLCD.h"     /* ::Board Support:Graphic LCD */
 #include "GLCD_Config.h"    /* Keil.SAM4E-EK::Board Support:Graphic LCD */
 
+#define RET2NS_PROTECTION
 /* Start address of non-secure application */
 #define NONSECURE_START (0x00200000u)
-extern unsigned int Image$$ER_PRIV__PRIV_BASE$$Base;
-extern unsigned int Image$$ER_PRIV__PRIV_BASE$$Limit;
 
 void * mask_pointer(void* pt) __attribute__((noinline));
 extern GLCD_FONT GLCD_Font_16x24;
@@ -41,6 +40,7 @@ int32_t Secure_LED_On(uint32_t num) __attribute__((cmse_nonsecure_entry));
 int32_t Secure_LED_On(uint32_t num)
 {
     int32_t val = LED_On(num);
+    #ifdef RET2NS_PROTECTION
     __ASM volatile(
         ".syntax unified\n\t"
         ".thumb\n\t"
@@ -49,24 +49,107 @@ int32_t Secure_LED_On(uint32_t num)
         "cbnz r2, #6\n\t"
         "mrs r2, control_ns\n\t"
         "lsls r2, r2, #31\n\t"
-        "bne #8\n\t"
-        "movw r2, #65535\n\t"
-        "movt r2, #33\n\t"
-        "ands r1, r1, r2\n\t"
+        "bne #14\n\t"
+        "cmn r1, #0x100\n\t"
+        "ittt cc\n\t"
+        "movcc r2, #65535\n\t"
+        "movtcc r2, #33\n\t"
+        "andcc r1, r1, r2\n\t"
     );
+    #endif
     return val;
 }
 
 int32_t Secure_LED_Off(uint32_t num) __attribute__((cmse_nonsecure_entry));
 int32_t Secure_LED_Off(uint32_t num)
 {
-    return LED_Off(num);
+    int32_t val = LED_Off(num);
+    #ifdef RET2NS_PROTECTION
+    __ASM volatile(
+        ".syntax unified\n\t"
+        ".thumb\n\t"
+        "ldr r1, [sp, #4]\n\t"
+        "mrs r2, ipsr\n\t"
+        "cbnz r2, #6\n\t"
+        "mrs r2, control_ns\n\t"
+        "lsls r2, r2, #31\n\t"
+        "bne #14\n\t"
+        "cmn r1, #0x100\n\t"
+        "ittt cc\n\t"
+        "movcc r2, #65535\n\t"
+        "movtcc r2, #33\n\t"
+        "andcc r1, r1, r2\n\t"
+    );
+    #endif
+    return val;
 }
 
 void Secure_printf(char *pString) __attribute__((cmse_nonsecure_entry));
 void Secure_printf(char *pString)
 {
     printf("%s", pString);
+    #ifdef RET2NS_PROTECTION
+    __ASM volatile(
+        ".syntax unified\n\t"
+        ".thumb\n\t"
+        "ldr r1, [sp, #4]\n\t"
+        "mrs r2, ipsr\n\t"
+        "cbnz r2, #6\n\t"
+        "mrs r2, control_ns\n\t"
+        "lsls r2, r2, #31\n\t"
+        "bne #14\n\t"
+        "cmn r1, #0x100\n\t"
+        "ittt cc\n\t"
+        "movcc r2, #65535\n\t"
+        "movtcc r2, #33\n\t"
+        "andcc r1, r1, r2\n\t"
+    );
+    #endif
+}
+
+void __attribute__((optnone)) empty_function(void)
+{
+    return;
+}
+
+void Secure_empty(void) __attribute__((cmse_nonsecure_entry));
+void Secure_empty(void)
+{
+    empty_function();
+    #ifdef RET2NS_PROTECTION
+    __ASM volatile(
+        ".syntax unified\n\t"
+        ".thumb\n\t"
+        "ldr r0, [sp, #4]\n\t"
+        "mrs r3, ipsr\n\t"
+        "cbnz r3, #10\n\t"
+        "mrs r3, control_ns\n\t"
+        "mov r2, #1\n\t"
+        "ands r3, r2\n\t"
+        "cbnz r3, #44\n\t"
+        "tta r0, r0\n\t"
+        "movw r3, #0\n\t"
+        "movt r3, #1\n\t"
+        "ands r3, r0\n\t"
+        "cbz r3, #28\n\t"
+        "movw r3, #60816\n\t"
+        "movt r3, #57346\n\t"
+        "mov r2, #255\n\t"
+        "ands r2, r0\n\t"
+        "str r2, [r3, #8]\n\t"
+        "ldr r3, [r3, #12]\n\t"
+        "mov r2, #2\n\t"
+        "ands r3, r2\n\t"
+        "cbz r3, #2\n\t"
+        "b HardFault_Handler\n\t"
+    );
+    #endif
+}
+
+void Secure_printf_int(uint32_t value) __attribute__((cmse_nonsecure_entry));
+void Secure_printf_int(uint32_t value)
+{
+    printf("(EVL)cycles: %d\n", value);
 }
 
 /*----------------------------------------------------------------------------
@@ -106,13 +189,8 @@ void SysTick_Handler(void)
     case 30:
         if (pfNonSecure_LED_On != NULL)
         {
-            pfNonSecure_LED_On = mask_pointer(pfNonSecure_LED_On);
-            pfNonSecure_LED_On(1u);
-        }
-        break;
-    case 50:
-        if (pfNonSecure_LED_Off != NULL)
-        {
+            #ifdef RET2NS_PROTECTION
+            // pfNonSecure_LED_On = mask_pointer(pfNonSecure_LED_On);
             __ASM volatile(
                 ".syntax unified\n\t"
                 ".thumb\n\t"
@@ -125,6 +203,27 @@ void SysTick_Handler(void)
                 "movt r1, #33\n\t"
                 "ands r0, r0, r1\n\t"
             );
+            #endif
+            pfNonSecure_LED_On(1u);
+        }
+        break;
+    case 50:
+        if (pfNonSecure_LED_Off != NULL)
+        {
+            #ifdef RET2NS_PROTECTION
+            __ASM volatile(
+                ".syntax unified\n\t"
+                ".thumb\n\t"
+                "mrs r1, ipsr\n\t"
+                "cbnz r1, #6\n\t"
+                "mrs r1, control_ns\n\t"
+                "lsls r1, r1, #31\n\t"
+                "bne #8\n\t"
+                "movw r1, #65535\n\t"
+                "movt r1, #33\n\t"
+                "ands r0, r0, r1\n\t"
+            );
+            #endif
             pfNonSecure_LED_Off(1u);
         }
         break;

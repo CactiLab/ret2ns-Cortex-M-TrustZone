@@ -16,6 +16,13 @@
 
 char text[] = "Hello World (non-secure)\r\n";
 
+#define ARM_CM_DEMCR (*(uint32_t *)0xE000EDFC)
+#define ARM_CM_DWT_CTRL (*(uint32_t *)0xE0001000)
+#define ARM_CM_DWT_CYCCNT (*(uint32_t *)0xE0001004)
+
+// #define TEST_MACRO
+#define TEST_MICRO
+
 /*----------------------------------------------------------------------------
   NonSecure functions used for callbacks
  *----------------------------------------------------------------------------*/
@@ -71,6 +78,8 @@ static uint32_t x;
 int main(void)
 {
     uint32_t i;
+    uint32_t j;
+    uint32_t k;
 
     /* exercise some floating point instructions */
     volatile uint32_t fpuType = SCB_GetFPUType();
@@ -92,27 +101,63 @@ int main(void)
   LED_Initialize ();                      /* already done in Secure part */
 #endif
 
+    if (ARM_CM_DWT_CTRL != 0)
+    {                            // See if DWT is available
+        ARM_CM_DEMCR |= 1 << 24; // Set bit 24
+        ARM_CM_DWT_CYCCNT = 0;
+        ARM_CM_DWT_CTRL |= 1 << 0; // Set bit 0
+    }
+    uint32_t start;
+    uint32_t stop;
+    uint32_t delta;
+
     SystemCoreClockUpdate();
     SysTick_Config(SystemCoreClock / 100); /* Generate interrupt each 10 ms */
 
     /* drop NonSecure privileges */
     DROP_NS_PRIVILEGES;
 
-    while (1)
+    #ifdef TEST_MICRO
+    for (i = 0; i < 10; i++)
     {
-        LED_On(5u);
-        for (i = 0; i < 0x100000; i++)
+        for (k = 0; k < 0x100000; k++)
             __NOP();
-        LED_Off(5u);
-        for (i = 0; i < 0x100000; i++)
-            __NOP();
-        Secure_LED_On(4u);
-        for (i = 0; i < 0x100000; i++)
-            __NOP();
-        Secure_LED_Off(4u);
-        for (i = 0; i < 0x100000; i++)
-            __NOP();
+        
+        start = ARM_CM_DWT_CYCCNT;
+        Secure_empty();
+        stop = ARM_CM_DWT_CYCCNT;
 
-        Secure_printf(text);
+        delta = stop - start;
+        Secure_printf_int(delta);
     }
+    #endif
+
+    #ifdef TEST_MACRO
+    for (i = 0; i < 10; i++)
+    {
+        start = ARM_CM_DWT_CYCCNT;
+        for (j = 0; j < 50; j++)
+        {
+            LED_On(5u);
+            for (k = 0; k < 0x100000; k++)
+                __NOP();
+            LED_Off(5u);
+            for (k = 0; k < 0x100000; k++)
+                __NOP();
+            Secure_LED_On(4u);
+            for (k = 0; k < 0x100000; k++)
+                __NOP();
+            Secure_LED_Off(4u);
+            for (k = 0; k < 0x100000; k++)
+                __NOP();
+
+            Secure_printf(text);
+        }
+        stop = ARM_CM_DWT_CYCCNT;
+        delta = stop - start;
+        Secure_printf_int(delta);
+    }
+    #endif
+
+    while (1) {}
 }
