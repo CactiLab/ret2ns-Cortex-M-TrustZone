@@ -71,6 +71,47 @@ void SysTick_Handler(void)
     }
 }
 
+void SVC_Handler_Main(uint32_t exc_return_code, uint32_t msp_val) __attribute__((section("privilege_code")));
+void SVC_Handler_Main(uint32_t exc_return_code, uint32_t msp_val)
+{
+    uint32_t stack_frame_addr;
+    unsigned int *svc_args;
+    uint8_t svc_number;
+    // Determines which stack pointer was used
+    if (exc_return_code & 0x4)
+        stack_frame_addr = __get_PSP();
+    else
+        stack_frame_addr = msp_val;
+    // Determines whether additional state context is present
+    if (exc_return_code & 0x20)
+    {
+        svc_args = (unsigned *)stack_frame_addr;
+    }
+    else
+    { // additional state context present (only for Secure SVC)
+        svc_args = (unsigned *)(stack_frame_addr + 40);
+    }
+    // extracts SVC number
+    svc_number = ((char *)svc_args[6])[-2]; // Memory[(stacked_pc)-2]
+    switch (svc_number)
+    {
+    case 0:
+        SET_NS_PRIVILEGES;
+        break;
+    default:
+        break;
+    }
+}
+
+void SVC_Handler(void) __attribute__((naked, section("privilege_code")));
+void SVC_Handler(void)
+{
+    __asm volatile(
+        "mov r0, lr\n\t"
+        "mov r1, sp\n\t"
+        "b      SVC_Handler_Main\n\t");
+}
+
 static uint32_t x;
 /*----------------------------------------------------------------------------
   Main function
@@ -115,27 +156,31 @@ int main(void)
     SysTick_Config(SystemCoreClock / 100); /* Generate interrupt each 10 ms */
 
     /* drop NonSecure privileges */
-    DROP_NS_PRIVILEGES;
+    // DROP_NS_PRIVILEGES;
 
-    #ifdef TEST_MICRO
+#ifdef TEST_MICRO
     for (i = 0; i < 10; i++)
     {
         for (k = 0; k < 0x100000; k++)
             __NOP();
-        
+
         start = ARM_CM_DWT_CYCCNT;
-        Secure_empty();
+        DROP_NS_PRIVILEGES;
+        // Secure_empty();
+        Secure_printf(text);
+        __ASM volatile("svc #0"); // set NonSecure privileges
         stop = ARM_CM_DWT_CYCCNT;
 
         delta = stop - start;
         Secure_printf_int(delta);
     }
-    #endif
+#endif
 
-    #ifdef TEST_MACRO
+#ifdef TEST_MACRO
     for (i = 0; i < 10; i++)
     {
         start = ARM_CM_DWT_CYCCNT;
+        DROP_NS_PRIVILEGES;
         for (j = 0; j < 50; j++)
         {
             LED_On(5u);
@@ -153,11 +198,14 @@ int main(void)
 
             Secure_printf(text);
         }
+        __ASM volatile("svc #0"); // set NonSecure privileges
         stop = ARM_CM_DWT_CYCCNT;
         delta = stop - start;
         Secure_printf_int(delta);
     }
-    #endif
+#endif
 
-    while (1) {}
+    while (1)
+    {
+    }
 }
