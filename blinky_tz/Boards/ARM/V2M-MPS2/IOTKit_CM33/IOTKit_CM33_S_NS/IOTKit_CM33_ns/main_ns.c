@@ -9,6 +9,12 @@
 #include "Board_LED.h"                         /* ::Board Support:LED */
 #include "..\IOTKit_CM33_s\Secure_Functions.h" /* Secure Code Entry Points */
 
+#define DROP_NS_PRIVILEGES __asm("msr CONTROL, %[reg] " ::[reg] "r"(1) \
+                                 : "memory")
+
+#define SET_NS_PRIVILEGES __asm("msr CONTROL, %[reg] " ::[reg] "r"(0) \
+                                : "memory")
+
 char text[] = "Hello World (non-secure)\r\n";
 
 #define ARM_CM_DEMCR (*(uint32_t *)0xE000EDFC)
@@ -66,6 +72,47 @@ void SysTick_Handler(void)
     }
 }
 
+void SVC_Handler_Main(uint32_t exc_return_code, uint32_t msp_val);
+void SVC_Handler_Main(uint32_t exc_return_code, uint32_t msp_val)
+{
+    uint32_t stack_frame_addr;
+    unsigned int *svc_args;
+    uint8_t svc_number;
+    // Determines which stack pointer was used
+    if (exc_return_code & 0x4)
+        stack_frame_addr = __get_PSP();
+    else
+        stack_frame_addr = msp_val;
+    // Determines whether additional state context is present
+    if (exc_return_code & 0x20)
+    {
+        svc_args = (unsigned *)stack_frame_addr;
+    }
+    else
+    { // additional state context present (only for Secure SVC)
+        svc_args = (unsigned *)(stack_frame_addr + 40);
+    }
+    // extracts SVC number
+    svc_number = ((char *)svc_args[6])[-2]; // Memory[(stacked_pc)-2]
+    switch (svc_number)
+    {
+    case 0:
+        SET_NS_PRIVILEGES;
+        break;
+    default:
+        break;
+    }
+}
+
+void SVC_Handler(void) __attribute__((naked));
+void SVC_Handler(void)
+{
+    __asm volatile(
+        "mov r0, lr\n\t"
+        "mov r1, sp\n\t"
+        "b      SVC_Handler_Main\n\t");
+}
+
 static uint32_t x;
 /*----------------------------------------------------------------------------
   Main function
@@ -116,7 +163,10 @@ int main(void)
             __NOP();
         
         start = ARM_CM_DWT_CYCCNT;
-        Secure_empty();
+        DROP_NS_PRIVILEGES;
+        // Secure_empty();
+        Secure_printf(text);
+        __ASM volatile("svc #0"); // set NonSecure privileges
         stop = ARM_CM_DWT_CYCCNT;
 
         delta = stop - start;

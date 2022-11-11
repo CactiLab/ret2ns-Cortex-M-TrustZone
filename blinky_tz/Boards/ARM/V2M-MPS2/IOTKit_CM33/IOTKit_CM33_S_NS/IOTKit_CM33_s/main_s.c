@@ -14,7 +14,8 @@
 
 /* Start address of non-secure application */
 #define NONSECURE_START (0x00200000u)
-
+void HardFault_Handler(void);
+void chk_pointer(void* pt) __attribute__((noinline));
 extern GLCD_FONT GLCD_Font_16x24;
 
 extern int stdout_init(void);
@@ -46,26 +47,21 @@ int32_t Secure_LED_On(uint32_t num)
         ".thumb\n\t"
         "ldr r0, [sp, #4]\n\t"
         "mrs r3, ipsr\n\t"
-        "cbnz r3, #10\n\t"
+        "cbnz r3, #6\n\t"
         "mrs r3, control_ns\n\t"
-        "mov r2, #1\n\t"
-        "ands r3, r2\n\t"
-        "cbnz r3, #44\n\t"
+        "lsls r3, r3, #31\n\t"
+        "bne #28\n\t"
         "tta r0, r0\n\t"
-        "movw r3, #0\n\t"
-        "movt r3, #1\n\t"
-        "ands r3, r0\n\t"
-        "cbz r3, #28\n\t"
-        "movw r3, #60816\n\t"
-        "movt r3, #57346\n\t"
-        "mov r2, #255\n\t"
-        "ands r2, r0\n\t"
-        "str r2, [r3, #8]\n\t"
-        "ldr r3, [r3, #12]\n\t"
-        "mov r2, #2\n\t"
-        "ands r3, r2\n\t"
-        "cbz r3, #2\n\t"
-        "b HardFault_Handler\n\t"
+        "lsls r3, r0, #15\n\t"
+        "bpl #20\n\t"
+        "uxtb r0, r0\n\t"
+        "ldr r3, #14\n\t"
+        "str r0, [r3, #0]\n\t"
+        "ldr r0, [r3, #4]\n\t"
+        "lsls r0, r0, #30\n\t"
+        "it mi\n\t"
+        "bmi HardFault_Handler\n\t"
+        "ldc p0, c14, [r8, #8]\n\t"
     );
     #endif
     return val;
@@ -81,26 +77,21 @@ int32_t Secure_LED_Off(uint32_t num)
         ".thumb\n\t"
         "ldr r0, [sp, #4]\n\t"
         "mrs r3, ipsr\n\t"
-        "cbnz r3, #10\n\t"
+        "cbnz r3, #6\n\t"
         "mrs r3, control_ns\n\t"
-        "mov r2, #1\n\t"
-        "ands r3, r2\n\t"
-        "cbnz r3, #44\n\t"
+        "lsls r3, r3, #31\n\t"
+        "bne #28\n\t"
         "tta r0, r0\n\t"
-        "movw r3, #0\n\t"
-        "movt r3, #1\n\t"
-        "ands r3, r0\n\t"
-        "cbz r3, #28\n\t"
-        "movw r3, #60816\n\t"
-        "movt r3, #57346\n\t"
-        "mov r2, #255\n\t"
-        "ands r2, r0\n\t"
-        "str r2, [r3, #8]\n\t"
-        "ldr r3, [r3, #12]\n\t"
-        "mov r2, #2\n\t"
-        "ands r3, r2\n\t"
-        "cbz r3, #2\n\t"
-        "b HardFault_Handler\n\t"
+        "lsls r3, r0, #15\n\t"
+        "bpl #20\n\t"
+        "uxtb r0, r0\n\t"
+        "ldr r3, #14\n\t"
+        "str r0, [r3, #0]\n\t"
+        "ldr r0, [r3, #4]\n\t"
+        "lsls r0, r0, #30\n\t"
+        "it mi\n\t"
+        "bmi HardFault_Handler\n\t"
+        "ldc p0, c14, [r8, #8]\n\t"
     );
     #endif
     return val;
@@ -116,26 +107,21 @@ void Secure_printf(char *pString)
         ".thumb\n\t"
         "ldr r0, [sp, #4]\n\t"
         "mrs r3, ipsr\n\t"
-        "cbnz r3, #10\n\t"
+        "cbnz r3, #6\n\t"
         "mrs r3, control_ns\n\t"
-        "mov r2, #1\n\t"
-        "ands r3, r2\n\t"
-        "cbnz r3, #44\n\t"
+        "lsls r3, r3, #31\n\t"
+        "bne #28\n\t"
         "tta r0, r0\n\t"
-        "movw r3, #0\n\t"
-        "movt r3, #1\n\t"
-        "ands r3, r0\n\t"
-        "cbz r3, #28\n\t"
-        "movw r3, #60816\n\t"
-        "movt r3, #57346\n\t"
-        "mov r2, #255\n\t"
-        "ands r2, r0\n\t"
-        "str r2, [r3, #8]\n\t"
-        "ldr r3, [r3, #12]\n\t"
-        "mov r2, #2\n\t"
-        "ands r3, r2\n\t"
-        "cbz r3, #2\n\t"
-        "b HardFault_Handler\n\t"
+        "lsls r3, r0, #15\n\t"
+        "bpl #20\n\t"
+        "uxtb r0, r0\n\t"
+        "ldr r3, #14\n\t"
+        "str r0, [r3, #0]\n\t"
+        "ldr r0, [r3, #4]\n\t"
+        "lsls r0, r0, #30\n\t"
+        "it mi\n\t"
+        "bmi HardFault_Handler\n\t"
+        "ldc p0, c14, [r8, #8]\n\t"
     );
     #endif
 }
@@ -155,26 +141,21 @@ void Secure_empty(void)
         ".thumb\n\t"
         "ldr r0, [sp, #4]\n\t"
         "mrs r3, ipsr\n\t"
-        "cbnz r3, #10\n\t"
+        "cbnz r3, #6\n\t"
         "mrs r3, control_ns\n\t"
-        "mov r2, #1\n\t"
-        "ands r3, r2\n\t"
-        "cbnz r3, #44\n\t"
+        "lsls r3, r3, #31\n\t"
+        "bne #28\n\t"
         "tta r0, r0\n\t"
-        "movw r3, #0\n\t"
-        "movt r3, #1\n\t"
-        "ands r3, r0\n\t"
-        "cbz r3, #28\n\t"
-        "movw r3, #60816\n\t"
-        "movt r3, #57346\n\t"
-        "mov r2, #255\n\t"
-        "ands r2, r0\n\t"
-        "str r2, [r3, #8]\n\t"
-        "ldr r3, [r3, #12]\n\t"
-        "mov r2, #2\n\t"
-        "ands r3, r2\n\t"
-        "cbz r3, #2\n\t"
-        "b HardFault_Handler\n\t"
+        "lsls r3, r0, #15\n\t"
+        "bpl #20\n\t"
+        "uxtb r0, r0\n\t"
+        "ldr r3, #14\n\t"
+        "str r0, [r3, #0]\n\t"
+        "ldr r0, [r3, #4]\n\t"
+        "lsls r0, r0, #30\n\t"
+        "it mi\n\t"
+        "bmi HardFault_Handler\n\t"
+        "ldc p0, c14, [r8, #8]\n\t"
     );
     #endif
 }
@@ -224,31 +205,27 @@ void SysTick_Handler(void)
     case 30:
         if (pfNonSecure_LED_On != NULL)
         {
+            // chk_pointer(pfNonSecure_LED_On);
             #ifdef RET2NS_PROTECTION
             __ASM volatile(
                 ".syntax unified\n\t"
                 ".thumb\n\t"
                 "mrs r3, ipsr\n\t"
-                "cbnz r3, #10\n\t"
+                "cbnz r3, #6\n\t"
                 "mrs r3, control_ns\n\t"
-                "mov r2, #1\n\t"
-                "ands r3, r2\n\t"
-                "cbnz r3, #44\n\t"
+                "lsls r3, r3, #31\n\t"
+                "bne #28\n\t"
                 "tta r0, r0\n\t"
-                "movw r3, #0\n\t"
-                "movt r3, #1\n\t"
-                "ands r3, r0\n\t"
-                "cbz r3, #28\n\t"
-                "movw r3, #60816\n\t"
-                "movt r3, #57346\n\t"
-                "mov r2, #255\n\t"
-                "ands r2, r0\n\t"
-                "str r2, [r3, #8]\n\t"
-                "ldr r3, [r3, #12]\n\t"
-                "mov r2, #2\n\t"
-                "ands r3, r2\n\t"
-                "cbz r3, #2\n\t"
-                "b HardFault_Handler\n\t"
+                "lsls r3, r0, #15\n\t"
+                "bpl #20\n\t"
+                "uxtb r0, r0\n\t"
+                "ldr r3, #14\n\t"
+                "str r0, [r3, #0]\n\t"
+                "ldr r0, [r3, #4]\n\t"
+                "lsls r0, r0, #30\n\t"
+                "it mi\n\t"
+                "bmi HardFault_Handler\n\t"
+                "ldc p0, c14, [r8, #8]\n\t"
             );
             #endif
             pfNonSecure_LED_On(1u);
@@ -262,26 +239,21 @@ void SysTick_Handler(void)
                 ".syntax unified\n\t"
                 ".thumb\n\t"
                 "mrs r3, ipsr\n\t"
-                "cbnz r3, #10\n\t"
+                "cbnz r3, #6\n\t"
                 "mrs r3, control_ns\n\t"
-                "mov r2, #1\n\t"
-                "ands r3, r2\n\t"
-                "cbnz r3, #44\n\t"
+                "lsls r3, r3, #31\n\t"
+                "bne #28\n\t"
                 "tta r0, r0\n\t"
-                "movw r3, #0\n\t"
-                "movt r3, #1\n\t"
-                "ands r3, r0\n\t"
-                "cbz r3, #28\n\t"
-                "movw r3, #60816\n\t"
-                "movt r3, #57346\n\t"
-                "mov r2, #255\n\t"
-                "ands r2, r0\n\t"
-                "str r2, [r3, #8]\n\t"
-                "ldr r3, [r3, #12]\n\t"
-                "mov r2, #2\n\t"
-                "ands r3, r2\n\t"
-                "cbz r3, #2\n\t"
-                "b HardFault_Handler\n\t"
+                "lsls r3, r0, #15\n\t"
+                "bpl #20\n\t"
+                "uxtb r0, r0\n\t"
+                "ldr r3, #14\n\t"
+                "str r0, [r3, #0]\n\t"
+                "ldr r0, [r3, #4]\n\t"
+                "lsls r0, r0, #30\n\t"
+                "it mi\n\t"
+                "bmi HardFault_Handler\n\t"
+                "ldc p0, c14, [r8, #8]\n\t"
             );
             #endif
             pfNonSecure_LED_Off(1u);
@@ -301,6 +273,20 @@ void SysTick_Handler(void)
             ticks = 0;
         }
     }
+}
+
+void chk_pointer(void* pt)
+{
+	if (__get_IPSR() || !(__TZ_get_CONTROL_NS() & 0b01)) 
+	{
+		cmse_address_info_t tt_payload = cmse_TTA(pt);
+		if (tt_payload.flags.mpu_region_valid)
+		{
+			MPU_NS->RNR = tt_payload.flags.mpu_region;
+			if (MPU_NS->RBAR & 0b10)
+			{ HardFault_Handler(); }
+		}
+	}
 }
 
 static uint32_t x;
