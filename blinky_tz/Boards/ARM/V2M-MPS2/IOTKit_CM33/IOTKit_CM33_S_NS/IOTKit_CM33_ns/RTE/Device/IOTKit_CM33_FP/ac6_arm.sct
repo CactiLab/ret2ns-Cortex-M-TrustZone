@@ -76,6 +76,7 @@
 
 #define __RO_BASE          ( __ROM_BASE )
 #define __RO_SIZE          ( __ROM_SIZE - __CV_SIZE )
+#define __PRIV_BASE        ( __ROM_BASE + 0x10000 )
 
 #define __RW_BASE          ( __RAM_BASE )
 #define __RW_SIZE          ( __RAM_SIZE - __STACK_SIZE - __HEAP_SIZE )
@@ -85,13 +86,14 @@
   Scatter Region definition
  *----------------------------------------------------------------------------*/
 LR_ROM __RO_BASE __RO_SIZE  {                       ; load region size_region
-  ER_ROM __RO_BASE __RO_SIZE  {                     ; load address = execution address
+  ER_ROM __RO_BASE FIXED  {                     ; load address = execution address
    *.o (RESET, +First)
    *(InRoot$$Sections)
+   *(privilege_code)
    .ANY (+RO)
    .ANY (+XO)
   }
-
+  
   RW_RAM __RW_BASE __RW_SIZE  {                     ; RW data
    .ANY (+RW +ZI)
   }

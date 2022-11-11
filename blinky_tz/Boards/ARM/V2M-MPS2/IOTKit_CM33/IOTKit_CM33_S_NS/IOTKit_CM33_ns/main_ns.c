@@ -21,19 +21,21 @@ char text[] = "Hello World (non-secure)\r\n";
 #define ARM_CM_DWT_CTRL (*(uint32_t *)0xE0001000)
 #define ARM_CM_DWT_CYCCNT (*(uint32_t *)0xE0001004)
 
-// #define TEST_MACRO
-#define TEST_MICRO
+
+// #define TEST_MICRO_BASELINE
+// #define TEST_MICRO
+#define TEST_MACRO
 
 /*----------------------------------------------------------------------------
   NonSecure functions used for callbacks
  *----------------------------------------------------------------------------*/
-int32_t NonSecure_LED_On(uint32_t num);
+int32_t NonSecure_LED_On(uint32_t num) __attribute__((section("privilege_code")));
 int32_t NonSecure_LED_On(uint32_t num)
 {
     return LED_On(num);
 }
 
-int32_t NonSecure_LED_Off(uint32_t num);
+int32_t NonSecure_LED_Off(uint32_t num) __attribute__((section("privilege_code")));
 int32_t NonSecure_LED_Off(uint32_t num)
 {
     return LED_Off(num);
@@ -42,7 +44,7 @@ int32_t NonSecure_LED_Off(uint32_t num)
 /*----------------------------------------------------------------------------
   SysTick IRQ Handler
  *----------------------------------------------------------------------------*/
-void SysTick_Handler(void);
+void SysTick_Handler(void) __attribute__((section("privilege_code")));
 void SysTick_Handler(void)
 {
     static uint32_t ticks;
@@ -72,7 +74,7 @@ void SysTick_Handler(void)
     }
 }
 
-void SVC_Handler_Main(uint32_t exc_return_code, uint32_t msp_val);
+void SVC_Handler_Main(uint32_t exc_return_code, uint32_t msp_val) __attribute__((section("privilege_code")));
 void SVC_Handler_Main(uint32_t exc_return_code, uint32_t msp_val)
 {
     uint32_t stack_frame_addr;
@@ -104,7 +106,7 @@ void SVC_Handler_Main(uint32_t exc_return_code, uint32_t msp_val)
     }
 }
 
-void SVC_Handler(void) __attribute__((naked));
+void SVC_Handler(void) __attribute__((naked, section("privilege_code")));
 void SVC_Handler(void)
 {
     __asm volatile(
@@ -156,7 +158,22 @@ int main(void)
     SystemCoreClockUpdate();
     SysTick_Config(SystemCoreClock / 100); /* Generate interrupt each 10 ms */
 
-    #ifdef TEST_MICRO
+    #ifdef TEST_MICRO_BASELINE
+    for (i = 0; i < 10; i++)
+    {
+        for (k = 0; k < 0x100000; k++)
+            __NOP();
+        
+        start = ARM_CM_DWT_CYCCNT;
+        DROP_NS_PRIVILEGES;
+        Secure_empty();
+        __ASM volatile("svc #0"); // set NonSecure privileges
+        stop = ARM_CM_DWT_CYCCNT;
+
+        delta = stop - start;
+        Secure_printf_int(delta);
+    }
+    #elif defined TEST_MICRO
     for (i = 0; i < 10; i++)
     {
         for (k = 0; k < 0x100000; k++)
@@ -172,9 +189,7 @@ int main(void)
         delta = stop - start;
         Secure_printf_int(delta);
     }
-    #endif
-
-    #ifdef TEST_MACRO
+    #elif defined TEST_MACRO
     for (i = 0; i < 10; i++)
     {
         start = ARM_CM_DWT_CYCCNT;

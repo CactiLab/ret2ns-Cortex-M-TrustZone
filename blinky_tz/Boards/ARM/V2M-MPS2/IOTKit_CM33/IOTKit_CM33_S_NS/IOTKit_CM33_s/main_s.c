@@ -5,17 +5,21 @@
 
 #include <arm_cmse.h>
 #include <stdio.h>
+#include "mpu_init.h"
 #include "IOTKit_CM33_FP.h" /* Device header */
 #include "Board_LED.h"      /* ::Board Support:LED */
 #include "Board_GLCD.h"     /* ::Board Support:Graphic LCD */
 #include "GLCD_Config.h"    /* Keil.SAM4E-EK::Board Support:Graphic LCD */
 
-//#define RET2NS_PROTECTION
+#define RET2NS_PROTECTION_MPU
+//#define RET2NS_PROTECTION_MASKING
+
+void HardFault_Handler(void);
+void chk_pointer(void* pt) __attribute__((noinline));
 
 /* Start address of non-secure application */
 #define NONSECURE_START (0x00200000u)
-void HardFault_Handler(void);
-void chk_pointer(void* pt) __attribute__((noinline));
+
 extern GLCD_FONT GLCD_Font_16x24;
 
 extern int stdout_init(void);
@@ -41,7 +45,7 @@ int32_t Secure_LED_On(uint32_t num) __attribute__((cmse_nonsecure_entry));
 int32_t Secure_LED_On(uint32_t num)
 {
     int32_t val = LED_On(num);
-    #ifdef RET2NS_PROTECTION
+    #ifdef RET2NS_PROTECTION_MPU
     __ASM volatile(
         ".syntax unified\n\t"
         ".thumb\n\t"
@@ -55,13 +59,27 @@ int32_t Secure_LED_On(uint32_t num)
         "lsls r3, r0, #15\n\t"
         "bpl #20\n\t"
         "uxtb r0, r0\n\t"
-        "ldr r3, #14\n\t"
+        "movw r3, #60824\n\t"
+        "movt r3, #57346\n\t"
         "str r0, [r3, #0]\n\t"
         "ldr r0, [r3, #4]\n\t"
         "lsls r0, r0, #30\n\t"
         "it mi\n\t"
         "bmi HardFault_Handler\n\t"
-        "ldc p0, c14, [r8, #8]\n\t"
+    );
+    #elif defined RET2NS_PROTECTION_MASKING
+    __ASM volatile(
+        ".syntax unified\n\t"
+        ".thumb\n\t"
+        "ldr r1, [sp, #4]\n\t"
+        "mrs r2, ipsr\n\t"
+        "cbnz r2, #6\n\t"
+        "mrs r2, control_ns\n\t"
+        "lsls r2, r2, #31\n\t"
+        "bne #8\n\t"
+        "cmn r1, #0x100\n\t"
+        "it cc\n\t"
+        "movtcc r1, #0x20\n\t"
     );
     #endif
     return val;
@@ -71,7 +89,7 @@ int32_t Secure_LED_Off(uint32_t num) __attribute__((cmse_nonsecure_entry));
 int32_t Secure_LED_Off(uint32_t num)
 {
     int32_t val = LED_Off(num);
-    #ifdef RET2NS_PROTECTION
+    #ifdef RET2NS_PROTECTION_MPU
     __ASM volatile(
         ".syntax unified\n\t"
         ".thumb\n\t"
@@ -85,13 +103,27 @@ int32_t Secure_LED_Off(uint32_t num)
         "lsls r3, r0, #15\n\t"
         "bpl #20\n\t"
         "uxtb r0, r0\n\t"
-        "ldr r3, #14\n\t"
+        "movw r3, #60824\n\t"
+        "movt r3, #57346\n\t"
         "str r0, [r3, #0]\n\t"
         "ldr r0, [r3, #4]\n\t"
         "lsls r0, r0, #30\n\t"
         "it mi\n\t"
         "bmi HardFault_Handler\n\t"
-        "ldc p0, c14, [r8, #8]\n\t"
+    );
+    #elif defined RET2NS_PROTECTION_MASKING
+    __ASM volatile(
+        ".syntax unified\n\t"
+        ".thumb\n\t"
+        "ldr r1, [sp, #4]\n\t"
+        "mrs r2, ipsr\n\t"
+        "cbnz r2, #6\n\t"
+        "mrs r2, control_ns\n\t"
+        "lsls r2, r2, #31\n\t"
+        "bne #8\n\t"
+        "cmn r1, #0x100\n\t"
+        "it cc\n\t"
+        "movtcc r1, #0x20\n\t"
     );
     #endif
     return val;
@@ -101,7 +133,7 @@ void Secure_printf(char *pString) __attribute__((cmse_nonsecure_entry));
 void Secure_printf(char *pString)
 {
     printf("%s", pString);
-    #ifdef RET2NS_PROTECTION
+    #ifdef RET2NS_PROTECTION_MPU
     __ASM volatile(
         ".syntax unified\n\t"
         ".thumb\n\t"
@@ -115,13 +147,27 @@ void Secure_printf(char *pString)
         "lsls r3, r0, #15\n\t"
         "bpl #20\n\t"
         "uxtb r0, r0\n\t"
-        "ldr r3, #14\n\t"
+        "movw r3, #60824\n\t"
+        "movt r3, #57346\n\t"
         "str r0, [r3, #0]\n\t"
         "ldr r0, [r3, #4]\n\t"
         "lsls r0, r0, #30\n\t"
         "it mi\n\t"
         "bmi HardFault_Handler\n\t"
-        "ldc p0, c14, [r8, #8]\n\t"
+    );
+    #elif defined RET2NS_PROTECTION_MASKING
+    __ASM volatile(
+        ".syntax unified\n\t"
+        ".thumb\n\t"
+        "ldr r1, [sp, #4]\n\t"
+        "mrs r2, ipsr\n\t"
+        "cbnz r2, #6\n\t"
+        "mrs r2, control_ns\n\t"
+        "lsls r2, r2, #31\n\t"
+        "bne #8\n\t"
+        "cmn r1, #0x100\n\t"
+        "it cc\n\t"
+        "movtcc r1, #0x20\n\t"
     );
     #endif
 }
@@ -135,7 +181,7 @@ void Secure_empty(void) __attribute__((cmse_nonsecure_entry));
 void Secure_empty(void)
 {
     empty_function();
-    #ifdef RET2NS_PROTECTION
+    #ifdef RET2NS_PROTECTION_MPU
     __ASM volatile(
         ".syntax unified\n\t"
         ".thumb\n\t"
@@ -149,13 +195,27 @@ void Secure_empty(void)
         "lsls r3, r0, #15\n\t"
         "bpl #20\n\t"
         "uxtb r0, r0\n\t"
-        "ldr r3, #14\n\t"
+        "movw r3, #60824\n\t"
+        "movt r3, #57346\n\t"
         "str r0, [r3, #0]\n\t"
         "ldr r0, [r3, #4]\n\t"
         "lsls r0, r0, #30\n\t"
         "it mi\n\t"
         "bmi HardFault_Handler\n\t"
-        "ldc p0, c14, [r8, #8]\n\t"
+    );
+    #elif defined RET2NS_PROTECTION_MASKING
+    __ASM volatile(
+        ".syntax unified\n\t"
+        ".thumb\n\t"
+        "ldr r1, [sp, #4]\n\t"
+        "mrs r2, ipsr\n\t"
+        "cbnz r2, #6\n\t"
+        "mrs r2, control_ns\n\t"
+        "lsls r2, r2, #31\n\t"
+        "bne #8\n\t"
+        "cmn r1, #0x100\n\t"
+        "it cc\n\t"
+        "movtcc r1, #0x20\n\t"
     );
     #endif
 }
@@ -206,7 +266,7 @@ void SysTick_Handler(void)
         if (pfNonSecure_LED_On != NULL)
         {
             // chk_pointer(pfNonSecure_LED_On);
-            #ifdef RET2NS_PROTECTION
+            #ifdef RET2NS_PROTECTION_MPU
             __ASM volatile(
                 ".syntax unified\n\t"
                 ".thumb\n\t"
@@ -219,13 +279,24 @@ void SysTick_Handler(void)
                 "lsls r3, r0, #15\n\t"
                 "bpl #20\n\t"
                 "uxtb r0, r0\n\t"
-                "ldr r3, #14\n\t"
+                "movw r3, #60824\n\t"
+                "movt r3, #57346\n\t"
                 "str r0, [r3, #0]\n\t"
                 "ldr r0, [r3, #4]\n\t"
                 "lsls r0, r0, #30\n\t"
                 "it mi\n\t"
                 "bmi HardFault_Handler\n\t"
-                "ldc p0, c14, [r8, #8]\n\t"
+            );
+            #elif defined RET2NS_PROTECTION_MASKING
+            __ASM volatile(
+                ".syntax unified\n\t"
+                ".thumb\n\t"
+                "mrs r1, ipsr\n\t"
+                "cbnz r1, #6\n\t"
+                "mrs r1, control_ns\n\t"
+                "lsls r1, r1, #31\n\t"
+                "bne #2\n\t"
+                "movt r0, #0x20\n\t"
             );
             #endif
             pfNonSecure_LED_On(1u);
@@ -234,7 +305,7 @@ void SysTick_Handler(void)
     case 50:
         if (pfNonSecure_LED_Off != NULL)
         {
-            #ifdef RET2NS_PROTECTION
+            #ifdef RET2NS_PROTECTION_MPU
             __ASM volatile(
                 ".syntax unified\n\t"
                 ".thumb\n\t"
@@ -247,13 +318,24 @@ void SysTick_Handler(void)
                 "lsls r3, r0, #15\n\t"
                 "bpl #20\n\t"
                 "uxtb r0, r0\n\t"
-                "ldr r3, #14\n\t"
+                "movw r3, #60824\n\t"
+                "movt r3, #57346\n\t"
                 "str r0, [r3, #0]\n\t"
                 "ldr r0, [r3, #4]\n\t"
                 "lsls r0, r0, #30\n\t"
                 "it mi\n\t"
                 "bmi HardFault_Handler\n\t"
-                "ldc p0, c14, [r8, #8]\n\t"
+            );
+            #elif defined RET2NS_PROTECTION_MASKING
+            __ASM volatile(
+                ".syntax unified\n\t"
+                ".thumb\n\t"
+                "mrs r1, ipsr\n\t"
+                "cbnz r1, #6\n\t"
+                "mrs r1, control_ns\n\t"
+                "lsls r1, r1, #31\n\t"
+                "bne #2\n\t"
+                "movt r0, #0x20\n\t"
             );
             #endif
             pfNonSecure_LED_Off(1u);
@@ -289,6 +371,19 @@ void chk_pointer(void* pt)
 	}
 }
 
+void * mask_pointer(void *pt)
+{
+    if (__get_IPSR() || !(__TZ_get_CONTROL_NS() & 0b01))
+    {
+        if (((uint32_t)pt | 0xff) != 0xffffffff)
+        {
+            // address masking for pointer *pt
+            pt = (void *)((uint32_t)pt & ~0xffff0000 | 0x00210000);
+        }
+    }
+    return pt;
+}
+
 static uint32_t x;
 /*----------------------------------------------------------------------------
   Main function
@@ -297,6 +392,8 @@ int main(void)
 {
     uint32_t NonSecure_StackPointer = (*((uint32_t *)(NONSECURE_START + 0u)));
     NonSecure_fpVoid NonSecure_ResetHandler = (NonSecure_fpVoid)(*((uint32_t *)(NONSECURE_START + 4u)));
+
+    mpu_ns_init();
 
     /* exercise some floating point instructions from Secure Mode */
     volatile uint32_t fpuType = SCB_GetFPUType();
