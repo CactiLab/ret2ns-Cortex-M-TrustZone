@@ -10,11 +10,10 @@
 #include "Board_GLCD.h"     /* ::Board Support:Graphic LCD */
 #include "GLCD_Config.h"    /* Keil.SAM4E-EK::Board Support:Graphic LCD */
 
-#define RET2NS_PROTECTION
 /* Start address of non-secure application */
 #define NONSECURE_START (0x00200000u)
+#define MAX_LEN 128
 
-void * mask_pointer(void* pt) __attribute__((noinline));
 extern GLCD_FONT GLCD_Font_16x24;
 
 extern int stdout_init(void);
@@ -39,98 +38,28 @@ NonSecure_fpParam pfNonSecure_LED_Off = (NonSecure_fpParam)NULL;
 int32_t Secure_LED_On(uint32_t num) __attribute__((cmse_nonsecure_entry));
 int32_t Secure_LED_On(uint32_t num)
 {
-    int32_t val = LED_On(num);
-    #ifdef RET2NS_PROTECTION
-    __ASM volatile(
-        ".syntax unified\n\t"
-        ".thumb\n\t"
-        "ldr r1, [sp, #4]\n\t"
-        "mrs r2, ipsr\n\t"
-        "cbnz r2, #6\n\t"
-        "mrs r2, control_ns\n\t"
-        "lsls r2, r2, #31\n\t"
-        "bne #8\n\t"
-        "cmn r1, #0x100\n\t"
-        "it cc\n\t"
-        "movtcc r1, #0x21\n\t"
-    );
-    #endif
-    return val;
+    return LED_On(num);
 }
 
 int32_t Secure_LED_Off(uint32_t num) __attribute__((cmse_nonsecure_entry));
 int32_t Secure_LED_Off(uint32_t num)
 {
-    int32_t val = LED_Off(num);
-    #ifdef RET2NS_PROTECTION
-    __ASM volatile(
-        ".syntax unified\n\t"
-        ".thumb\n\t"
-        "ldr r1, [sp, #4]\n\t"
-        "mrs r2, ipsr\n\t"
-        "cbnz r2, #6\n\t"
-        "mrs r2, control_ns\n\t"
-        "lsls r2, r2, #31\n\t"
-        "bne #8\n\t"
-        "cmn r1, #0x100\n\t"
-        "it cc\n\t"
-        "movtcc r1, #0x21\n\t"
-    );
-    #endif
-    return val;
+    return LED_Off(num);
 }
 
 void Secure_printf(char *pString) __attribute__((cmse_nonsecure_entry));
 void Secure_printf(char *pString)
 {
     printf("%s", pString);
-    #ifdef RET2NS_PROTECTION
-    __ASM volatile(
-        ".syntax unified\n\t"
-        ".thumb\n\t"
-        "ldr r1, [sp, #4]\n\t"
-        "mrs r2, ipsr\n\t"
-        "cbnz r2, #6\n\t"
-        "mrs r2, control_ns\n\t"
-        "lsls r2, r2, #31\n\t"
-        "bne #8\n\t"
-        "cmn r1, #0x100\n\t"
-        "it cc\n\t"
-        "movtcc r1, #0x21\n\t"
-    );
-    #endif
 }
 
-void __attribute__((optnone)) empty_function(void)
+int32_t print_LCD_nsc(char *msg) __attribute__((cmse_nonsecure_entry));
+int32_t print_LCD_nsc(char *msg)
 {
-    return;
-}
-
-void Secure_empty(void) __attribute__((cmse_nonsecure_entry));
-void Secure_empty(void)
-{
-    empty_function();
-    #ifdef RET2NS_PROTECTION
-    __ASM volatile(
-        ".syntax unified\n\t"
-        ".thumb\n\t"
-        "ldr r1, [sp, #4]\n\t"
-        "mrs r2, ipsr\n\t"
-        "cbnz r2, #6\n\t"
-        "mrs r2, control_ns\n\t"
-        "lsls r2, r2, #31\n\t"
-        "bne #8\n\t"
-        "cmn r1, #0x100\n\t"
-        "it cc\n\t"
-        "movtcc r1, #0x21\n\t"
-    );
-    #endif
-}
-
-void Secure_printf_int(uint32_t value) __attribute__((cmse_nonsecure_entry));
-void Secure_printf_int(uint32_t value)
-{
-    printf("(EVL)cycles: %d\n", value);
+    char buf[MAX_LEN] = {0};
+    sprintf(buf, "%s", msg);
+    printf("%s", buf);
+    return 1;
 }
 
 /*----------------------------------------------------------------------------
@@ -170,37 +99,12 @@ void SysTick_Handler(void)
     case 30:
         if (pfNonSecure_LED_On != NULL)
         {
-            #ifdef RET2NS_PROTECTION
-            // pfNonSecure_LED_On = mask_pointer(pfNonSecure_LED_On);
-            __ASM volatile(
-                ".syntax unified\n\t"
-                ".thumb\n\t"
-                "mrs r1, ipsr\n\t"
-                "cbnz r1, #6\n\t"
-                "mrs r1, control_ns\n\t"
-                "lsls r1, r1, #31\n\t"
-                "bne #2\n\t"
-                "movt r0, #0x21\n\t"
-            );
-            #endif
             pfNonSecure_LED_On(1u);
         }
         break;
     case 50:
         if (pfNonSecure_LED_Off != NULL)
         {
-            #ifdef RET2NS_PROTECTION
-            __ASM volatile(
-                ".syntax unified\n\t"
-                ".thumb\n\t"
-                "mrs r1, ipsr\n\t"
-                "cbnz r1, #6\n\t"
-                "mrs r1, control_ns\n\t"
-                "lsls r1, r1, #31\n\t"
-                "bne #2\n\t"
-                "movt r0, #0x21\n\t"
-            );
-            #endif
             pfNonSecure_LED_Off(1u);
         }
         break;
@@ -218,19 +122,6 @@ void SysTick_Handler(void)
             ticks = 0;
         }
     }
-}
-
-void * mask_pointer(void *pt)
-{
-    if (__get_IPSR() || !(__TZ_get_CONTROL_NS() & 0b01))
-    {
-        if (((uint32_t)pt | 0xff) != 0xffffffff)
-        {
-            // address masking for pointer *pt
-            pt = (void *)((uint32_t)pt & ~0xffff0000 | 0x00210000);
-        }
-    }
-    return pt;
 }
 
 static uint32_t x;
