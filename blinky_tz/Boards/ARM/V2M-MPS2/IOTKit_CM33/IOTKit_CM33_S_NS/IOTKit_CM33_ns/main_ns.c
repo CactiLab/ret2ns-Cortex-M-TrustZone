@@ -22,9 +22,9 @@ char text[] = "Hello World (non-secure)\r\n";
 #define ARM_CM_DWT_CYCCNT (*(uint32_t *)0xE0001004)
 
 
-// #define TEST_MICRO_BASELINE
-// #define TEST_MICRO
-#define TEST_MACRO
+#define TEST_MICRO_BASELINE
+//#define TEST_MICRO
+//#define TEST_MACRO
 
 /*----------------------------------------------------------------------------
   NonSecure functions used for callbacks
@@ -165,9 +165,7 @@ int main(void)
             __NOP();
         
         start = ARM_CM_DWT_CYCCNT;
-        DROP_NS_PRIVILEGES;
         Secure_empty();
-        __ASM volatile("svc #0"); // set NonSecure privileges
         stop = ARM_CM_DWT_CYCCNT;
 
         delta = stop - start;
@@ -180,10 +178,7 @@ int main(void)
             __NOP();
         
         start = ARM_CM_DWT_CYCCNT;
-        DROP_NS_PRIVILEGES;
-        // Secure_empty();
         Secure_printf(text);
-        __ASM volatile("svc #0"); // set NonSecure privileges
         stop = ARM_CM_DWT_CYCCNT;
 
         delta = stop - start;
@@ -193,7 +188,7 @@ int main(void)
     for (i = 0; i < 10; i++)
     {
         start = ARM_CM_DWT_CYCCNT;
-        for (j = 0; j < 50; j++)
+        for (j = 0; j < 10; j++)
         {
             LED_On(5u);
             for (k = 0; k < 0x100000; k++)

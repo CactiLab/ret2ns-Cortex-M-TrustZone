@@ -13,3 +13,4 @@ extern int32_t Secure_LED_On_callback (NonSecure_funcptr);
 extern int32_t Secure_LED_Off_callback(NonSecure_funcptr);
 extern void    Secure_printf (char*);
 extern void    Secure_printf_int (uint32_t);
+extern void    Secure_empty (void);

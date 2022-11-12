@@ -11,8 +11,8 @@
 #include "Board_GLCD.h"     /* ::Board Support:Graphic LCD */
 #include "GLCD_Config.h"    /* Keil.SAM4E-EK::Board Support:Graphic LCD */
 
-#define RET2NS_PROTECTION_MPU
-//#define RET2NS_PROTECTION_MASKING
+//#define RET2NS_PROTECTION_MPU
+#define RET2NS_PROTECTION_MASKING
 
 void HardFault_Handler(void);
 void chk_pointer(void* pt) __attribute__((noinline));
@@ -225,7 +225,7 @@ void Secure_empty(void)
 void Secure_printf_int(uint32_t value) __attribute__((cmse_nonsecure_entry));
 void Secure_printf_int(uint32_t value)
 {
-    printf("(EVL)cycles: %d\n", value);
+    printf("(EVL)cycles: %d\r\n", value);
 }
 
 /*----------------------------------------------------------------------------

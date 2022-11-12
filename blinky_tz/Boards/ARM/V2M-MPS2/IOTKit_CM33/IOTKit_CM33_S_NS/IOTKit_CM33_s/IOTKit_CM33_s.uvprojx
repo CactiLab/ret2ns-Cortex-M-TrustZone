@@ -394,6 +394,16 @@
               <FileType>1</FileType>
               <FilePath>.\stdout_USART.c</FilePath>
             </File>
+            <File>
+              <FileName>mpu_init.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\mpu_init.c</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_init.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\mpu_init.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -810,6 +820,16 @@
               <FileName>stdout_USART.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\stdout_USART.c</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_init.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\mpu_init.c</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_init.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\mpu_init.h</FilePath>
             </File>
           </Files>
         </Group>
