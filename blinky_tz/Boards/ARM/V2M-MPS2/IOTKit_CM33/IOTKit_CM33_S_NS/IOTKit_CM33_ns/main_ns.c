@@ -21,7 +21,8 @@ char text[] = "Hello World (non-secure)\r\n";
 #define ARM_CM_DWT_CTRL (*(uint32_t *)0xE0001000)
 #define ARM_CM_DWT_CYCCNT (*(uint32_t *)0xE0001004)
 
-
+#define T 100000
+#define N 10000000
 //#define TEST_MICRO_BASELINE
 //#define TEST_MICRO
 #define TEST_MACRO
@@ -47,30 +48,20 @@ int32_t NonSecure_LED_Off(uint32_t num)
 void SysTick_Handler(void) __attribute__((section("privilege_code")));
 void SysTick_Handler(void)
 {
-    static uint32_t ticks;
+    static uint32_t ticks = 0;
 
-    switch (ticks++)
+    switch (ticks)
     {
-    case 10:
-        LED_On(7u);
+    case 0:
+        Secure_LED_On(2u);
+        ticks = 1;
         break;
-    case 20:
-        Secure_LED_On(6u);
-        break;
-    case 30:
-        LED_Off(7u);
-        break;
-    case 50:
-        Secure_LED_Off(6u);
-        break;
-    case 99:
+    case 1:
+        Secure_LED_Off(2u);
         ticks = 0;
         break;
     default:
-        if (ticks > 99)
-        {
-            ticks = 0;
-        }
+        ticks = 0;
     }
 }
 
@@ -156,7 +147,7 @@ int main(void)
     uint32_t delta;
     
     SystemCoreClockUpdate();
-    SysTick_Config(SystemCoreClock / 100); /* Generate interrupt each 10 ms */
+    SysTick_Config(T); /* Generate interrupt each T cycles */
 
     #ifdef TEST_MICRO_BASELINE
     for (i = 0; i < 10; i++)
@@ -185,24 +176,19 @@ int main(void)
         Secure_printf_int(delta);
     }
     #elif defined TEST_MACRO
-    for (i = 0; i < 10; i++)
+    for (i = 0; i < 5; i++)
     {
         start = ARM_CM_DWT_CYCCNT;
         for (j = 0; j < 10; j++)
         {
-            LED_On(5u);
-            for (k = 0; k < 0x100000; k++)
+            for (k = 0; k < N; k++)
                 __NOP();
-            LED_Off(5u);
-            for (k = 0; k < 0x100000; k++)
+            Secure_LED_On(0u);
+            for (k = 0; k < N; k++)
                 __NOP();
-            Secure_LED_On(4u);
-            for (k = 0; k < 0x100000; k++)
+            Secure_LED_Off(0u);
+            for (k = 0; k < N; k++)
                 __NOP();
-            Secure_LED_Off(4u);
-            for (k = 0; k < 0x100000; k++)
-                __NOP();
-
             Secure_printf(text);
         }
         stop = ARM_CM_DWT_CYCCNT;
@@ -210,6 +196,7 @@ int main(void)
         Secure_printf_int(delta);
     }
     #endif
+    Secure_printf("End\r\n");
 
     while (1) {}
 }
