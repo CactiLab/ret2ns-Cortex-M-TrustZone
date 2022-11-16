@@ -22,9 +22,9 @@ char text[] = "Hello World (non-secure)\r\n";
 #define ARM_CM_DWT_CYCCNT (*(uint32_t *)0xE0001004)
 
 
-#define TEST_MICRO_BASELINE
+//#define TEST_MICRO_BASELINE
 //#define TEST_MICRO
-//#define TEST_MACRO
+#define TEST_MACRO
 
 /*----------------------------------------------------------------------------
   NonSecure functions used for callbacks

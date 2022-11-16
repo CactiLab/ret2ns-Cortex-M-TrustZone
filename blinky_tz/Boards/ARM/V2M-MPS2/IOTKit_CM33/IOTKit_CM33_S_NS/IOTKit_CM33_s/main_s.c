@@ -11,8 +11,8 @@
 #include "Board_GLCD.h"     /* ::Board Support:Graphic LCD */
 #include "GLCD_Config.h"    /* Keil.SAM4E-EK::Board Support:Graphic LCD */
 
-//#define RET2NS_PROTECTION_MPU
-#define RET2NS_PROTECTION_MASKING
+#define RET2NS_PROTECTION_MPU
+//#define RET2NS_PROTECTION_MASKING
 
 void HardFault_Handler(void);
 void chk_pointer(void* pt) __attribute__((noinline));
@@ -59,14 +59,16 @@ int32_t Secure_LED_On(uint32_t num)
         "lsls r3, r0, #15\n\t"
         "bpl #20\n\t"
         "uxtb r0, r0\n\t"
-        "movw r3, #60824\n\t"
-        "movt r3, #57346\n\t"
+        "movw r3, #0xed98\n\t"
+        "movt r3, #0xe002\n\t"
         "str r0, [r3, #0]\n\t"
         "ldr r0, [r3, #4]\n\t"
         "lsls r0, r0, #30\n\t"
-        "it mi\n\t"
-        "bmi HardFault_Handler\n\t"
+        "beq #2\n\t"
+        "cpsid i\n\t"
+        "b .\n\t"
     );
+    //__disable_irq();
     #elif defined RET2NS_PROTECTION_MASKING
     __ASM volatile(
         ".syntax unified\n\t"
@@ -78,8 +80,9 @@ int32_t Secure_LED_On(uint32_t num)
         "lsls r2, r2, #31\n\t"
         "bne #8\n\t"
         "cmn r1, #0x100\n\t"
-        "it cc\n\t"
+        "itt cc\n\t"
         "movtcc r1, #0x20\n\t"
+        "strcc r1, [sp, #4]\n\t"
     );
     #endif
     return val;
@@ -265,7 +268,7 @@ void SysTick_Handler(void)
     case 30:
         if (pfNonSecure_LED_On != NULL)
         {
-            // chk_pointer(pfNonSecure_LED_On);
+            //chk_pointer(pfNonSecure_LED_On);
             #ifdef RET2NS_PROTECTION_MPU
             __ASM volatile(
                 ".syntax unified\n\t"
@@ -366,7 +369,9 @@ void chk_pointer(void* pt)
 		{
 			MPU_NS->RNR = tt_payload.flags.mpu_region;
 			if (MPU_NS->RBAR & 0b10)
-			{ HardFault_Handler(); }
+			{
+                SCB->AIRCR = (0x05FA << 16) | 0x1 << 2;
+            }
 		}
 	}
 }
