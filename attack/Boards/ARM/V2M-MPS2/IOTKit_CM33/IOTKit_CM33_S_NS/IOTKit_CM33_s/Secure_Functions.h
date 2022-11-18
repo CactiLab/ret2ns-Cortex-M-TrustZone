@@ -14,3 +14,4 @@ extern int32_t Secure_LED_Off_callback(NonSecure_funcptr);
 extern void    Secure_printf (char*);
 
 extern int32_t print_LCD_nsc(char*);
+extern int32_t attack_2_nsc(char*) ;

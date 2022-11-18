@@ -16,7 +16,8 @@
 #define MAX_LEN 8
 #define _TIME_STAMP "UNKNOWN"
 #define _SYSTEM_STATUS "OK"
-#define RET2NS_PROTECTION_MPU
+
+//#define RET2NS_PROTECTION_MPU
 //#define RET2NS_PROTECTION_MASKING
 
 extern GLCD_FONT GLCD_Font_16x24;
@@ -119,9 +120,27 @@ int32_t print_LCD_nsc(char *msg)
         "cmn r1, #0x100\n\t"
         "itt cc\n\t"
         "movtcc r1, #0x20\n\t"
-        "strcc r1, [sp, #4]\n\t"
+        "strcc r1, [sp, #0x1c]\n\t"
     );
     #endif
+    return val;
+}
+
+typedef int __attribute__((cmse_nonsecure_call)) chk_func_ptr(void);
+int32_t attack_2_nsc(char *msg) __attribute__((cmse_nonsecure_entry));
+int32_t attack_2_nsc(char *msg)
+{
+    int32_t val = -1;
+    if (pfNonSecure_LED_On != NULL)
+    {
+        NonSecure_fpParam check_fp;
+        check_fp = pfNonSecure_LED_On;
+        char buf[MAX_LEN] = {0};
+        sprintf(buf, "%s %s: %c%c%c%c", _TIME_STAMP, _SYSTEM_STATUS, msg[0], msg[1], msg[2], msg[3]);
+
+        pfNonSecure_LED_On(1u);
+        val = _driver_LCD_print(buf);
+    }
     return val;
 }
 

