@@ -5,6 +5,7 @@
 
 #include <arm_cmse.h>
 #include <stdio.h>
+#include "mpu_init.h"
 #include "IOTKit_CM33_FP.h" /* Device header */
 #include "Board_LED.h"      /* ::Board Support:LED */
 #include "Board_GLCD.h"     /* ::Board Support:Graphic LCD */
@@ -12,7 +13,11 @@
 
 /* Start address of non-secure application */
 #define NONSECURE_START (0x00200000u)
-#define MAX_LEN 128
+#define MAX_LEN 8
+#define _TIME_STAMP "UNKNOWN"
+#define _SYSTEM_STATUS "OK"
+#define RET2NS_PROTECTION_MPU
+//#define RET2NS_PROTECTION_MASKING
 
 extern GLCD_FONT GLCD_Font_16x24;
 
@@ -23,6 +28,20 @@ typedef int32_t (*NonSecure_fpParam)(uint32_t) __attribute__((cmse_nonsecure_cal
 typedef void (*NonSecure_fpVoid)(void) __attribute__((cmse_nonsecure_call));
 
 char text[] = "Hello World (secure)\r\n";
+
+int32_t _driver_LCD_ready(void) __attribute__((optnone));
+int32_t _driver_LCD_ready(void)
+{
+    return 1;
+}
+
+int32_t _driver_LCD_print(char *msg);
+int32_t _driver_LCD_print(char *msg)
+{
+    printf("%s\r\n", msg);
+    return 0;
+}
+
 
 /*----------------------------------------------------------------------------
   NonSecure callback functions
@@ -57,9 +76,53 @@ int32_t print_LCD_nsc(char *msg) __attribute__((cmse_nonsecure_entry));
 int32_t print_LCD_nsc(char *msg)
 {
     char buf[MAX_LEN] = {0};
-    sprintf(buf, "%s", msg);
-    printf("%s", buf);
-    return 1;
+    int32_t val = -1;
+    if (_driver_LCD_ready())
+    {
+        sprintf(buf, "%s %s: %c%c%c%c", _TIME_STAMP, _SYSTEM_STATUS, msg[0], msg[1], msg[2], msg[3]);
+
+        val = _driver_LCD_print(buf);
+    }
+    #ifdef RET2NS_PROTECTION_MPU
+    __ASM volatile(
+        ".syntax unified\n\t"
+        ".thumb\n\t"
+        "ldr r0, [sp, #0x1c]\n\t"
+        "mrs r3, ipsr\n\t"
+        "cbnz r3, #6\n\t"
+        "mrs r3, control_ns\n\t"
+        "lsls r3, r3, #31\n\t"
+        "bne #28\n\t"
+        "tta r0, r0\n\t"
+        "lsls r3, r0, #15\n\t"
+        "bpl #20\n\t"
+        "uxtb r0, r0\n\t"
+        "movw r3, #0xed98\n\t"
+        "movt r3, #0xe002\n\t"
+        "str r0, [r3, #0]\n\t"
+        "ldr r0, [r3, #4]\n\t"
+        "lsls r0, r0, #30\n\t"
+        "beq #2\n\t"
+        "cpsid i\n\t"
+        "b .\n\t"
+    );
+    #elif defined RET2NS_PROTECTION_MASKING
+    __ASM volatile(
+        ".syntax unified\n\t"
+        ".thumb\n\t"
+        "ldr r1, [sp, #0x1c]\n\t"
+        "mrs r2, ipsr\n\t"
+        "cbnz r2, #6\n\t"
+        "mrs r2, control_ns\n\t"
+        "lsls r2, r2, #31\n\t"
+        "bne #8\n\t"
+        "cmn r1, #0x100\n\t"
+        "itt cc\n\t"
+        "movtcc r1, #0x20\n\t"
+        "strcc r1, [sp, #4]\n\t"
+    );
+    #endif
+    return val;
 }
 
 /*----------------------------------------------------------------------------
@@ -133,6 +196,8 @@ int main(void)
     uint32_t NonSecure_StackPointer = (*((uint32_t *)(NONSECURE_START + 0u)));
     NonSecure_fpVoid NonSecure_ResetHandler = (NonSecure_fpVoid)(*((uint32_t *)(NONSECURE_START + 4u)));
 
+    mpu_ns_init();
+    
     /* exercise some floating point instructions from Secure Mode */
     volatile uint32_t fpuType = SCB_GetFPUType();
     volatile float x1 = 12.4567f;
@@ -163,7 +228,7 @@ int main(void)
     GLCD_SetForegroundColor(GLCD_COLOR_RED);
     GLCD_DrawString(0 * 16, 0 * 24, "   V2M-MPS2+ Demo   ");
     GLCD_DrawString(0 * 16, 1 * 24, " Secure/Non-Secure  ");
-    GLCD_DrawString(0 * 16, 2 * 24, "   www.keil.com     ");
+    GLCD_DrawString(0 * 16, 2 * 24, "   ret2ns Attack    ");
 
     GLCD_SetBackgroundColor(GLCD_COLOR_WHITE);
     GLCD_SetForegroundColor(GLCD_COLOR_BLACK);
@@ -180,7 +245,7 @@ int main(void)
         break;
     }
 
-    SysTick_Config(SystemCoreClock / 100); /* Generate interrupt each 10 ms */
+    SysTick->CTRL = 0;
 
     NonSecure_ResetHandler();
 }

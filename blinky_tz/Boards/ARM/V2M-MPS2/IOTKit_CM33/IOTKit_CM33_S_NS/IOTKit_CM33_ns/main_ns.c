@@ -53,12 +53,12 @@ void SysTick_Handler(void)
     switch (ticks)
     {
     case 0:
-        Secure_LED_On(2u);
         ticks = 1;
+        Secure_LED_On(2u);
         break;
     case 1:
-        Secure_LED_Off(2u);
         ticks = 0;
+        Secure_LED_Off(2u);
         break;
     default:
         ticks = 0;
