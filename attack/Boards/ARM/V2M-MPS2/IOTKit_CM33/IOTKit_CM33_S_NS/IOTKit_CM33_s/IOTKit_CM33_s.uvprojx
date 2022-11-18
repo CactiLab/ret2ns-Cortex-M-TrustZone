@@ -89,7 +89,7 @@
             <nStopA1X>0</nStopA1X>
             <nStopA2X>0</nStopA2X>
           </AfterMake>
-          <SelectedForBatchBuild>1</SelectedForBatchBuild>
+          <SelectedForBatchBuild>0</SelectedForBatchBuild>
           <SVCSIdString></SVCSIdString>
         </TargetCommonOption>
         <CommonProperty>
@@ -394,6 +394,16 @@
               <FileType>1</FileType>
               <FilePath>.\stdout_USART.c</FilePath>
             </File>
+            <File>
+              <FileName>mpu_init.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\mpu_init.c</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_init.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\mpu_init.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -427,7 +437,7 @@
       <TargetName>V2M-MPS2+</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6160000::V6.16::ARMCLANG</pCCUsed>
+      <pCCUsed>6180000::V6.18::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -506,7 +516,7 @@
             <nStopA1X>0</nStopA1X>
             <nStopA2X>0</nStopA2X>
           </AfterMake>
-          <SelectedForBatchBuild>0</SelectedForBatchBuild>
+          <SelectedForBatchBuild>1</SelectedForBatchBuild>
           <SVCSIdString></SVCSIdString>
         </TargetCommonOption>
         <CommonProperty>
@@ -810,6 +820,16 @@
               <FileName>stdout_USART.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\stdout_USART.c</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_init.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\mpu_init.c</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_init.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\mpu_init.h</FilePath>
             </File>
           </Files>
         </Group>
