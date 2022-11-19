@@ -154,7 +154,7 @@ void attack_1(void)
 
 /*----------------------------------------------------------------------------
   Attack 2: Non-secure handler calls secure NSC function,
-   and then BLXNS calls another non-secure function (banked CONTROL_NS.nPRIV)
+   and then BLXNS calls another non-secure function (IPSR changes with the non-secure function call)
  *----------------------------------------------------------------------------*/
 void attack_2(void)
 {
@@ -165,7 +165,7 @@ void attack_2(void)
 
 /*----------------------------------------------------------------------------
   Attack 3: Non-secure privileged thread calls secure NSC function,
-   and then BXNS returns back (shared IPSR)
+   and then BXNS returns back (banked CONTROL_NS.nPRIV)
  *----------------------------------------------------------------------------*/
 void attack_3(void)
 {
@@ -177,7 +177,7 @@ void attack_3(void)
 
 /*----------------------------------------------------------------------------
   Attack 4: Non-secure privileged thread calls secure NSC function,
-   and then BLXNS calls another non-secure function (banked CONTROL_NS.nPRIV)
+   and then BLXNS calls another non-secure function (IPSR changes with the non-secure function call)
  *----------------------------------------------------------------------------*/
 void attack_4(void)
 {

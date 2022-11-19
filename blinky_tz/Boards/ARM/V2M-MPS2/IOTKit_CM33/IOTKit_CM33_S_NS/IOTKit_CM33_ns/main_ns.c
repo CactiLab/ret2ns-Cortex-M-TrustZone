@@ -23,6 +23,7 @@ char text[] = "Hello World (non-secure)\r\n";
 
 #define T 100000
 #define N 10000000
+
 //#define TEST_MICRO_BASELINE
 //#define TEST_MICRO
 #define TEST_MACRO
