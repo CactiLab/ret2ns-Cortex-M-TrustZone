@@ -12,24 +12,23 @@
 #include "Board_GLCD.h"     /* ::Board Support:Graphic LCD */
 #include "GLCD_Config.h"    /* Keil.SAM4E-EK::Board Support:Graphic LCD */
 
+/*----------------------------------------------------------------------------
+  Macros to enable the MPU-assisted address sanitizer or the address masking mechanism,
+  eithor of which can be used to mitigate the ret2ns attacks
+ *----------------------------------------------------------------------------*/
+//#define RET2NS_PROTECTION_MPU
+//#define RET2NS_PROTECTION_MASKING
+
 /* Start address of non-secure application */
 #define NONSECURE_START (0x00200000u)
 #define MAX_LEN 8
 #define _TIME_STAMP "UNKNOWN"
 #define _SYSTEM_STATUS "OK"
 
-#define RET2NS_PROTECTION_MPU
-//#define RET2NS_PROTECTION_MASKING
-
 extern GLCD_FONT GLCD_Font_16x24;
-
 extern int stdout_init(void);
-
-/* typedef for NonSecure callback functions */
-typedef int32_t (*NonSecure_fpParam)(uint32_t) __attribute__((cmse_nonsecure_call));
 typedef void (*NonSecure_fpVoid)(void) __attribute__((cmse_nonsecure_call));
-
-char text[] = "Hello World (secure)\r\n";
+typedef int __attribute__((cmse_nonsecure_call)) chk_func_ptr(void);
 
 int32_t _driver_LCD_ready(void) __attribute__((optnone));
 int32_t _driver_LCD_ready(void)
@@ -44,68 +43,48 @@ int32_t _driver_LCD_print(char *msg)
     return 0;
 }
 
-
 /*----------------------------------------------------------------------------
-  NonSecure callback functions
+  NonSecure callback functions initialization
  *----------------------------------------------------------------------------*/
-extern NonSecure_fpParam pfNonSecure_LED_On;
-NonSecure_fpParam pfNonSecure_LED_On = (NonSecure_fpParam)NULL;
-extern NonSecure_fpParam pfNonSecure_LED_Off;
-NonSecure_fpParam pfNonSecure_LED_Off = (NonSecure_fpParam)NULL;
-
-
-/* ======== Secure callable functions initialization ======== */
-
+/* Secure callable functions initialization */
 void default_callback(void);
-void default_callback(void) {
-	__BKPT(0);
-	while(1);
+void default_callback(void)
+{
+    __BKPT(0);
 }
 
 /*
  * Declare function pointer *fp
  * fp can point to either a secure or a non-secure function
  * Initialized to a default callback
-*/
+ */
+/* typedef for NonSecure callback function */
 typedef int __attribute__((cmse_nonsecure_call)) tdef_nsfunc_o_int_i_void(void);
-tdef_nsfunc_o_int_i_void *fp = (tdef_nsfunc_o_int_i_void *) default_callback;
+tdef_nsfunc_o_int_i_void *fp = (tdef_nsfunc_o_int_i_void *)default_callback;
 
 // This is a Secure API with a function pointer as an input parameter
 int __attribute__((cmse_nonsecure_entry)) pass_nsfunc_ptr_o_int_i_void(tdef_nsfunc_o_int_i_void *callback)
 {
-	// Result for the function pointer
-	cmse_address_info_t tt_payload;
-	tt_payload = cmse_TTA_fptr(callback);
-	if (tt_payload.flags.nonsecure_read_ok) {
-		fp = cmse_nsfptr_create(callback); // Non-secure function pointer
-// 		fp();
-		return (0);
-	} else {
-		return (1); // Function pointer is not accessible from the Non-secure side
-	}
+    // Result for the function pointer
+    cmse_address_info_t tt_payload;
+    tt_payload = cmse_TTA_fptr(callback);
+    if (tt_payload.flags.nonsecure_read_ok)
+    {
+        fp = cmse_nsfptr_create(callback); // Non-secure function pointer
+        return (0);
+    }
+    else
+        return (1); // Function pointer is not accessible from the Non-secure side
 }
 
 /*----------------------------------------------------------------------------
-  Secure functions exported to NonSecure application
+  Secure functions exported to NonSecure application (NSC)
  *----------------------------------------------------------------------------*/
-int32_t Secure_LED_On(uint32_t num) __attribute__((cmse_nonsecure_entry));
-int32_t Secure_LED_On(uint32_t num)
-{
-    return LED_On(num);
-}
-
-int32_t Secure_LED_Off(uint32_t num) __attribute__((cmse_nonsecure_entry));
-int32_t Secure_LED_Off(uint32_t num)
-{
-    return LED_Off(num);
-}
-
-void Secure_printf(char *pString) __attribute__((cmse_nonsecure_entry));
-void Secure_printf(char *pString)
-{
-    printf("%s", pString);
-}
-
+/*----------------------------------------------------------------------------
+  Vulnerable NSC function: this function has a buffer overflow vulnerability,
+    which can be exploited to overwrite the NSC return address on the stack
+    (BXNS)
+ *----------------------------------------------------------------------------*/
 int32_t print_LCD_nsc(char *msg) __attribute__((cmse_nonsecure_entry));
 int32_t print_LCD_nsc(char *msg)
 {
@@ -117,7 +96,7 @@ int32_t print_LCD_nsc(char *msg)
 
         val = _driver_LCD_print(buf);
     }
-    #ifdef RET2NS_PROTECTION_MPU
+#ifdef RET2NS_PROTECTION_MPU
     __ASM volatile(
         ".syntax unified\n\t"
         ".thumb\n\t"
@@ -138,9 +117,8 @@ int32_t print_LCD_nsc(char *msg)
         "lsls r0, r0, #30\n\t"
         "beq #2\n\t"
         "cpsid i\n\t"
-        "b .\n\t"
-    );
-    #elif defined RET2NS_PROTECTION_MASKING
+        "b .\n\t");
+#elif defined RET2NS_PROTECTION_MASKING
     __ASM volatile(
         ".syntax unified\n\t"
         ".thumb\n\t"
@@ -153,25 +131,28 @@ int32_t print_LCD_nsc(char *msg)
         "cmn r1, #0x100\n\t"
         "itt cc\n\t"
         "movtcc r1, #0x21\n\t"
-        "strcc r1, [sp, #0x1c]\n\t"
-    );
-    #endif
+        "strcc r1, [sp, #0x1c]\n\t");
+#endif
     return val;
 }
 
-typedef int __attribute__((cmse_nonsecure_call)) chk_func_ptr(void);
+/*----------------------------------------------------------------------------
+  Vulnerable NSC function: this function has a buffer overflow vulnerability,
+    which can be exploited to overwrite the non-secure function pointer on the stack
+    (BLXNS)
+ *----------------------------------------------------------------------------*/
 int32_t blxns_nsc(char *msg) __attribute__((cmse_nonsecure_entry, optnone));
 int32_t blxns_nsc(char *msg)
 {
     int32_t val = -1;
     int driver_status;
-	chk_func_ptr *check_fp;
-	check_fp = cmse_nsfptr_create(fp);
+    chk_func_ptr *check_fp;
+    check_fp = cmse_nsfptr_create(fp);
 
     char buf[MAX_LEN];
     sprintf(buf, "%s %s: %c%c%c%c", _TIME_STAMP, _SYSTEM_STATUS, msg[0], msg[1], msg[2], msg[3]);
-    
-    #ifdef RET2NS_PROTECTION_MPU
+
+#ifdef RET2NS_PROTECTION_MPU
     __ASM volatile(
         ".syntax unified\n\t"
         ".thumb\n\t"
@@ -192,9 +173,8 @@ int32_t blxns_nsc(char *msg)
         "lsls r0, r0, #30\n\t"
         "beq #2\n\t"
         "cpsid i\n\t"
-        "b .\n\t"
-    );
-    #elif defined RET2NS_PROTECTION_MASKING
+        "b .\n\t");
+#elif defined RET2NS_PROTECTION_MASKING
     __ASM volatile(
         ".syntax unified\n\t"
         ".thumb\n\t"
@@ -207,76 +187,14 @@ int32_t blxns_nsc(char *msg)
         "cmn r1, #0x100\n\t"
         "itt cc\n\t"
         "movtcc r1, #0x21\n\t"
-        "strcc r1, [sp, #0x20]\n\t"
-    );
-    #endif
+        "strcc r1, [sp, #0x20]\n\t");
+#endif
     driver_status = check_fp();
-    if (driver_status == 0) {
+    if (driver_status == 0)
+    {
         val = _driver_LCD_print(buf);
     }
     return val;
-}
-
-/*----------------------------------------------------------------------------
-  Secure function for NonSecure callbacks exported to NonSecure application
- *----------------------------------------------------------------------------*/
-int32_t Secure_LED_On_callback(NonSecure_fpParam callback) __attribute__((cmse_nonsecure_entry));
-int32_t Secure_LED_On_callback(NonSecure_fpParam callback)
-{
-    pfNonSecure_LED_On = callback;
-    return 0;
-}
-
-int32_t Secure_LED_Off_callback(NonSecure_fpParam callback) __attribute__((cmse_nonsecure_entry));
-int32_t Secure_LED_Off_callback(NonSecure_fpParam callback)
-{
-    pfNonSecure_LED_Off = callback;
-    return 0;
-}
-
-/*----------------------------------------------------------------------------
-  SysTick IRQ Handler
- *----------------------------------------------------------------------------*/
-void SysTick_Handler(void);
-void SysTick_Handler(void)
-{
-    static uint32_t ticks = 0;
-    static uint32_t ticks_printf = 0;
-
-    switch (ticks++)
-    {
-    case 10:
-        LED_On(0u);
-        break;
-    case 20:
-        LED_Off(0u);
-        break;
-    case 30:
-        if (pfNonSecure_LED_On != NULL)
-        {
-            pfNonSecure_LED_On(1u);
-        }
-        break;
-    case 50:
-        if (pfNonSecure_LED_Off != NULL)
-        {
-            pfNonSecure_LED_Off(1u);
-        }
-        break;
-    case 99:
-        ticks = 0;
-        if (ticks_printf++ == 3)
-        {
-            printf("%s", text);
-            ticks_printf = 0;
-        }
-        break;
-    default:
-        if (ticks > 99)
-        {
-            ticks = 0;
-        }
-    }
 }
 
 static uint32_t x;
@@ -288,15 +206,8 @@ int main(void)
     uint32_t NonSecure_StackPointer = (*((uint32_t *)(NONSECURE_START + 0u)));
     NonSecure_fpVoid NonSecure_ResetHandler = (NonSecure_fpVoid)(*((uint32_t *)(NONSECURE_START + 4u)));
 
+    /* Initialize NS MPU */
     mpu_ns_init();
-    
-    /* exercise some floating point instructions from Secure Mode */
-    volatile uint32_t fpuType = SCB_GetFPUType();
-    volatile float x1 = 12.4567f;
-    volatile float x2 = 0.6637967f;
-    volatile float x3 = 24.1111118f;
-
-    x3 = x3 * (x1 / x2);
 
     /* exercise some core register from Secure Mode */
     x = __get_MSP();
@@ -307,6 +218,7 @@ int main(void)
     x = __TZ_get_PSP_NS();
 
     SystemCoreClockUpdate();
+    SysTick->CTRL = 0;
 
     stdout_init(); /* Initialize Serial interface */
     LED_Initialize();
@@ -336,8 +248,6 @@ int main(void)
         GLCD_DrawString(0 * 16, 4 * 24, "  unknown Cortex-M  ");
         break;
     }
-
-    SysTick->CTRL = 0;
 
     NonSecure_ResetHandler();
 }
