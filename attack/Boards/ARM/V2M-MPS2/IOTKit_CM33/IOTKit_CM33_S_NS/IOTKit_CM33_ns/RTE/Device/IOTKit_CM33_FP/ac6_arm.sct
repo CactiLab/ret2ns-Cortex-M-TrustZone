@@ -76,7 +76,7 @@
 
 #define __RO_BASE          ( __ROM_BASE )
 #define __RO_SIZE          ( __ROM_SIZE - __CV_SIZE )
-#define __UPRIV_BASE       ( __ROM_BASE + 0x10000 )
+#define __PRIV_BASE        ( __ROM_BASE + 0x10000 )
 
 
 #define __RW_BASE          ( __RAM_BASE )
@@ -94,8 +94,8 @@ LR_ROM __RO_BASE __RO_SIZE  {                       ; load region size_region
    .ANY (+XO)
   }
 
-  ER_UPRIV __UPRIV_BASE 0x20000 {                   ; load address = execution address
-    *(unprivilege_code)
+  ER_PRIV __PRIV_BASE 0x20000 {                   ; load address = execution address
+    *(privilege_code)
     .ANY (+ZI)
   }
 

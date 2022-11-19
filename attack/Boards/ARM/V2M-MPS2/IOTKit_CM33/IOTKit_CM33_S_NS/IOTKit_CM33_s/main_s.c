@@ -5,6 +5,7 @@
 
 #include <arm_cmse.h>
 #include <stdio.h>
+#include <string.h>
 #include "mpu_init.h"
 #include "IOTKit_CM33_FP.h" /* Device header */
 #include "Board_LED.h"      /* ::Board Support:LED */
@@ -17,7 +18,7 @@
 #define _TIME_STAMP "UNKNOWN"
 #define _SYSTEM_STATUS "OK"
 
-//#define RET2NS_PROTECTION_MPU
+#define RET2NS_PROTECTION_MPU
 //#define RET2NS_PROTECTION_MASKING
 
 extern GLCD_FONT GLCD_Font_16x24;
@@ -51,6 +52,38 @@ extern NonSecure_fpParam pfNonSecure_LED_On;
 NonSecure_fpParam pfNonSecure_LED_On = (NonSecure_fpParam)NULL;
 extern NonSecure_fpParam pfNonSecure_LED_Off;
 NonSecure_fpParam pfNonSecure_LED_Off = (NonSecure_fpParam)NULL;
+
+
+/* ======== Secure callable functions initialization ======== */
+
+void default_callback(void);
+void default_callback(void) {
+	__BKPT(0);
+	while(1);
+}
+
+/*
+ * Declare function pointer *fp
+ * fp can point to either a secure or a non-secure function
+ * Initialized to a default callback
+*/
+typedef int __attribute__((cmse_nonsecure_call)) tdef_nsfunc_o_int_i_void(void);
+tdef_nsfunc_o_int_i_void *fp = (tdef_nsfunc_o_int_i_void *) default_callback;
+
+// This is a Secure API with a function pointer as an input parameter
+int __attribute__((cmse_nonsecure_entry)) pass_nsfunc_ptr_o_int_i_void(tdef_nsfunc_o_int_i_void *callback)
+{
+	// Result for the function pointer
+	cmse_address_info_t tt_payload;
+	tt_payload = cmse_TTA_fptr(callback);
+	if (tt_payload.flags.nonsecure_read_ok) {
+		fp = cmse_nsfptr_create(callback); // Non-secure function pointer
+// 		fp();
+		return (0);
+	} else {
+		return (1); // Function pointer is not accessible from the Non-secure side
+	}
+}
 
 /*----------------------------------------------------------------------------
   Secure functions exported to NonSecure application
@@ -119,7 +152,7 @@ int32_t print_LCD_nsc(char *msg)
         "bne #8\n\t"
         "cmn r1, #0x100\n\t"
         "itt cc\n\t"
-        "movtcc r1, #0x20\n\t"
+        "movtcc r1, #0x21\n\t"
         "strcc r1, [sp, #0x1c]\n\t"
     );
     #endif
@@ -127,18 +160,58 @@ int32_t print_LCD_nsc(char *msg)
 }
 
 typedef int __attribute__((cmse_nonsecure_call)) chk_func_ptr(void);
-int32_t attack_2_nsc(char *msg) __attribute__((cmse_nonsecure_entry));
-int32_t attack_2_nsc(char *msg)
+int32_t blxns_nsc(char *msg) __attribute__((cmse_nonsecure_entry, optnone));
+int32_t blxns_nsc(char *msg)
 {
     int32_t val = -1;
-    if (pfNonSecure_LED_On != NULL)
-    {
-        NonSecure_fpParam check_fp;
-        check_fp = pfNonSecure_LED_On;
-        char buf[MAX_LEN] = {0};
-        sprintf(buf, "%s %s: %c%c%c%c", _TIME_STAMP, _SYSTEM_STATUS, msg[0], msg[1], msg[2], msg[3]);
+    int driver_status;
+	chk_func_ptr *check_fp;
+	check_fp = cmse_nsfptr_create(fp);
 
-        pfNonSecure_LED_On(1u);
+    char buf[MAX_LEN];
+    sprintf(buf, "%s %s: %c%c%c%c", _TIME_STAMP, _SYSTEM_STATUS, msg[0], msg[1], msg[2], msg[3]);
+    
+    #ifdef RET2NS_PROTECTION_MPU
+    __ASM volatile(
+        ".syntax unified\n\t"
+        ".thumb\n\t"
+        "ldr r0, [sp, #0x20]\n\t"
+        "mrs r3, ipsr\n\t"
+        "cbnz r3, #6\n\t"
+        "mrs r3, control_ns\n\t"
+        "lsls r3, r3, #31\n\t"
+        "bne #28\n\t"
+        "tta r0, r0\n\t"
+        "lsls r3, r0, #15\n\t"
+        "bpl #20\n\t"
+        "uxtb r0, r0\n\t"
+        "movw r3, #0xed98\n\t"
+        "movt r3, #0xe002\n\t"
+        "str r0, [r3, #0]\n\t"
+        "ldr r0, [r3, #4]\n\t"
+        "lsls r0, r0, #30\n\t"
+        "beq #2\n\t"
+        "cpsid i\n\t"
+        "b .\n\t"
+    );
+    #elif defined RET2NS_PROTECTION_MASKING
+    __ASM volatile(
+        ".syntax unified\n\t"
+        ".thumb\n\t"
+        "ldr r1, [sp, #0x20]\n\t"
+        "mrs r2, ipsr\n\t"
+        "cbnz r2, #6\n\t"
+        "mrs r2, control_ns\n\t"
+        "lsls r2, r2, #31\n\t"
+        "bne #8\n\t"
+        "cmn r1, #0x100\n\t"
+        "itt cc\n\t"
+        "movtcc r1, #0x21\n\t"
+        "strcc r1, [sp, #0x20]\n\t"
+    );
+    #endif
+    driver_status = check_fp();
+    if (driver_status == 0) {
         val = _driver_LCD_print(buf);
     }
     return val;

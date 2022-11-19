@@ -1,6 +1,7 @@
 #include <arm_cmse.h>
 #include <stdio.h>
 #include "IOTKit_CM33_FP.h" /* Device header */
+//#include "Secure_Functions.h"
 
 #define __ROM_BASE      0x00200000
 #define __UPRIV_BASE    ( __ROM_BASE + 0x10000 )

