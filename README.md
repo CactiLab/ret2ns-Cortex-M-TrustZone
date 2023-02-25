@@ -7,10 +7,10 @@ The results of this project was published in the paper entitled "Return-to-Non-S
 
 ```
 @inproceedings{ma2023dac,
-  title = {Return-to-Non-Secure Vulnerabilities on ARM Cortex-M TrustZone: Attack and Defense},
-  author = {Ma, Zheyuan and Tan, Xi and Ziarek, Lukasz and Zhang, Ning and Hu, Hongxin and Zhao, Ziming},
-  booktitle = {ACM/IEEE Design Automation Conference},
-  year = {2023},
+ title = {Return-to-Non-Secure Vulnerabilities on ARM Cortex-M TrustZone: Attack and Defense},
+ author = {Ma, Zheyuan and Tan, Xi and Ziarek, Lukasz and Zhang, Ning and Hu, Hongxin and Zhao, Ziming},
+ booktitle = {ACM/IEEE Design Automation Conference},
+ year = {2023},
 }
 
 ```
