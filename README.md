@@ -1,13 +1,24 @@
 Return-to-Non-Secure Vulnerabilities on ARM Cortex-M TrustZone: Attack and Defense
 ========================
 
-This repo demonstrates the Return-to-Non-Secure (ret2ns) vulnerability on ARM Cortex-M TrustZone. It contains the attack and defense demonstration, as well as the defense overhead evaluation.
+This repo demonstrates the Return-to-Non-Secure (ret2ns) vulnerabilities on ARM Cortex-M TrustZone. It contains the attack and defense demonstration, as well as the defense overhead evaluation.
 
-Target environment
+The results of this project was published in the paper entitled "Return-to-Non-Secure Vulnerabilities on ARM Cortex-M TrustZone: Attack and Defense" in the ACM/IEEE Design Automation Conference (DAC) 2023. If you want to cite our paper in your work, please use the following BibTeX entry.
+
+```
+@inproceedings{ma2023dac,
+  title = {Return-to-Non-Secure Vulnerabilities on ARM Cortex-M TrustZone: Attack and Defense},
+  author = {Ma, Zheyuan and Tan, Xi and Ziarek, Lukasz and Zhang, Ning and Hu, Hongxin and Zhao, Ziming},
+  booktitle = {ACM/IEEE Design Automation Conference},
+  year = {2023},
+}
+
+```
+
+Target environments
 ------------------
 
-The projects here are for the
-ARM **IOTKit_CM33** microcontroller using ARM **V2M-MPS2+** Evaluation Board (uses onboard CMSIS-DAP as the debugger). Compliant with Cortex Microcontroller Software Interface Standard (CMSIS).
+The projects are tested for the ARM **IOTKit_CM33** microcontroller using ARM **V2M-MPS2+** Evaluation Board (uses onboard CMSIS-DAP as the debugger). The code is compliant with Cortex Microcontroller Software Interface Standard (CMSIS).
 - MPS2+ image: AN505 (+ MB BIOS image V2.2.0)
 
 Attack and Defense Demonstration
