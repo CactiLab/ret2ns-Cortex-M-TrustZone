@@ -29,7 +29,7 @@ The four attack variants are:
 - Attack 1: the Non-secure handler calls a secure NSC function, and then returns with BXNS (shared IPSR).
 - Attack 2: the Non-secure handler calls a secure NSC function, and then the secure NSC calls another non-secure function with BLXNS (IPSR changes with the non-secure function call)
 - Attack 3: the Non-secure privileged thread program calls a secure NSC function, and then returns with BXNS (banked CONTROL_NS.nPRIV)
-- Attack 4: the Non-secure privileged thread program calls a secure NSC function, and then the secure NSC calls another non-secure function (IPSR changes with the non-secure function call)
+- Attack 4: the Non-secure privileged thread program calls a secure NSC function, and then the secure NSC calls another non-secure function (banked CONTROL_NS.nPRIV)
 
 The two secure NSC functions are:
 - `print_LCD_nsc`: this function has a buffer overflow vulnerability, which can be exploited to overwrite the NSC return address on the stack (change the BXNS target).
