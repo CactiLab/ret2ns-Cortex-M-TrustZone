@@ -3,7 +3,7 @@ Return-to-Non-Secure Vulnerabilities on ARM Cortex-M TrustZone: Attack and Defen
 
 This repo demonstrates the Return-to-Non-Secure (ret2ns) vulnerabilities on ARM Cortex-M TrustZone. It contains the attack and defense demonstration, as well as the defense overhead evaluation.
 
-The results of this project was published in the paper entitled "Return-to-Non-Secure Vulnerabilities on ARM Cortex-M TrustZone: Attack and Defense" in the ACM/IEEE Design Automation Conference (DAC) 2023. If you want to cite our paper in your work, please use the following BibTeX entry.
+The results of this project were published in the paper entitled "[Return-to-Non-Secure Vulnerabilities on ARM Cortex-M TrustZone: Attack and Defense](https://cactilab.github.io/assets/pdf/ret2ns2023.pdf)" in the ACM/IEEE Design Automation Conference (DAC) 2023. If you want to cite our paper in your work, please use the following BibTeX entry.
 
 ```
 @inproceedings{ma2023dac,
@@ -12,7 +12,6 @@ The results of this project was published in the paper entitled "Return-to-Non-S
  booktitle = {ACM/IEEE Design Automation Conference},
  year = {2023},
 }
-
 ```
 
 Target environments
