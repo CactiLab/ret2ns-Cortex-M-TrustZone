@@ -22,7 +22,7 @@ char text[] = "Hello World (non-secure)\r\n";
 #define ARM_CM_DWT_CYCCNT (*(uint32_t *)0xE0001004)
 
 #define T 100000
-#define N 10000000
+#define N 100000
 
 //#define TEST_MICRO_BASELINE
 //#define TEST_MICRO
@@ -143,9 +143,6 @@ int main(void)
         ARM_CM_DWT_CYCCNT = 0;
         ARM_CM_DWT_CTRL |= 1 << 0; // Set bit 0
     }
-    uint32_t start;
-    uint32_t stop;
-    uint32_t delta;
     
     SystemCoreClockUpdate();
     SysTick_Config(T); /* Generate interrupt each T cycles */
@@ -156,12 +153,11 @@ int main(void)
         for (k = 0; k < 0x100000; k++)
             __NOP();
         
-        start = ARM_CM_DWT_CYCCNT;
-        Secure_empty();
-        stop = ARM_CM_DWT_CYCCNT;
+        ARM_CM_DWT_CYCCNT = 0;
 
-        delta = stop - start;
-        Secure_printf_int(delta);
+        Secure_empty();
+
+        Secure_printf_int(ARM_CM_DWT_CYCCNT);
     }
     #elif defined TEST_MICRO
     for (i = 0; i < 10; i++)
@@ -169,17 +165,17 @@ int main(void)
         for (k = 0; k < 0x100000; k++)
             __NOP();
         
-        start = ARM_CM_DWT_CYCCNT;
-        Secure_printf(text);
-        stop = ARM_CM_DWT_CYCCNT;
+        ARM_CM_DWT_CYCCNT = 0;
 
-        delta = stop - start;
-        Secure_printf_int(delta);
+        Secure_printf(text);
+
+        Secure_printf_int(ARM_CM_DWT_CYCCNT);
     }
     #elif defined TEST_MACRO
     for (i = 0; i < 5; i++)
     {
-        start = ARM_CM_DWT_CYCCNT;
+        ARM_CM_DWT_CYCCNT = 0;
+        
         for (j = 0; j < 10; j++)
         {
             for (k = 0; k < N; k++)
@@ -192,9 +188,8 @@ int main(void)
                 __NOP();
             Secure_printf(text);
         }
-        stop = ARM_CM_DWT_CYCCNT;
-        delta = stop - start;
-        Secure_printf_int(delta);
+
+        Secure_printf_int(ARM_CM_DWT_CYCCNT);
     }
     #endif
     Secure_printf("End\r\n");
