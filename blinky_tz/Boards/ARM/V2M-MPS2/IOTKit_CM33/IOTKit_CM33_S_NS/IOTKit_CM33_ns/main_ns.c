@@ -21,8 +21,8 @@ char text[] = "Hello World (non-secure)\r\n";
 #define ARM_CM_DWT_CTRL (*(uint32_t *)0xE0001000)
 #define ARM_CM_DWT_CYCCNT (*(uint32_t *)0xE0001004)
 
-#define T 100000
-#define N 100000
+#define T 8900000
+#define N 10000000
 
 //#define TEST_MICRO_BASELINE
 //#define TEST_MICRO
@@ -175,7 +175,7 @@ int main(void)
     for (i = 0; i < 5; i++)
     {
         ARM_CM_DWT_CYCCNT = 0;
-        
+
         for (j = 0; j < 10; j++)
         {
             for (k = 0; k < N; k++)

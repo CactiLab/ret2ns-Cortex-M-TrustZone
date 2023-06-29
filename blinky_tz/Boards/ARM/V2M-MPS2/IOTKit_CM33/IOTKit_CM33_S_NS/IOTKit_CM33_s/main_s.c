@@ -11,9 +11,9 @@
 #include "Board_GLCD.h"     /* ::Board Support:Graphic LCD */
 #include "GLCD_Config.h"    /* Keil.SAM4E-EK::Board Support:Graphic LCD */
 
-#define T 100000
+#define T 8900000
 // #define RET2NS_PROTECTION_MPU
-// #define RET2NS_PROTECTION_MASKING
+#define RET2NS_PROTECTION_MASKING
 
 void HardFault_Handler(void);
 void chk_pointer(void* pt) __attribute__((noinline));
