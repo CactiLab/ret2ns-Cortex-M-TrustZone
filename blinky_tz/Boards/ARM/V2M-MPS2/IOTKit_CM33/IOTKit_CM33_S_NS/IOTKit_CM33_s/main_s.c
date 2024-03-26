@@ -336,7 +336,7 @@ void SysTick_Handler(void)
                 "mrs r2, ipsr\n\t"
                 "cbnz r2, #6\n\t"
                 "mrs r2, control_ns\n\t"
-                "lsls r1, r1, #31\n\t"
+                "lsls r2, r2, #31\n\t"
                 "bne #2\n\t"
                 "movt r1, #0x20\n\t"
             );
