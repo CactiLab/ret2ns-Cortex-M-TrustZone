@@ -13,7 +13,8 @@
 
 #define T 8900000
 // #define RET2NS_PROTECTION_MPU
-#define RET2NS_PROTECTION_MASKING
+// #define RET2NS_PROTECTION_MASKING
+#define RET2NS_PROTECTION_RANGE_CHECKING
 
 void HardFault_Handler(void);
 void chk_pointer(void* pt) __attribute__((noinline));
@@ -73,16 +74,34 @@ int32_t Secure_LED_On(uint32_t num)
     __ASM volatile(
         ".syntax unified\n\t"
         ".thumb\n\t"
-        "ldr r1, [sp, #4]\n\t"
         "mrs r2, ipsr\n\t"
         "cbnz r2, #6\n\t"
         "mrs r2, control_ns\n\t"
         "lsls r2, r2, #31\n\t"
-        "bne #8\n\t"
+        "bne #12\n\t"
+        "ldr r1, [sp, #4]\n\t"
         "cmn r1, #0x100\n\t"
         "itt cc\n\t"
         "movtcc r1, #0x20\n\t"
         "strcc r1, [sp, #4]\n\t"
+    );
+    #elif defined RET2NS_PROTECTION_RANGE_CHECKING
+    __ASM volatile(
+        ".syntax unified\n\t"
+        ".thumb\n\t"
+        "mrs r2, ipsr\n\t"
+        "cbnz r2, #6\n\t"
+        "mrs r2, control_ns\n\t"
+        "lsls r2, r2, #31\n\t"
+        "bne #18\n\t"
+        "ldr r1, [sp, #4]\n\t"
+        "cmn r1, #0x100\n\t"
+        "bcs #10\n\t"
+        "lsr r2, r1, #16\n\t"
+        "cmp r2, #0x20\n\t"
+        "beq #2\n\t"
+        "cpsid i\n\t"
+        "b .\n\t"
     );
     #endif
     return val;
@@ -118,16 +137,34 @@ int32_t Secure_LED_Off(uint32_t num)
     __ASM volatile(
         ".syntax unified\n\t"
         ".thumb\n\t"
-        "ldr r1, [sp, #4]\n\t"
         "mrs r2, ipsr\n\t"
         "cbnz r2, #6\n\t"
         "mrs r2, control_ns\n\t"
         "lsls r2, r2, #31\n\t"
-        "bne #8\n\t"
+        "bne #12\n\t"
+        "ldr r1, [sp, #4]\n\t"
         "cmn r1, #0x100\n\t"
         "itt cc\n\t"
         "movtcc r1, #0x20\n\t"
         "strcc r1, [sp, #4]\n\t"
+    );
+    #elif defined RET2NS_PROTECTION_RANGE_CHECKING
+    __ASM volatile(
+        ".syntax unified\n\t"
+        ".thumb\n\t"
+        "mrs r2, ipsr\n\t"
+        "cbnz r2, #6\n\t"
+        "mrs r2, control_ns\n\t"
+        "lsls r2, r2, #31\n\t"
+        "bne #18\n\t"
+        "ldr r1, [sp, #4]\n\t"
+        "cmn r1, #0x100\n\t"
+        "bcs #10\n\t"
+        "lsr r2, r1, #16\n\t"
+        "cmp r2, #0x20\n\t"
+        "beq #2\n\t"
+        "cpsid i\n\t"
+        "b .\n\t"
     );
     #endif
     return val;
@@ -164,16 +201,34 @@ void Secure_printf(char *pString)
     __ASM volatile(
         ".syntax unified\n\t"
         ".thumb\n\t"
-        "ldr r1, [sp, #4]\n\t"
         "mrs r2, ipsr\n\t"
         "cbnz r2, #6\n\t"
         "mrs r2, control_ns\n\t"
         "lsls r2, r2, #31\n\t"
-        "bne #8\n\t"
+        "bne #12\n\t"
+        "ldr r1, [sp, #4]\n\t"
         "cmn r1, #0x100\n\t"
         "itt cc\n\t"
         "movtcc r1, #0x20\n\t"
         "strcc r1, [sp, #4]\n\t"
+    );
+    #elif defined RET2NS_PROTECTION_RANGE_CHECKING
+    __ASM volatile(
+        ".syntax unified\n\t"
+        ".thumb\n\t"
+        "mrs r2, ipsr\n\t"
+        "cbnz r2, #6\n\t"
+        "mrs r2, control_ns\n\t"
+        "lsls r2, r2, #31\n\t"
+        "bne #18\n\t"
+        "ldr r1, [sp, #4]\n\t"
+        "cmn r1, #0x100\n\t"
+        "bcs #10\n\t"
+        "lsr r2, r1, #16\n\t"
+        "cmp r2, #0x20\n\t"
+        "beq #2\n\t"
+        "cpsid i\n\t"
+        "b .\n\t"
     );
     #endif
 }
@@ -214,16 +269,34 @@ void Secure_empty(void)
     __ASM volatile(
         ".syntax unified\n\t"
         ".thumb\n\t"
-        "ldr r1, [sp, #4]\n\t"
         "mrs r2, ipsr\n\t"
         "cbnz r2, #6\n\t"
         "mrs r2, control_ns\n\t"
         "lsls r2, r2, #31\n\t"
-        "bne #8\n\t"
+        "bne #12\n\t"
+        "ldr r1, [sp, #4]\n\t"
         "cmn r1, #0x100\n\t"
         "itt cc\n\t"
         "movtcc r1, #0x20\n\t"
         "strcc r1, [sp, #4]\n\t"
+    );
+    #elif defined RET2NS_PROTECTION_RANGE_CHECKING
+    __ASM volatile(
+        ".syntax unified\n\t"
+        ".thumb\n\t"
+        "mrs r2, ipsr\n\t"
+        "cbnz r2, #6\n\t"
+        "mrs r2, control_ns\n\t"
+        "lsls r2, r2, #31\n\t"
+        "bne #18\n\t"
+        "ldr r1, [sp, #4]\n\t"
+        "cmn r1, #0x100\n\t"
+        "bcs #10\n\t"
+        "lsr r2, r1, #16\n\t"
+        "cmp r2, #0x20\n\t"
+        "beq #2\n\t"
+        "cpsid i\n\t"
+        "b .\n\t"
     );
     #endif
 }
@@ -299,6 +372,21 @@ void SysTick_Handler(void)
                 "bne #2\n\t"
                 "movt r1, #0x20\n\t"
             );
+            #elif defined RET2NS_PROTECTION_RANGE_CHECKING
+            __ASM volatile(
+                ".syntax unified\n\t"
+                ".thumb\n\t"
+                "mrs r2, ipsr\n\t"
+                "cbnz r2, #6\n\t"
+                "mrs r2, control_ns\n\t"
+                "lsls r2, r2, #31\n\t"
+                "bne #10\n\t"
+                "lsr r2, r1, #16\n\t"
+                "cmp r2, #0x20\n\t"
+                "beq #2\n\t"
+                "cpsid i\n\t"
+                "b .\n\t"
+            );
             #endif
             pfNonSecure_LED_On(1u);
         }
@@ -339,6 +427,21 @@ void SysTick_Handler(void)
                 "lsls r2, r2, #31\n\t"
                 "bne #2\n\t"
                 "movt r1, #0x20\n\t"
+            );
+            #elif defined RET2NS_PROTECTION_RANGE_CHECKING
+            __ASM volatile(
+                ".syntax unified\n\t"
+                ".thumb\n\t"
+                "mrs r2, ipsr\n\t"
+                "cbnz r2, #6\n\t"
+                "mrs r2, control_ns\n\t"
+                "lsls r2, r2, #31\n\t"
+                "bne #10\n\t"
+                "lsr r2, r1, #16\n\t"
+                "cmp r2, #0x20\n\t"
+                "beq #2\n\t"
+                "cpsid i\n\t"
+                "b .\n\t"
             );
             #endif
             pfNonSecure_LED_Off(1u);
