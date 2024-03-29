@@ -1,0 +1,10 @@
+*** Using Compiler 'V6.19', folder: 'C:\Keil_v5\ARM\ARMCLANG\Bin'
+Build target 'V2M-MPS2+'
+linking...
+.\Objects\IOTKit_CM33_ns.axf: Warning: L9931W: Your license for feature Keil will expire in 29 days
+.\Objects\IOTKit_CM33_ns.axf: warning: Your license for feature Keil will expire in 29 days [-Wlicense-management]
+.\Objects\IOTKit_CM33_ns.axf: Warning: L9931W: Your license for feature Keil will expire in 29 days
+Program Size: Code=784 RO-data=1056 RW-data=32 ZI-data=4100  
+Finished: 0 information, 2 warning and 0 error messages.
+".\Objects\IOTKit_CM33_ns.axf" - 0 Error(s), 3 Warning(s).
+Build Time Elapsed:  00:00:00

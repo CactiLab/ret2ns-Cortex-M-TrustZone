@@ -11,10 +11,10 @@
 #include "Board_GLCD.h"     /* ::Board Support:Graphic LCD */
 #include "GLCD_Config.h"    /* Keil.SAM4E-EK::Board Support:Graphic LCD */
 
-#define T 8900000
+#define T 3400000
 // #define RET2NS_PROTECTION_MPU
 // #define RET2NS_PROTECTION_MASKING
-#define RET2NS_PROTECTION_RANGE_CHECKING
+// #define RET2NS_PROTECTION_RANGE_CHECKING
 
 void HardFault_Handler(void);
 void chk_pointer(void* pt) __attribute__((noinline));
@@ -538,6 +538,22 @@ int main(void)
         GLCD_DrawString(0 * 16, 4 * 24, "  unknown Cortex-M  ");
         break;
     }
+
+    #ifdef RET2NS_PROTECTION_MPU
+    GLCD_DrawString(0 * 16, 5 * 24, "  MPU           ");
+    #elif defined RET2NS_PROTECTION_MASKING
+    GLCD_DrawString(0 * 16, 5 * 24, "  Masking       ");
+    #elif defined RET2NS_PROTECTION_RANGE_CHECKING
+    GLCD_DrawString(0 * 16, 5 * 24, "  Range Checking");
+    #else
+    GLCD_DrawString(0 * 16, 5 * 24, "  Baseline      ");
+    #endif
+
+    char T_char[16];
+    sprintf(T_char, "  T = %d", T);
+
+    // Show the T value
+    GLCD_DrawString(0 * 16, 7 * 24, T_char);
 
     SysTick_Config(T); /* Generate interrupt each T cycles */
 

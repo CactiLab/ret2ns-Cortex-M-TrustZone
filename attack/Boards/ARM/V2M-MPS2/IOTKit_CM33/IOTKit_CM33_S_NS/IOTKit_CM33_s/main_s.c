@@ -16,8 +16,8 @@
   Macros to enable the MPU-assisted address sanitizer or the address masking mechanism,
   eithor of which can be used to mitigate the ret2ns attacks
  *----------------------------------------------------------------------------*/
-//#define RET2NS_PROTECTION_MPU
-//#define RET2NS_PROTECTION_MASKING
+// #define RET2NS_PROTECTION_MPU
+#define RET2NS_PROTECTION_MASKING
 
 /* Start address of non-secure application */
 #define NONSECURE_START (0x00200000u)

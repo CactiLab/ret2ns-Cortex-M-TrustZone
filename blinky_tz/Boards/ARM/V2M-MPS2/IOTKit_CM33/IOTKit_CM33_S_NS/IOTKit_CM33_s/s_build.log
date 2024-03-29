@@ -1,0 +1,9 @@
+*** Using Compiler 'V6.19', folder: 'C:\Keil_v5\ARM\ARMCLANG\Bin'
+Build target 'V2M-MPS2+'
+compiling main_s.c...
+creating list file for main_s.c...
+linking...
+.\Objects\IOTKit_CM33_s.axf: warning: Your license for feature Keil will expire in 29 days [-Wlicense-management]
+Program Size: Code=7540 RO-data=6548 RW-data=20 ZI-data=4512  
+".\Objects\IOTKit_CM33_s.axf" - 0 Error(s), 1 Warning(s).
+Build Time Elapsed:  00:00:01
