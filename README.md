@@ -3,14 +3,26 @@ Return-to-Non-Secure Vulnerabilities on ARM Cortex-M TrustZone: Attack and Defen
 
 This repo demonstrates the Return-to-Non-Secure (ret2ns) vulnerabilities on ARM Cortex-M TrustZone. It contains the attack and defense demonstration, as well as the defense overhead evaluation.
 
-The results of this project were published in the paper entitled "[Return-to-Non-Secure Vulnerabilities on ARM Cortex-M TrustZone: Attack and Defense](https://cactilab.github.io/assets/pdf/ret2ns2023.pdf)" in the ACM/IEEE Design Automation Conference (DAC) 2023. If you want to cite our paper in your work, please use the following BibTeX entry.
+The results of this project were published in the paper entitled "[Return-to-Non-Secure Vulnerabilities on ARM Cortex-M TrustZone: Attack and Defense](https://cactilab.github.io/assets/pdf/ret2ns2023.pdf)" in the ACM/IEEE Design Automation Conference (DAC) 2023.
+An extended version of the DAC paper, entitled "[MICROFT: Exploring and Mitigating Cross-state Control-flow Hijacking Attacks on ARM Cortex-M TrustZone](https://cactilab.github.io/assets/pdf/ma2025microft.pdf)," was published in the IEEE Transactions on Information Forensics and Security (TIFS) journal.
+If you want to cite our papers in your work, please use the following BibTeX entries.
 
 ```
 @inproceedings{ma2023dac,
  title = {Return-to-Non-Secure Vulnerabilities on ARM Cortex-M TrustZone: Attack and Defense},
  author = {Ma, Zheyuan and Tan, Xi and Ziarek, Lukasz and Zhang, Ning and Hu, Hongxin and Zhao, Ziming},
- booktitle = {ACM/IEEE Design Automation Conference},
+ booktitle = {2023 60th ACM/IEEE Design Automation Conference (DAC)},
  year = {2023},
+ doi = {10.1109/DAC56929.2023.10247972}
+}
+```
+```
+@article{ma2025microft,
+	title = {MICROFT: Exploring and Mitigating Cross-state Control-flow Hijacking Attacks on ARM Cortex-M TrustZone},
+	author = {Ma, Zheyuan and Tan, Xi and Ziarek, Lukasz and Zhang, Ning and Upadhyaya, Shambhu and Hu, Hongxin and Zhao, Ziming},
+	journal = {IEEE Transactions on Information Forensics and Security},
+	year = {2025},
+	doi = {10.1109/TIFS.2025.3625394}
 }
 ```
 
